@@ -47,7 +47,9 @@ public class ItemcaseWatcher implements Runnable {
                 itemcase.spawnItem();
             }
 
-            if (!itemcase.getBlock().getType().equals(Material.STEP)) {
+            if (!itemcase.getBlock().getType().equals(Material.STEP)
+                    && !itemcase.getBlock().getType()
+                            .equals(Material.WOOD_STEP)) {
                 itemcase.getBlock().setType(Material.STEP);
             }
         }

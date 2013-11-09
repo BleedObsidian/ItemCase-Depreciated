@@ -47,7 +47,8 @@ public class PlayerListener implements Listener {
                 && player.isSneaking()) {
             Block block = event.getClickedBlock();
 
-            if (block.getType() == Material.STEP) {
+            if (block.getType() == Material.STEP
+                    || block.getType() == Material.WOOD_STEP) {
                 if (!this.itemcaseManager.isItemcaseCreatedAt(block
                         .getLocation())) {
                     ItemStack itemStack = player.getItemInHand();
