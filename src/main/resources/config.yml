@@ -1,0 +1,11 @@
+#-------------------- ItemCase Configuration File --------------------#
+# This file contains all of the ItemCase configuration settings that
+# can be changed and altered.
+#---------------------------------------------------------------------#
+
+#Locale: en-us
+Locale: en-us
+    
+Updates:
+    # Notify if an update is available. (Recommended)
+    Check-For-Update: true

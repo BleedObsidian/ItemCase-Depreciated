@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>com.gmail.bleedobsidian.itemcase</groupId>
+  <artifactId>ItemCase</artifactId>
+  <version>1.0</version>
+  <name>ItemCase</name>
+  <description>TODO</description>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <bukkit.version>1.6.4-R2.0</bukkit.version>
+  </properties>
+  
+  <repositories>
+    <repository>
+      <id>bukkit-repo</id>
+      <url>http://repo.bukkit.org/content/groups/public/</url>
+    </repository>
+  </repositories>
+  
+  <dependencies>
+  	<dependency>
+  	  <groupId>org.bukkit</groupId>
+      <artifactId>bukkit</artifactId>
+      <version>${bukkit.version}</version>
+  	</dependency>
+  	
+  	<dependency>
+  	  <groupId>net.milkbowl.vault</groupId>
+      <artifactId>vault</artifactId>
+      <version>1.2.27</version>
+  	</dependency>
+  </dependencies>
+  
+  <build>
+    <defaultGoal>clean</defaultGoal>
+    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+    
+    <resources>
+        <resource>
+            <targetPath>.</targetPath>
+            <filtering>true</filtering>
+            <directory>${basedir}/src/main/resources</directory>
+            <includes>
+                <include>*.yml</include>
+            </includes>
+        </resource>
+        <resource>
+            <targetPath>./languages/</targetPath>
+            <filtering>true</filtering>
+            <directory>${basedir}/src/main/resources/languages/</directory>
+            <includes>
+                <include>*.yml</include>
+            </includes>
+        </resource>
+    </resources>
+    
+    <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+        </plugin>
+                      
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+          <configuration> 
+            <archive> 
+              <addMavenDescriptor>false</addMavenDescriptor> 
+            </archive> 
+          </configuration> 
+        </plugin>
+    </plugins>
+  </build>
+</project>

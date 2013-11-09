@@ -1,0 +1,15 @@
+#-------------------- EN-US --------------------#
+
+Console:
+    Enabled: ItemCase v%Version% enabled!
+    Disabled: ItemCase v%Version% disabled!
+    Update-Available: A newer version of ItemCase is available!
+    Itemcases-Created: Created saved itemcases.
+    Itemcases-Destroyed: Destroyed itemcases.
+    Errors:
+        Itemcase-Loader:
+            Load-Error: Failed to load a saved itemcase.
+            Parse-Error: Failed to parse saved location of itemcase.
+            Owner-Error: Failed to load saved owner of itemcase.
+            Item-Error: Failed to load saved item data of itemcase.
+    

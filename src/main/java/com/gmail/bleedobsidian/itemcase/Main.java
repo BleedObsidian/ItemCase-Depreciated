@@ -1,0 +1,126 @@
+/*
+ * Copyright (C) 2013 Jesse Prescott <BleedObsidian@gmail.com>
+ *
+ * ItemCase is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
+ */
+
+package com.gmail.bleedobsidian.itemcase;
+
+import java.io.IOException;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.gmail.bleedobsidian.itemcase.configuration.ConfigFile;
+import com.gmail.bleedobsidian.itemcase.listeners.BlockListener;
+import com.gmail.bleedobsidian.itemcase.listeners.PlayerListener;
+import com.gmail.bleedobsidian.itemcase.listeners.WorldListener;
+import com.gmail.bleedobsidian.itemcase.logger.PluginLogger;
+import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.managers.WorldManager;
+
+public class Main extends JavaPlugin {
+    private ConfigFile config;
+
+    private WorldManager worldManager;
+    private ItemcaseManager itemcaseManager;
+
+    @Override
+    public void onEnable() {
+        // Setup Logger
+        PluginLogger.setJavaPlugin(this);
+
+        // Create WorldManager
+        this.worldManager = new WorldManager(this);
+
+        // Load Configuration Files
+        try {
+            this.config = new ConfigFile("config.yml");
+            this.config.load(this);
+
+            // Load all world save files
+            this.worldManager.load(this);
+        } catch (IOException e) {
+            PluginLogger.error("Failed to load configuration file.", e);
+            return;
+        }
+
+        // Set language
+        String locale = this.config.getFileConfiguration().getString("Locale");
+
+        if (Language.exists(locale)) {
+            Language.setLangauge(locale + ".yml", this);
+        } else {
+            PluginLogger.warning("Failed to find locale: " + locale
+                    + ", using en-us instead.", true);
+            Language.setLangauge("en-us.yml", this);
+        }
+
+        // Check for update
+        if (this.config.getFileConfiguration().getBoolean(
+                "Updates.Check-For-Update")) {
+            if (Update.isNewVersionAvailable(this)) {
+                PluginLogger.warning(Language.getLanguageFile().getMessage(
+                        "Console.Update-Available"));
+            }
+        }
+
+        // Load Vault
+        if (!Vault.load(this)) {
+            PluginLogger.error("Failed to load Vault.");
+            return;
+        }
+
+        // Create ItemcaseManager
+        this.itemcaseManager = new ItemcaseManager(this, this.worldManager);
+
+        // Register Events
+        this.registerEvents();
+
+        // Load itemcases
+        this.itemcaseManager.loadItemcases();
+        PluginLogger.info(Language.getLanguageFile().getMessage(
+                "Console.Itemcases-Created"));
+
+        PluginLogger.info(Language.getLanguageFile().getMessage(
+                "Console.Enabled",
+                new String[] { "%Version%", this.getVersion() }));
+    }
+
+    @Override
+    public void onDisable() {
+        // Cancel ItemcaseWhatcher
+        this.getServer().getScheduler().cancelTasks(this);
+
+        this.itemcaseManager.unloadItemcases();
+        PluginLogger.info(Language.getLanguageFile().getMessage(
+                "Console.Itemcases-Destroyed"));
+
+        PluginLogger.info(Language.getLanguageFile().getMessage(
+                "Console.Disabled",
+                new String[] { "%Version%", this.getVersion() }));
+    }
+
+    public String getVersion() {
+        return this.getDescription().getVersion();
+    }
+
+    private void registerEvents() {
+        this.getServer().getPluginManager()
+                .registerEvents(new BlockListener(this.itemcaseManager), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new PlayerListener(this.itemcaseManager), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new WorldListener(this.itemcaseManager), this);
+    }
+}
