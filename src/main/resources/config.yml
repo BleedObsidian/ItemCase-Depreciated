@@ -6,6 +6,9 @@
 #Locale: en-us
 Locale: en-us
     
+#Update options
 Updates:
     # Notify if an update is available. (Recommended)
     Check-For-Update: true
+    # Use a custom API key for the ServerMods API. (Optional)
+    API-Key: your_api_key
