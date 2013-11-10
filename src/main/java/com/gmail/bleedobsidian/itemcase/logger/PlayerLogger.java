@@ -17,9 +17,18 @@
 
 package com.gmail.bleedobsidian.itemcase.logger;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+/**
+ * This API class allows you to easily send messages to a player.
+ * 
+ * @author Jesse Prescott
+ */
 public class PlayerLogger {
-	public static void message(Player player, String message) {
-	}
+    private static String prefix = ChatColor.BLUE + "[ItemCase]";
+
+    public static void message(Player player, String message) {
+        player.sendMessage(prefix + ": " + ChatColor.RESET + message);
+    }
 }
