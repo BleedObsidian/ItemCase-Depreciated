@@ -30,6 +30,8 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.Language;
+import com.gmail.bleedobsidian.itemcase.logger.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 
 public class PlayerListener implements Listener {
@@ -61,6 +63,9 @@ public class PlayerListener implements Listener {
 
                         this.itemcaseManager.createItemcase(itemStackCopy,
                                 location, player);
+
+                        PlayerLogger.message(player, Language.getLanguageFile()
+                                .getMessage("ItemCase.Created"));
                     }
                 }
             }

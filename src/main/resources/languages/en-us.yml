@@ -12,4 +12,6 @@ Console:
             Parse-Error: Failed to parse saved location of itemcase.
             Owner-Error: Failed to load saved owner of itemcase.
             Item-Error: Failed to load saved item data of itemcase.
-    
+ItemCase:
+    Created: "(GREEN)Itemcase created."
+    Destroyed: "(GREEN)Itemcase destroyed."
