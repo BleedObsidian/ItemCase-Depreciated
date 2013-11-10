@@ -4,8 +4,8 @@ Console:
     Enabled: ItemCase v%Version% enabled!
     Disabled: ItemCase v%Version% disabled!
     Update-Available: A newer version of ItemCase is available!
-    Itemcases-Created: Created saved itemcases.
-    Itemcases-Destroyed: Destroyed itemcases.
+    Itemcases-Created: Loaded and created saved itemcases.
+    Itemcases-Destroyed: Saved and destroyed itemcases.
     Errors:
         Itemcase-Loader:
             Load-Error: Failed to load a saved itemcase.
