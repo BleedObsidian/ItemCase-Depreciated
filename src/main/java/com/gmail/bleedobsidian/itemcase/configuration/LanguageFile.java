@@ -39,7 +39,7 @@ public class LanguageFile {
      * @param name
      */
     public LanguageFile(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     /**
@@ -48,8 +48,8 @@ public class LanguageFile {
      * @param plugin
      */
     public void load(JavaPlugin plugin) {
-	InputStream stream = plugin.getResource("languages/" + this.name);
-	this.fileConfiguration = YamlConfiguration.loadConfiguration(stream);
+        InputStream stream = plugin.getResource("languages/" + this.name);
+        this.fileConfiguration = YamlConfiguration.loadConfiguration(stream);
     }
 
     /**
@@ -62,8 +62,8 @@ public class LanguageFile {
      * @return Parsed Message
      */
     public String getMessage(String path, String[] variables) {
-	return this.parseMessage(this.fileConfiguration.getString(path),
-		variables);
+        return this.parseMessage(this.fileConfiguration.getString(path),
+                variables);
     }
 
     /**
@@ -74,8 +74,8 @@ public class LanguageFile {
      * @return Parsed Message
      */
     public String getMessage(String path) {
-	return this.parseMessage(this.fileConfiguration.getString(path),
-		new String[0]);
+        return this.parseMessage(this.fileConfiguration.getString(path),
+                new String[0]);
     }
 
     /**
@@ -88,52 +88,52 @@ public class LanguageFile {
      * @return Parsed Message
      */
     private String parseMessage(String message, String[] variables) {
-	message = message.replaceAll("\\[BLACK\\]", ChatColor.BLACK.toString());
+        message = message.replaceAll("\\(BLACK\\)", ChatColor.BLACK.toString());
 
-	message = message.replaceAll("\\[AQUA\\]", ChatColor.AQUA.toString());
-	message = message.replaceAll("\\[DARK_AQUA\\]",
-		ChatColor.DARK_AQUA.toString());
+        message = message.replaceAll("\\(AQUA\\)", ChatColor.AQUA.toString());
+        message = message.replaceAll("\\(DARK_AQUA\\)",
+                ChatColor.DARK_AQUA.toString());
 
-	message = message.replaceAll("\\[BLUE\\]", ChatColor.BLUE.toString());
-	message = message.replaceAll("\\[DARK_BLUE\\]",
-		ChatColor.DARK_BLUE.toString());
+        message = message.replaceAll("\\(BLUE\\)", ChatColor.BLUE.toString());
+        message = message.replaceAll("\\(DARK_BLUE\\)",
+                ChatColor.DARK_BLUE.toString());
 
-	message = message.replaceAll("\\[GREEN\\]", ChatColor.GREEN.toString());
-	message = message.replaceAll("\\[DARK_GREEN\\]",
-		ChatColor.DARK_GREEN.toString());
+        message = message.replaceAll("\\(GREEN\\)", ChatColor.GREEN.toString());
+        message = message.replaceAll("\\(DARK_GREEN\\)",
+                ChatColor.DARK_GREEN.toString());
 
-	message = message.replaceAll("\\[RED\\]", ChatColor.RED.toString());
-	message = message.replaceAll("\\[DARK_RED\\]",
-		ChatColor.DARK_RED.toString());
+        message = message.replaceAll("\\(RED\\)", ChatColor.RED.toString());
+        message = message.replaceAll("\\(DARK_RED\\)",
+                ChatColor.DARK_RED.toString());
 
-	message = message.replaceAll("\\[GRAY\\]", ChatColor.GRAY.toString());
-	message = message.replaceAll("\\[DARK_GRAY\\]",
-		ChatColor.DARK_GRAY.toString());
+        message = message.replaceAll("\\(GRAY\\)", ChatColor.GRAY.toString());
+        message = message.replaceAll("\\(DARK_GRAY\\)",
+                ChatColor.DARK_GRAY.toString());
 
-	message = message.replaceAll("\\[LIGHT_PURPLE\\]",
-		ChatColor.LIGHT_PURPLE.toString());
-	message = message.replaceAll("\\[DARK_PURPLE\\]",
-		ChatColor.DARK_PURPLE.toString());
+        message = message.replaceAll("\\(LIGHT_PURPLE\\)",
+                ChatColor.LIGHT_PURPLE.toString());
+        message = message.replaceAll("\\(DARK_PURPLE\\)",
+                ChatColor.DARK_PURPLE.toString());
 
-	message = message.replaceAll("\\[GOLD\\]", ChatColor.GOLD.toString());
+        message = message.replaceAll("\\(GOLD\\)", ChatColor.GOLD.toString());
 
-	message = message.replaceAll("\\[YELLOW\\]",
-		ChatColor.YELLOW.toString());
+        message = message.replaceAll("\\(YELLOW\\)",
+                ChatColor.YELLOW.toString());
 
-	message = message.replaceAll("\\[WHITE\\]", ChatColor.WHITE.toString());
+        message = message.replaceAll("\\(WHITE\\)", ChatColor.WHITE.toString());
 
-	message = message.replaceAll("\\[BOLD\\]", ChatColor.BOLD.toString());
-	message = message.replaceAll("\\[ITALIC\\]",
-		ChatColor.ITALIC.toString());
+        message = message.replaceAll("\\(BOLD\\)", ChatColor.BOLD.toString());
+        message = message.replaceAll("\\(ITALIC\\)",
+                ChatColor.ITALIC.toString());
 
-	message = message.replaceAll("\\[MAGIC\\]", ChatColor.MAGIC.toString());
+        message = message.replaceAll("\\(MAGIC\\)", ChatColor.MAGIC.toString());
 
-	message = message.replaceAll("\\[RESET\\]", ChatColor.RESET.toString());
+        message = message.replaceAll("\\(RESET\\)", ChatColor.RESET.toString());
 
-	for (int i = 0; i < variables.length; i += 2) {
-	    message = message.replaceAll(variables[i], variables[i + 1]);
-	}
+        for (int i = 0; i < variables.length; i += 2) {
+            message = message.replaceAll(variables[i], variables[i + 1]);
+        }
 
-	return message.trim();
+        return message.trim();
     }
 }
