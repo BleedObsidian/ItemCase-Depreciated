@@ -14,4 +14,6 @@ Console:
             Item-Error: Failed to load saved item data of itemcase.
 ItemCase:
     Created: "(GREEN)Itemcase created."
+    Created-Permission: "(RED) You don't have permission to create an itemcase."
     Destroyed: "(GREEN)Itemcase destroyed."
+    Destroyed-Permission: "(RED) You don't own this itemcase!"

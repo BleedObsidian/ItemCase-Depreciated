@@ -9,3 +9,10 @@ depend: [Vault]
 prefix: ItemCase
 
 main: com.gmail.bleedobsidian.itemcase.Main
+
+permissions:
+    itemcase.create:
+        description: Create and destroy itemcases
+        
+    itemcase.destroy.other:
+        description: Destroy an itemcase you don't own

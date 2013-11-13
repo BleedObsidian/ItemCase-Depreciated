@@ -56,16 +56,29 @@ public class PlayerListener implements Listener {
                     ItemStack itemStack = player.getItemInHand();
 
                     if (itemStack.getType() != Material.AIR) {
-                        Location location = block.getLocation();
+                        if (player.hasPermission("itemcase.create")) {
+                            Location location = block.getLocation();
 
-                        ItemStack itemStackCopy = itemStack.clone();
-                        itemStackCopy.setAmount(1);
+                            ItemStack itemStackCopy = itemStack.clone();
+                            itemStackCopy.setAmount(1);
 
-                        this.itemcaseManager.createItemcase(itemStackCopy,
-                                location, player);
+                            this.itemcaseManager.createItemcase(itemStackCopy,
+                                    location, player);
 
-                        PlayerLogger.message(player, Language.getLanguageFile()
-                                .getMessage("ItemCase.Created"));
+                            PlayerLogger.message(
+                                    player,
+                                    Language.getLanguageFile().getMessage(
+                                            "ItemCase.Created"));
+                        } else {
+                            event.setCancelled(true);
+
+                            PlayerLogger.message(
+                                    player,
+                                    Language.getLanguageFile().getMessage(
+                                            "ItemCase.Created-Permission"));
+
+                            return;
+                        }
                     }
                 }
             }

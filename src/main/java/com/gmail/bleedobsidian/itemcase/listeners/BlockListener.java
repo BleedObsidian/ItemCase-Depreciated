@@ -46,13 +46,26 @@ public class BlockListener implements Listener {
 
             for (Itemcase itemcase : itemcases) {
                 if (event.getBlock().equals(itemcase.getBlock())) {
-                    this.itemcaseManager.destroyItemcase(itemcase);
+                    if (itemcase.getOwnerName().equalsIgnoreCase(
+                            event.getPlayer().getName())
+                            || event.getPlayer().hasPermission(
+                                    "itemcase.destroy.other")) {
+                        this.itemcaseManager.destroyItemcase(itemcase);
 
-                    PlayerLogger
-                            .message(
-                                    event.getPlayer(),
-                                    Language.getLanguageFile().getMessage(
-                                            "ItemCase.Destroyed"));
+                        PlayerLogger.message(
+                                event.getPlayer(),
+                                Language.getLanguageFile().getMessage(
+                                        "ItemCase.Destroyed"));
+                    } else {
+                        event.setCancelled(true);
+
+                        PlayerLogger.message(
+                                event.getPlayer(),
+                                Language.getLanguageFile().getMessage(
+                                        "ItemCase.Destroyed-Permission"));
+
+                        return;
+                    }
                 }
             }
         }
