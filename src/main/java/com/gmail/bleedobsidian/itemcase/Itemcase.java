@@ -85,7 +85,7 @@ public class Itemcase {
         return this.itemStack;
     }
 
-    public String getPlayerName() {
+    public String getOwnerName() {
         return this.player;
     }
 }
