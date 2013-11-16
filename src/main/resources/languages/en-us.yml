@@ -12,8 +12,11 @@ Console:
             Parse-Error: Failed to parse saved location of itemcase.
             Owner-Error: Failed to load saved owner of itemcase.
             Item-Error: Failed to load saved item data of itemcase.
-ItemCase:
-    Created: "(GREEN)Itemcase created."
-    Created-Permission: "(RED) You don't have permission to create an itemcase."
-    Destroyed: "(GREEN)Itemcase destroyed."
-    Destroyed-Permission: "(RED) You don't own this itemcase!"
+    Command: You must be a player to use this command.
+Player:
+    ItemCase:
+        Created: "(GREEN)Itemcase created."
+        Created-Permission: "(RED) You don't have permission to create an itemcase."
+        Destroyed: "(GREEN)Itemcase destroyed."
+        Destroyed-Permission: "(RED) You don't own this itemcase!"
+    Syntax-Error: "(RED) Invalid command. (GOLD)/ic help (RED)for more."

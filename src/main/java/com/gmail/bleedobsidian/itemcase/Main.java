@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gmail.bleedobsidian.itemcase.command.ICCommandExecutor;
 import com.gmail.bleedobsidian.itemcase.configuration.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.listeners.BlockListener;
 import com.gmail.bleedobsidian.itemcase.listeners.PlayerListener;
@@ -117,6 +118,9 @@ public class Main extends JavaPlugin {
         this.itemcaseManager.loadItemcases();
         PluginLogger.info(Language.getLanguageFile().getMessage(
                 "Console.Itemcases-Created"));
+
+        // Register command
+        this.getCommand("ic").setExecutor(new ICCommandExecutor(this));
 
         PluginLogger.info(Language.getLanguageFile().getMessage(
                 "Console.Enabled",
