@@ -20,8 +20,8 @@ package com.gmail.bleedobsidian.itemcase.tasks;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class ItemcaseWatcher implements Runnable {
     private ItemcaseManager itemcaseManager;

@@ -22,8 +22,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class WorldListener implements Listener {
     private ItemcaseManager itemcaseManager;

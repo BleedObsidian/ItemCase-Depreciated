@@ -26,10 +26,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.Language;
-import com.gmail.bleedobsidian.itemcase.logger.PlayerLogger;
+import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class BlockListener implements Listener {
     private ItemcaseManager itemcaseManager;

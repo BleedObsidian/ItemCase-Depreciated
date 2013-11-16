@@ -19,7 +19,7 @@ package com.gmail.bleedobsidian.itemcase;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gmail.bleedobsidian.itemcase.configuration.LanguageFile;
+import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 
 public class Language {
     private static LanguageFile languageFile;

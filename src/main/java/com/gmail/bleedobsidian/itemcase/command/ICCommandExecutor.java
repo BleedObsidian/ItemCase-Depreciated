@@ -23,14 +23,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.Language;
-import com.gmail.bleedobsidian.itemcase.Main;
-import com.gmail.bleedobsidian.itemcase.logger.PlayerLogger;
-import com.gmail.bleedobsidian.itemcase.logger.PluginLogger;
+import com.gmail.bleedobsidian.itemcase.ItemCase;
+import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 
 public class ICCommandExecutor implements CommandExecutor {
-    private final Main plugin;
+    private final ItemCase plugin;
 
-    public ICCommandExecutor(Main plugin) {
+    public ICCommandExecutor(ItemCase plugin) {
         this.plugin = plugin;
     }
 

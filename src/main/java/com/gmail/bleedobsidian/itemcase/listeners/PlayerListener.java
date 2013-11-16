@@ -29,10 +29,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.Language;
-import com.gmail.bleedobsidian.itemcase.logger.PlayerLogger;
+import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class PlayerListener implements Listener {
     private ItemcaseManager itemcaseManager;

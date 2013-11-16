@@ -29,10 +29,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.Language;
-import com.gmail.bleedobsidian.itemcase.configuration.WorldFile;
-import com.gmail.bleedobsidian.itemcase.logger.PluginLogger;
+import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
+import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.tasks.ItemcaseWatcher;
 
 public class ItemcaseManager {

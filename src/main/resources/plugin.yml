@@ -8,7 +8,7 @@ database: false
 depend: [Vault]
 prefix: ItemCase
 
-main: com.gmail.bleedobsidian.itemcase.Main
+main: com.gmail.bleedobsidian.itemcase.ItemCase
 
 commands:
     ic:

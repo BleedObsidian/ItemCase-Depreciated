@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
 
-package com.gmail.bleedobsidian.itemcase.configuration;
+package com.gmail.bleedobsidian.itemcase.configurations;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +28,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gmail.bleedobsidian.itemcase.logger.PluginLogger;
+import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 
 /**
  * This class allows you to create/load a configuration file.

@@ -26,7 +26,7 @@ import java.util.Map;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gmail.bleedobsidian.itemcase.configuration.WorldFile;
+import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
 
 public class WorldManager {
     private List<World> worlds = new ArrayList<World>();
