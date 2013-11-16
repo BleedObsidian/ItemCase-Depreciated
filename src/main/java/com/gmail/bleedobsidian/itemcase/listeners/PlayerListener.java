@@ -68,14 +68,16 @@ public class PlayerListener implements Listener {
                             PlayerLogger.message(
                                     player,
                                     Language.getLanguageFile().getMessage(
-                                            "ItemCase.Created"));
+                                            "Player.ItemCase.Created"));
                         } else {
                             event.setCancelled(true);
 
-                            PlayerLogger.message(
-                                    player,
-                                    Language.getLanguageFile().getMessage(
-                                            "ItemCase.Created-Permission"));
+                            PlayerLogger
+                                    .message(
+                                            player,
+                                            Language.getLanguageFile()
+                                                    .getMessage(
+                                                            "Player.ItemCase.Created-Permission"));
 
                             return;
                         }

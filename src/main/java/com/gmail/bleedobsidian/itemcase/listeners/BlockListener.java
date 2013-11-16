@@ -55,14 +55,16 @@ public class BlockListener implements Listener {
                         PlayerLogger.message(
                                 event.getPlayer(),
                                 Language.getLanguageFile().getMessage(
-                                        "ItemCase.Destroyed"));
+                                        "Player.ItemCase.Destroyed"));
                     } else {
                         event.setCancelled(true);
 
-                        PlayerLogger.message(
-                                event.getPlayer(),
-                                Language.getLanguageFile().getMessage(
-                                        "ItemCase.Destroyed-Permission"));
+                        PlayerLogger
+                                .message(
+                                        event.getPlayer(),
+                                        Language.getLanguageFile()
+                                                .getMessage(
+                                                        "Player.ItemCase.Destroyed-Permission"));
 
                         return;
                     }
