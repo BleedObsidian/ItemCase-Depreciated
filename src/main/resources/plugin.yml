@@ -17,7 +17,7 @@ commands:
 
 permissions:
     itemcase.create:
-        description: Create and destroy itemcases
+        description: Create and destroy itemcases.
         
     itemcase.destroy.other:
-        description: Destroy an itemcase you don't own
+        description: Destroy an itemcase you don't own.
