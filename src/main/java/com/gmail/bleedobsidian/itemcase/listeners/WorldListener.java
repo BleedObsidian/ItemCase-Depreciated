@@ -22,19 +22,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class WorldListener implements Listener {
-    private ItemcaseManager itemcaseManager;
+    private ItemCase plugin;
 
-    public WorldListener(ItemcaseManager itemcaseManager) {
-        this.itemcaseManager = itemcaseManager;
+    public WorldListener(ItemCase plugin) {
+        this.plugin = plugin;
     }
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
-        for (Itemcase itemcase : this.itemcaseManager.getItemcases()) {
+        for (Itemcase itemcase : this.plugin.getItemcaseManager()
+                .getItemcases()) {
             if (event.getChunk().equals(itemcase.getBlock().getChunk())
                     && itemcase.isChunkLoaded() == false) {
                 itemcase.setChunkLoaded(true);
@@ -44,7 +45,8 @@ public class WorldListener implements Listener {
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
-        for (Itemcase itemcase : this.itemcaseManager.getItemcases()) {
+        for (Itemcase itemcase : this.plugin.getItemcaseManager()
+                .getItemcases()) {
             if (event.getChunk().equals(itemcase.getBlock().getChunk())
                     && itemcase.isChunkLoaded() == true) {
                 itemcase.setChunkLoaded(false);

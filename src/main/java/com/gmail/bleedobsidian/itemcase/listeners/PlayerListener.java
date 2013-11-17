@@ -29,16 +29,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
-import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class PlayerListener implements Listener {
-    private ItemcaseManager itemcaseManager;
+    private ItemCase plugin;
 
-    public PlayerListener(ItemcaseManager itemcaseManager) {
-        this.itemcaseManager = itemcaseManager;
+    public PlayerListener(ItemCase plugin) {
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -51,8 +51,8 @@ public class PlayerListener implements Listener {
 
             if (block.getType() == Material.STEP
                     || block.getType() == Material.WOOD_STEP) {
-                if (!this.itemcaseManager.isItemcaseCreatedAt(block
-                        .getLocation())) {
+                if (!this.plugin.getItemcaseManager().isItemcaseAt(
+                        block.getLocation())) {
                     ItemStack itemStack = player.getItemInHand();
 
                     if (itemStack.getType() != Material.AIR) {
@@ -62,8 +62,8 @@ public class PlayerListener implements Listener {
                             ItemStack itemStackCopy = itemStack.clone();
                             itemStackCopy.setAmount(1);
 
-                            this.itemcaseManager.createItemcase(itemStackCopy,
-                                    location, player);
+                            this.plugin.getItemcaseManager().createItemcase(
+                                    itemStackCopy, location, player);
 
                             PlayerLogger.message(
                                     player,
@@ -84,12 +84,23 @@ public class PlayerListener implements Listener {
                     }
                 }
             }
+        } else if (event.getAction() == Action.LEFT_CLICK_BLOCK
+                || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (this.plugin.getItemcaseManager().isItemcaseAt(
+                    event.getClickedBlock().getLocation())) {
+                this.plugin.getSelectionManager().call(
+                        player,
+                        this.plugin.getItemcaseManager().getItemcaseAt(
+                                event.getClickedBlock().getLocation()));
+                event.setCancelled(true);
+            }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
-        for (Itemcase itemcase : this.itemcaseManager.getItemcases()) {
+        for (Itemcase itemcase : this.plugin.getItemcaseManager()
+                .getItemcases()) {
             if (event.getItem().equals(itemcase.getItem())) {
                 event.setCancelled(true);
             }

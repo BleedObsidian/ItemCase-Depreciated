@@ -26,23 +26,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
-import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class BlockListener implements Listener {
-    private ItemcaseManager itemcaseManager;
+    private ItemCase plugin;
 
-    public BlockListener(ItemcaseManager itemcaseManager) {
-        this.itemcaseManager = itemcaseManager;
+    public BlockListener(ItemCase plugin) {
+        this.plugin = plugin;
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (!event.isCancelled()) {
-            List<Itemcase> itemcases = new ArrayList<Itemcase>(
-                    this.itemcaseManager.getItemcases());
+            List<Itemcase> itemcases = new ArrayList<Itemcase>(this.plugin
+                    .getItemcaseManager().getItemcases());
 
             for (Itemcase itemcase : itemcases) {
                 if (event.getBlock().equals(itemcase.getBlock())) {
@@ -50,7 +50,8 @@ public class BlockListener implements Listener {
                             event.getPlayer().getName())
                             || event.getPlayer().hasPermission(
                                     "itemcase.destroy.other")) {
-                        this.itemcaseManager.destroyItemcase(itemcase);
+                        this.plugin.getItemcaseManager().destroyItemcase(
+                                itemcase);
 
                         PlayerLogger.message(
                                 event.getPlayer(),
@@ -78,7 +79,8 @@ public class BlockListener implements Listener {
         if (!event.isCancelled()) {
             Block block = event.getBlockAgainst();
 
-            if (this.itemcaseManager.isItemcaseCreatedAt(block.getLocation())) {
+            if (this.plugin.getItemcaseManager().isItemcaseAt(
+                    block.getLocation())) {
                 event.setCancelled(true);
             }
         }

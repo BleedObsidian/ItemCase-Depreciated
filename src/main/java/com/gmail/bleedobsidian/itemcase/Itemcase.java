@@ -28,6 +28,7 @@ import com.gmail.bleedobsidian.itemcase.listeners.PlayerListener;
 import com.gmail.bleedobsidian.itemcase.listeners.WorldListener;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.managers.SelectionManager;
 import com.gmail.bleedobsidian.itemcase.managers.WorldManager;
 
 public class ItemCase extends JavaPlugin {
@@ -35,6 +36,7 @@ public class ItemCase extends JavaPlugin {
 
     private WorldManager worldManager;
     private ItemcaseManager itemcaseManager;
+    private SelectionManager selectionManager;
 
     @Override
     public void onEnable() {
@@ -111,6 +113,9 @@ public class ItemCase extends JavaPlugin {
         // Create ItemcaseManager
         this.itemcaseManager = new ItemcaseManager(this, this.worldManager);
 
+        // Create SelectionManager
+        this.selectionManager = new SelectionManager();
+
         // Register Events
         this.registerEvents();
 
@@ -141,16 +146,28 @@ public class ItemCase extends JavaPlugin {
                 new String[] { "%Version%", this.getVersion() }));
     }
 
+    private void registerEvents() {
+        this.getServer().getPluginManager()
+                .registerEvents(new BlockListener(this), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new PlayerListener(this), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new WorldListener(this), this);
+    }
+
     public String getVersion() {
         return this.getDescription().getVersion();
     }
 
-    private void registerEvents() {
-        this.getServer().getPluginManager()
-                .registerEvents(new BlockListener(this.itemcaseManager), this);
-        this.getServer().getPluginManager()
-                .registerEvents(new PlayerListener(this.itemcaseManager), this);
-        this.getServer().getPluginManager()
-                .registerEvents(new WorldListener(this.itemcaseManager), this);
+    public WorldManager getWorldManager() {
+        return this.worldManager;
+    }
+
+    public ItemcaseManager getItemcaseManager() {
+        return this.itemcaseManager;
+    }
+
+    public SelectionManager getSelectionManager() {
+        return this.selectionManager;
     }
 }
