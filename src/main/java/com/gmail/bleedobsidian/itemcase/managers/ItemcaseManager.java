@@ -33,6 +33,8 @@ import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.ShopType;
 import com.gmail.bleedobsidian.itemcase.tasks.ItemcaseWatcher;
 
 public class ItemcaseManager {
@@ -73,6 +75,9 @@ public class ItemcaseManager {
             saveFile.getConfigFile().getFileConfiguration()
                     .set(path + ".Item", itemStack.serialize());
 
+            saveFile.getConfigFile().getFileConfiguration()
+                    .set(path + ".Type", "SHOWCASE");
+
             saveFile.getConfigFile().save(plugin);
         }
     }
@@ -92,6 +97,42 @@ public class ItemcaseManager {
 
             saveFile.getConfigFile().getFileConfiguration().set(path, null);
             saveFile.getConfigFile().save(this.plugin);
+        }
+    }
+
+    public void saveItemcase(Itemcase itemcase) {
+        World world = itemcase.getBlock().getWorld();
+        WorldFile saveFile = this.worldManager.getWorldFile(world);
+
+        if (saveFile != null) {
+            String path = "Itemcases."
+                    + itemcase.getBlock().getLocation().getBlockX() + "/"
+                    + itemcase.getBlock().getLocation().getBlockY() + "/"
+                    + itemcase.getBlock().getLocation().getBlockZ();
+
+            if (itemcase.getType() == ItemcaseType.SHOWCASE) {
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Type", "SHOWCASE");
+
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Shop", null);
+            } else if (itemcase.getType() == ItemcaseType.SHOP) {
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Type", "SHOP");
+
+                if (itemcase.getShopType() == ShopType.BUY) {
+                    saveFile.getConfigFile().getFileConfiguration()
+                            .set(path + ".Shop.Type", "BUY");
+                } else if (itemcase.getShopType() == ShopType.SELL) {
+                    saveFile.getConfigFile().getFileConfiguration()
+                            .set(path + ".Shop.Type", "SELL");
+                }
+
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Shop.Price", itemcase.getShopPrice());
+            }
+
+            saveFile.getConfigFile().save(plugin);
         }
     }
 
@@ -194,6 +235,45 @@ public class ItemcaseManager {
 
                         Itemcase itemcase = new Itemcase(item, location,
                                 playerName);
+
+                        if (saveFile.getConfigFile().getFileConfiguration()
+                                .getString(path + ".Type").equals("SHOWCASE")) {
+                            itemcase.setType(ItemcaseType.SHOWCASE);
+                        } else if (saveFile.getConfigFile()
+                                .getFileConfiguration()
+                                .getString(path + ".Type").equals("SHOP")) {
+                            itemcase.setType(ItemcaseType.SHOP);
+
+                            if (saveFile.getConfigFile().getFileConfiguration()
+                                    .getString(path + ".Shop.Type")
+                                    .equals("BUY")) {
+                                itemcase.setShopType(ShopType.BUY);
+                            } else if (saveFile.getConfigFile()
+                                    .getFileConfiguration()
+                                    .getString(path + ".Shop.Type")
+                                    .equals("SELL")) {
+                                itemcase.setShopType(ShopType.SELL);
+                            } else {
+                                PluginLogger
+                                        .warning(
+                                                Language.getLanguageFile()
+                                                        .getMessage(
+                                                                "Console.Errors.Itemcase-Loader.Load-Error"),
+                                                true);
+                            }
+
+                            itemcase.setShopPrice(saveFile.getConfigFile()
+                                    .getFileConfiguration()
+                                    .getDouble(path + ".Shop.Price"));
+                        } else {
+                            PluginLogger
+                                    .warning(
+                                            Language.getLanguageFile()
+                                                    .getMessage(
+                                                            "Console.Errors.Itemcase-Loader.Load-Error"),
+                                            true);
+                        }
+
                         this.itemcases.add(itemcase);
                     }
                 }
@@ -214,7 +294,7 @@ public class ItemcaseManager {
         return this.itemcases;
     }
 
-    public boolean isItemcaseCreatedAt(Location blockLocation) {
+    public boolean isItemcaseAt(Location blockLocation) {
         for (Itemcase itemcase : this.itemcases) {
             if (itemcase.getBlock().getLocation().equals(blockLocation)) {
                 return true;
@@ -222,5 +302,15 @@ public class ItemcaseManager {
         }
 
         return false;
+    }
+
+    public Itemcase getItemcaseAt(Location blockLocation) {
+        for (Itemcase itemcase : this.itemcases) {
+            if (itemcase.getBlock().getLocation().equals(blockLocation)) {
+                return itemcase;
+            }
+        }
+
+        return null;
     }
 }

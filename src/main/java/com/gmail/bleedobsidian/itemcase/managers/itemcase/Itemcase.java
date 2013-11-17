@@ -29,6 +29,11 @@ public class Itemcase {
     private Location blockLocation;
     private String player;
 
+    private ItemcaseType type = ItemcaseType.SHOWCASE;
+
+    private ShopType shopType = null;
+    private double shopPrice = 0;
+
     private boolean isChunkLoaded;
 
     public Itemcase(ItemStack itemStack, Location blockLocation, String player) {
@@ -87,5 +92,29 @@ public class Itemcase {
 
     public String getOwnerName() {
         return this.player;
+    }
+
+    public void setType(ItemcaseType type) {
+        this.type = type;
+    }
+
+    public ItemcaseType getType() {
+        return this.type;
+    }
+
+    public void setShopType(ShopType type) {
+        this.shopType = type;
+    }
+
+    public ShopType getShopType() {
+        return this.shopType;
+    }
+
+    public void setShopPrice(double price) {
+        this.shopPrice = price;
+    }
+
+    public double getShopPrice() {
+        return this.shopPrice;
     }
 }
