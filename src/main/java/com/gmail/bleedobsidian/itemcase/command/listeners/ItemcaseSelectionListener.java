@@ -20,7 +20,7 @@ package com.gmail.bleedobsidian.itemcase.command.listeners;
 import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
-import com.gmail.bleedobsidian.itemcase.command.commands.Modify;
+import com.gmail.bleedobsidian.itemcase.command.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
@@ -38,6 +38,6 @@ public class ItemcaseSelectionListener implements SelectionListener {
     }
 
     public void selected(Player player, Itemcase itemcase) {
-        Modify.selected(plugin, player, args, itemcase, type);
+        ModifyCommand.selected(plugin, player, args, itemcase, type);
     }
 }

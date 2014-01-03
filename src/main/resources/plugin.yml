@@ -16,8 +16,20 @@ commands:
         aliases: [itemcase, case]
 
 permissions:
-    itemcase.create:
-        description: Create and destroy itemcases.
+    itemcase.create.showcase:
+        description: Create and destroy showcase itemcases.
+        
+    itemcase.create.shop.buy:
+        description: Create and destroy itemcases that sells items to players.
+        
+    itemcase.create.shop.sell:
+        description: Create and destroy itemcases that buy items from players.
+        
+    itemcase.buy:
+        description: Buy items from itemcases.
+        
+    itemcase.sell:
+        description: Sell items to itemcase.
         
     itemcase.destroy.other:
         description: Destroy an itemcase you don't own.

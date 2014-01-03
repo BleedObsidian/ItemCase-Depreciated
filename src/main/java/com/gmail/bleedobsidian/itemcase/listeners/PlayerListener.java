@@ -17,6 +17,9 @@
 
 package com.gmail.bleedobsidian.itemcase.listeners;
 
+import java.util.Arrays;
+import java.util.Set;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -25,6 +28,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -33,6 +37,13 @@ import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
+import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatClickEventType;
+import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatColor;
+import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatExtra;
+import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatFormat;
+import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
+import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
 
 public class PlayerListener implements Listener {
     private ItemCase plugin;
@@ -56,7 +67,7 @@ public class PlayerListener implements Listener {
                     ItemStack itemStack = player.getItemInHand();
 
                     if (itemStack.getType() != Material.AIR) {
-                        if (player.hasPermission("itemcase.create")) {
+                        if (player.hasPermission("itemcase.create.showcase")) {
                             Location location = block.getLocation();
 
                             ItemStack itemStackCopy = itemStack.clone();
@@ -88,13 +99,75 @@ public class PlayerListener implements Listener {
                 || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (this.plugin.getItemcaseManager().isItemcaseAt(
                     event.getClickedBlock().getLocation())) {
-                if (this.plugin.getSelectionManager().isPendingSelection(
-                        event.getPlayer())) {
+                if (this.plugin.getSelectionManager()
+                        .isPendingSelection(player)) {
                     this.plugin.getSelectionManager().call(
                             player,
                             this.plugin.getItemcaseManager().getItemcaseAt(
                                     event.getClickedBlock().getLocation()));
                     event.setCancelled(true);
+                } else {
+                    if (!((this.plugin
+                            .getItemcaseManager()
+                            .getItemcaseAt(
+                                    event.getClickedBlock().getLocation())
+                            .getOwnerName().equals(event.getPlayer().getName()) || player
+                            .hasPermission("itemcase.destroy.other")) && event
+                            .getAction() == Action.LEFT_CLICK_BLOCK)) {
+                        if (this.plugin
+                                .getItemcaseManager()
+                                .getItemcaseAt(
+                                        event.getClickedBlock().getLocation())
+                                .getType() == ItemcaseType.SHOP) {
+                            if (!this.plugin.getShopManager().isPendingOrder(
+                                    player)) {
+                                this.plugin
+                                        .getShopManager()
+                                        .addPendingOrder(
+                                                this.plugin
+                                                        .getItemcaseManager()
+                                                        .getItemcaseAt(
+                                                                event.getClickedBlock()
+                                                                        .getLocation()),
+                                                player);
+                            } else {
+                                PlayerLogger
+                                        .message(
+                                                player,
+                                                Language.getLanguageFile()
+                                                        .getMessage(
+                                                                "Player.ItemCase.Shop-Order-Processing1"));
+
+                                JSONChatMessage messageCancel = new JSONChatMessage();
+                                messageCancel.addText("[ItemCase]: ",
+                                        JSONChatColor.BLUE, null);
+
+                                JSONChatExtra extraCancel = new JSONChatExtra(
+                                        Language.getLanguageFile()
+                                                .getMessage(
+                                                        "Player.ItemCase.Cancel-Order-Button"),
+                                        JSONChatColor.GOLD, Arrays
+                                                .asList(JSONChatFormat.BOLD));
+                                extraCancel
+                                        .setHoverEvent(
+                                                JSONChatHoverEventType.SHOW_TEXT,
+                                                Language.getLanguageFile()
+                                                        .getMessage(
+                                                                "Player.ItemCase.Cancel-Order-Button-Hover"));
+                                extraCancel.setClickEvent(
+                                        JSONChatClickEventType.RUN_COMMAND,
+                                        "/ic order cancel");
+
+                                messageCancel.addExtra(extraCancel);
+                                messageCancel.sendToPlayer(player);
+
+                                PlayerLogger.message(
+                                        player,
+                                        Language.getLanguageFile().getMessage(
+                                                "Player.Order.Amount-End"));
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -107,6 +180,42 @@ public class PlayerListener implements Listener {
             if (event.getItem().equals(itemcase.getItem())) {
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+        if (this.plugin.getAmountManager().isPendingAmount(event.getPlayer())) {
+            event.setCancelled(true);
+            try {
+                int amount = Integer.parseInt(event.getMessage());
+                this.plugin.getAmountManager().setPendingAmount(
+                        event.getPlayer(), amount);
+            } catch (NumberFormatException e) {
+                this.plugin.getAmountManager().removePendingAmount(
+                        event.getPlayer());
+                PlayerLogger.message(
+                        event.getPlayer(),
+                        Language.getLanguageFile().getMessage(
+                                "Player.Order.Amount-Error1"));
+                PlayerLogger.message(
+                        event.getPlayer(),
+                        Language.getLanguageFile().getMessage(
+                                "Player.Order.Amount-Error2"));
+                PlayerLogger.message(event.getPlayer(), Language
+                        .getLanguageFile()
+                        .getMessage("Player.Order.Amount-End"));
+            }
+        } else if (this.plugin.getShopManager().isPendingOrder(
+                event.getPlayer())) {
+            event.setCancelled(true);
+        }
+
+        Set<Player> playersOrdering = plugin.getShopManager().getOrders()
+                .keySet();
+
+        for (Player player : playersOrdering) {
+            event.getRecipients().remove(player);
         }
     }
 }

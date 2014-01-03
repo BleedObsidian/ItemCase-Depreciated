@@ -27,18 +27,12 @@ import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 
-public class Modify {
+public class ModifyCommand {
     public static void modify(ItemCase plugin, Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
         if (args.length >= 2) {
             if (args[1].equalsIgnoreCase("shop")) {
-                if (!player.hasPermission("itemcase.ic.modify.shop")) {
-                    PlayerLogger.message(player,
-                            language.getMessage("Player.Permission"));
-                    return;
-                }
-
                 if (args.length != 4) {
                     PlayerLogger.message(player,
                             language.getMessage("Player.Modify.Shop.Usage"));
@@ -50,6 +44,20 @@ public class Modify {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Modify.Shop.Invalid-Type", new String[] {
                                     "%type%", args[2] }));
+                    return;
+                }
+
+                if (args[2].equalsIgnoreCase("buy")
+                        && !player.hasPermission("itemcase.create.shop.buy")) {
+                    PlayerLogger.message(player,
+                            language.getMessage("Player.Permission-Itemcase"));
+                    return;
+                }
+
+                if (args[2].equalsIgnoreCase("sell")
+                        && !player.hasPermission("itemcase.create.shop.sell")) {
+                    PlayerLogger.message(player,
+                            language.getMessage("Player.Permission-Itemcase"));
                     return;
                 }
 
@@ -66,9 +74,9 @@ public class Modify {
                 plugin.getSelectionManager().addPendingSelection(listener,
                         player);
             } else if (args[1].equalsIgnoreCase("showcase")) {
-                if (!player.hasPermission("itemcase.create")) {
+                if (!player.hasPermission("itemcase.create.showcase")) {
                     PlayerLogger.message(player,
-                            language.getMessage("Player.Permission"));
+                            language.getMessage("Player.Permission-Itemcase"));
                     return;
                 }
 

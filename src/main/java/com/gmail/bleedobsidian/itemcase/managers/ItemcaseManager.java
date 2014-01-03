@@ -77,6 +77,9 @@ public class ItemcaseManager {
             saveFile.getConfigFile().getFileConfiguration()
                     .set(path + ".Type", "SHOWCASE");
 
+            saveFile.getConfigFile().getFileConfiguration()
+                    .set(path + ".Infinite", true);
+
             saveFile.getConfigFile().save(plugin);
         }
     }
@@ -108,6 +111,9 @@ public class ItemcaseManager {
                     + itemcase.getBlock().getLocation().getBlockX() + "/"
                     + itemcase.getBlock().getLocation().getBlockY() + "/"
                     + itemcase.getBlock().getLocation().getBlockZ();
+
+            saveFile.getConfigFile().getFileConfiguration()
+                    .set(path + ".Infinite", true);
 
             if (itemcase.getType() == ItemcaseType.SHOWCASE) {
                 saveFile.getConfigFile().getFileConfiguration()
