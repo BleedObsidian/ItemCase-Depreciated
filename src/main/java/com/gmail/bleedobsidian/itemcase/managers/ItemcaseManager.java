@@ -34,7 +34,6 @@ import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.ShopType;
 import com.gmail.bleedobsidian.itemcase.tasks.ItemcaseWatcher;
 
 public class ItemcaseManager {
@@ -120,16 +119,26 @@ public class ItemcaseManager {
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Type", "SHOP");
 
-                if (itemcase.getShopType() == ShopType.BUY) {
+                if (itemcase.canBuy()) {
                     saveFile.getConfigFile().getFileConfiguration()
-                            .set(path + ".Shop.Type", "BUY");
-                } else if (itemcase.getShopType() == ShopType.SELL) {
+                            .set(path + ".Shop.Buy", "true");
+                } else {
                     saveFile.getConfigFile().getFileConfiguration()
-                            .set(path + ".Shop.Type", "SELL");
+                            .set(path + ".Shop.Buy", "false");
+                }
+
+                if (itemcase.canSell()) {
+                    saveFile.getConfigFile().getFileConfiguration()
+                            .set(path + ".Shop.Sell", "true");
+                } else {
+                    saveFile.getConfigFile().getFileConfiguration()
+                            .set(path + ".Shop.Sell", "false");
                 }
 
                 saveFile.getConfigFile().getFileConfiguration()
-                        .set(path + ".Shop.Price", itemcase.getShopPrice());
+                        .set(path + ".Shop.BuyPrice", itemcase.getBuyPrice());
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Shop.SellPrice", itemcase.getSellPrice());
             }
 
             saveFile.getConfigFile().save(plugin);
@@ -245,26 +254,20 @@ public class ItemcaseManager {
                             itemcase.setType(ItemcaseType.SHOP);
 
                             if (saveFile.getConfigFile().getFileConfiguration()
-                                    .getString(path + ".Shop.Type")
-                                    .equals("BUY")) {
-                                itemcase.setShopType(ShopType.BUY);
-                            } else if (saveFile.getConfigFile()
-                                    .getFileConfiguration()
-                                    .getString(path + ".Shop.Type")
-                                    .equals("SELL")) {
-                                itemcase.setShopType(ShopType.SELL);
-                            } else {
-                                PluginLogger
-                                        .warning(
-                                                Language.getLanguageFile()
-                                                        .getMessage(
-                                                                "Console.Errors.Itemcase-Loader.Load-Error"),
-                                                true);
+                                    .getBoolean(path + ".Shop.Buy")) {
+                                itemcase.setCanBuy(true);
+                                itemcase.setBuyPrice(saveFile.getConfigFile()
+                                        .getFileConfiguration()
+                                        .getDouble(path + ".Shop.BuyPrice"));
                             }
 
-                            itemcase.setShopPrice(saveFile.getConfigFile()
-                                    .getFileConfiguration()
-                                    .getDouble(path + ".Shop.Price"));
+                            if (saveFile.getConfigFile().getFileConfiguration()
+                                    .getBoolean(path + ".Shop.Sell")) {
+                                itemcase.setCanSell(true);
+                                itemcase.setSellPrice(saveFile.getConfigFile()
+                                        .getFileConfiguration()
+                                        .getDouble(path + ".Shop.SellPrice"));
+                            }
                         } else {
                             PluginLogger
                                     .warning(

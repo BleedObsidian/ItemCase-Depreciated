@@ -26,7 +26,6 @@ import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.ShopType;
 
 public class Modify {
     public static void modify(ItemCase plugin, Player player, String[] args) {
@@ -113,15 +112,18 @@ public class Modify {
                     language.getMessage("Player.Modify.Showcase.Successful"));
         } else if (type == ItemcaseType.SHOP) {
             if (args[2].equalsIgnoreCase("buy")) {
-                itemcase.setShopType(ShopType.BUY);
+                itemcase.setCanBuy(true);
+                itemcase.setBuyPrice(Double.parseDouble(args[3]));
+
+                PlayerLogger.message(player,
+                        language.getMessage("Player.Modify.Shop.Buy"));
             } else if (args[2].equalsIgnoreCase("sell")) {
-                itemcase.setShopType(ShopType.SELL);
+                itemcase.setCanSell(true);
+                itemcase.setSellPrice(Double.parseDouble(args[3]));
+
+                PlayerLogger.message(player,
+                        language.getMessage("Player.Modify.Shop.Sell"));
             }
-
-            itemcase.setShopPrice(Double.parseDouble(args[3]));
-
-            PlayerLogger.message(player,
-                    language.getMessage("Player.Modify.Shop.Successful"));
         }
 
         plugin.getItemcaseManager().saveItemcase(itemcase);

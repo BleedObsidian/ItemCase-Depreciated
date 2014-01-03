@@ -21,14 +21,15 @@ Player:
         Destroyed-Permission: "(RED) You don't own this itemcase!"
     Modify:
         Usage: "(RED)Usage: (GOLD)/ic modify [showcase/shop]"
-        Unknown-Type: "(RED)Types: GOLD)showcase(RED), (GOLD)shop(RED)."
+        Unknown-Type: "(RED)Types: (GOLD)showcase(RED), (GOLD)shop(RED)."
         Select: "(GREEN)Select an itemcase to modify."
         Cancel: "(GREEN)To cancel: (GOLD)/ic cancel"
         Shop:
             Usage: "(RED)Usage: (GOLD)/ic modify shop [buy/sell] [price]"
             Invalid-Type: "(RED)Invalid type (GOLD)%type%(RED). (GOLD)BUY (RED)or (GOLD)SELL(RED)."
             Invalid-Price: "(RED)Not a valid price."
-            Successful: "(GREEN)Changed selected itemcase to a shop."
+            Buy: "(GREEN)Selected itemcase can now buy items from players."
+            Sell: "(GREEN)Selected itemcase can now sell items to players."
         Showcase:
             Usage: "(RED)Usage: (GOLD)/ic modify showcase"
             Successful: "(GREEN)Changed selected itemcase to a showcase."

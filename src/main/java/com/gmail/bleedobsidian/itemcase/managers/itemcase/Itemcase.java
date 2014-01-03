@@ -30,9 +30,11 @@ public class Itemcase {
     private String player;
 
     private ItemcaseType type = ItemcaseType.SHOWCASE;
+    private boolean canBuy;
+    private boolean canSell;
 
-    private ShopType shopType = null;
-    private double shopPrice = 0;
+    private double buyPrice = 0;
+    private double sellPrice = 0;
 
     private boolean isChunkLoaded;
 
@@ -102,19 +104,35 @@ public class Itemcase {
         return this.type;
     }
 
-    public void setShopType(ShopType type) {
-        this.shopType = type;
+    public boolean canBuy() {
+        return canBuy;
     }
 
-    public ShopType getShopType() {
-        return this.shopType;
+    public void setCanBuy(boolean canBuy) {
+        this.canBuy = canBuy;
     }
 
-    public void setShopPrice(double price) {
-        this.shopPrice = price;
+    public boolean canSell() {
+        return canSell;
     }
 
-    public double getShopPrice() {
-        return this.shopPrice;
+    public void setCanSell(boolean canSell) {
+        this.canSell = canSell;
+    }
+
+    public double getBuyPrice() {
+        return buyPrice;
+    }
+
+    public void setBuyPrice(double buyPrice) {
+        this.buyPrice = buyPrice;
+    }
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 }
