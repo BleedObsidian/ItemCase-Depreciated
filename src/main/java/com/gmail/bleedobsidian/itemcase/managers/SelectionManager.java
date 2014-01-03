@@ -42,4 +42,8 @@ public class SelectionManager {
     public void removePendingSelection(SelectionListener listener, Player player) {
         this.pending.remove(player);
     }
+
+    public boolean isPendingSelection(Player player) {
+        return this.pending.get(player) == null ? false : true;
+    }
 }

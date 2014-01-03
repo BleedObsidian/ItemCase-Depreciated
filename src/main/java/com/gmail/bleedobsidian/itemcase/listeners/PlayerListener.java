@@ -88,11 +88,14 @@ public class PlayerListener implements Listener {
                 || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (this.plugin.getItemcaseManager().isItemcaseAt(
                     event.getClickedBlock().getLocation())) {
-                this.plugin.getSelectionManager().call(
-                        player,
-                        this.plugin.getItemcaseManager().getItemcaseAt(
-                                event.getClickedBlock().getLocation()));
-                event.setCancelled(true);
+                if (this.plugin.getSelectionManager().isPendingSelection(
+                        event.getPlayer())) {
+                    this.plugin.getSelectionManager().call(
+                            player,
+                            this.plugin.getItemcaseManager().getItemcaseAt(
+                                    event.getClickedBlock().getLocation()));
+                    event.setCancelled(true);
+                }
             }
         }
     }
