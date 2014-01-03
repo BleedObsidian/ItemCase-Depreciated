@@ -121,18 +121,18 @@ public class ItemcaseManager {
 
                 if (itemcase.canBuy()) {
                     saveFile.getConfigFile().getFileConfiguration()
-                            .set(path + ".Shop.Buy", "true");
+                            .set(path + ".Shop.Buy", true);
                 } else {
                     saveFile.getConfigFile().getFileConfiguration()
-                            .set(path + ".Shop.Buy", "false");
+                            .set(path + ".Shop.Buy", false);
                 }
 
                 if (itemcase.canSell()) {
                     saveFile.getConfigFile().getFileConfiguration()
-                            .set(path + ".Shop.Sell", "true");
+                            .set(path + ".Shop.Sell", true);
                 } else {
                     saveFile.getConfigFile().getFileConfiguration()
-                            .set(path + ".Shop.Sell", "false");
+                            .set(path + ".Shop.Sell", false);
                 }
 
                 saveFile.getConfigFile().getFileConfiguration()
