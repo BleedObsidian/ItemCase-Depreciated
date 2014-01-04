@@ -185,37 +185,41 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        if (this.plugin.getAmountManager().isPendingAmount(event.getPlayer())) {
-            event.setCancelled(true);
-            try {
-                int amount = Integer.parseInt(event.getMessage());
-                this.plugin.getAmountManager().setPendingAmount(
-                        event.getPlayer(), amount);
-            } catch (NumberFormatException e) {
-                this.plugin.getAmountManager().removePendingAmount(
-                        event.getPlayer());
-                PlayerLogger.message(
-                        event.getPlayer(),
-                        Language.getLanguageFile().getMessage(
-                                "Player.Order.Amount-Error1"));
-                PlayerLogger.message(
-                        event.getPlayer(),
-                        Language.getLanguageFile().getMessage(
-                                "Player.Order.Amount-Error2"));
-                PlayerLogger.message(event.getPlayer(), Language
-                        .getLanguageFile()
-                        .getMessage("Player.Order.Amount-End"));
+        if (event.getPlayer() != null) {
+            if (this.plugin.getAmountManager().isPendingAmount(
+                    event.getPlayer())) {
+                event.setCancelled(true);
+                try {
+                    int amount = Integer.parseInt(event.getMessage());
+                    this.plugin.getAmountManager().setPendingAmount(
+                            event.getPlayer(), amount);
+                } catch (NumberFormatException e) {
+                    this.plugin.getAmountManager().removePendingAmount(
+                            event.getPlayer());
+                    PlayerLogger.message(
+                            event.getPlayer(),
+                            Language.getLanguageFile().getMessage(
+                                    "Player.Order.Amount-Error1"));
+                    PlayerLogger.message(
+                            event.getPlayer(),
+                            Language.getLanguageFile().getMessage(
+                                    "Player.Order.Amount-Error2"));
+                    PlayerLogger.message(
+                            event.getPlayer(),
+                            Language.getLanguageFile().getMessage(
+                                    "Player.Order.Amount-End"));
+                }
+            } else if (this.plugin.getShopManager().isPendingOrder(
+                    event.getPlayer())) {
+                event.setCancelled(true);
             }
-        } else if (this.plugin.getShopManager().isPendingOrder(
-                event.getPlayer())) {
-            event.setCancelled(true);
-        }
 
-        Set<Player> playersOrdering = plugin.getShopManager().getOrders()
-                .keySet();
+            Set<Player> playersOrdering = plugin.getShopManager().getOrders()
+                    .keySet();
 
-        for (Player player : playersOrdering) {
-            event.getRecipients().remove(player);
+            for (Player player : playersOrdering) {
+                event.getRecipients().remove(player);
+            }
         }
     }
 }
