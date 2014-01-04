@@ -58,7 +58,9 @@ public class OrderCommand {
                     language.getMessage("Player.Order.Canceled"));
             plugin.getShopManager().removePendingOrder(player);
             return;
-        } else if (args[1].equalsIgnoreCase("buy")) {
+        } else if (args[1].equalsIgnoreCase("buy")
+                && plugin.getShopManager().getOrder(player).getItemcase()
+                        .canBuy()) {
             if (!player.hasPermission("itemcase.buy")) {
                 PlayerLogger.message(player,
                         language.getMessage("Player.Permission-Itemcase"));
@@ -110,14 +112,16 @@ public class OrderCommand {
                                                     .currencyNameSingular() }));
                 }
 
-                PlayerLogger.message(player, language.getMessage(
-                        "Player.Order.Bought-Items",
-                        new String[] {
-                                "%Amount%",
-                                ""
-                                        + plugin.getShopManager()
-                                                .getOrder(player).getAmount(),
-                                "%Item%", items.getType().name() }));
+                PlayerLogger
+                        .message(player, language.getMessage(
+                                "Player.Order.Bought-Items",
+                                new String[] {
+                                        "%Amount%",
+                                        ""
+                                                + plugin.getShopManager()
+                                                        .getOrder(player)
+                                                        .getAmount(), "%Item%",
+                                        items.getItemMeta().getDisplayName() }));
 
                 PlayerLogger.message(player, Language.getLanguageFile()
                         .getMessage("Player.Order.Amount-End"));
@@ -129,7 +133,9 @@ public class OrderCommand {
                 plugin.getShopManager().removePendingOrder(player);
                 return;
             }
-        } else if (args[1].equalsIgnoreCase("sell")) {
+        } else if (args[1].equalsIgnoreCase("sell")
+                && plugin.getShopManager().getOrder(player).getItemcase()
+                        .canSell()) {
             if (!player.hasPermission("itemcase.sell")) {
                 PlayerLogger.message(player,
                         language.getMessage("Player.Permission-Itemcase"));
@@ -183,14 +189,16 @@ public class OrderCommand {
                                                     .currencyNameSingular() }));
                 }
 
-                PlayerLogger.message(player, language.getMessage(
-                        "Player.Order.Sold-Items",
-                        new String[] {
-                                "%Amount%",
-                                ""
-                                        + plugin.getShopManager()
-                                                .getOrder(player).getAmount(),
-                                "%Item%", items.getType().name() }));
+                PlayerLogger
+                        .message(player, language.getMessage(
+                                "Player.Order.Sold-Items",
+                                new String[] {
+                                        "%Amount%",
+                                        ""
+                                                + plugin.getShopManager()
+                                                        .getOrder(player)
+                                                        .getAmount(), "%Item%",
+                                        items.getItemMeta().getDisplayName() }));
 
                 PlayerLogger.message(player, Language.getLanguageFile()
                         .getMessage("Player.Order.Amount-End"));
