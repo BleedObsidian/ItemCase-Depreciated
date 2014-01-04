@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.Vault;
@@ -36,13 +35,7 @@ import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
 
 public class ShopManager {
-    private JavaPlugin plugin;
-
     private HashMap<Player, Order> orders = new HashMap<Player, Order>();
-
-    public ShopManager(JavaPlugin plugin) {
-        this.plugin = plugin;
-    }
 
     public void addPendingOrder(Itemcase itemcase, Player player) {
         PlayerLogger.message(
