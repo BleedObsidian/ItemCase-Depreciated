@@ -58,8 +58,10 @@ public class ShopManager {
                 player,
                 Language.getLanguageFile().getMessage(
                         "Player.ItemCase.Shop-Message2",
-                        new String[] { "%Item%",
-                                itemcase.getItemStack().getType().name() }));
+                        new String[] {
+                                "%Item%",
+                                itemcase.getItemStack().getItemMeta()
+                                        .getDisplayName() }));
 
         if (itemcase.canBuy()) {
             if (itemcase.getBuyPrice() >= 1) {
@@ -119,97 +121,97 @@ public class ShopManager {
                                         Vault.getEconomy()
                                                 .currencyNameSingular() }));
             }
+        }
 
-            JSONChatMessage message = new JSONChatMessage();
-            message.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-            message.addText(
+        JSONChatMessage message = new JSONChatMessage();
+        message.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
+        message.addText(
+                Language.getLanguageFile().getMessage(
+                        "Player.ItemCase.Shop-Message5")
+                        + " ", JSONChatColor.GREEN, null);
+
+        JSONChatExtra extra = new JSONChatExtra(Language.getLanguageFile()
+                .getMessage("Player.ItemCase.Shop-Amount-Button"),
+                JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
+        extra.setHoverEvent(
+                JSONChatHoverEventType.SHOW_TEXT,
+                Language.getLanguageFile().getMessage(
+                        "Player.ItemCase.Shop-Amount-Button-Hover"));
+        extra.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
+                "/ic order amount");
+        message.addExtra(extra);
+
+        message.sendToPlayer(player);
+
+        if (itemcase.canBuy()) {
+            JSONChatMessage messageBuy = new JSONChatMessage();
+            messageBuy.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
+            messageBuy.addText(
                     Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Message5")
+                            "Player.ItemCase.Shop-Message6")
                             + " ", JSONChatColor.GREEN, null);
 
-            JSONChatExtra extra = new JSONChatExtra(Language.getLanguageFile()
-                    .getMessage("Player.ItemCase.Shop-Amount-Button"),
-                    JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-            extra.setHoverEvent(
-                    JSONChatHoverEventType.SHOW_TEXT,
-                    Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Amount-Button-Hover"));
-            extra.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                    "/ic order amount");
-            message.addExtra(extra);
-
-            message.sendToPlayer(player);
-
-            if (itemcase.canBuy()) {
-                JSONChatMessage messageBuy = new JSONChatMessage();
-                messageBuy.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-                messageBuy.addText(
-                        Language.getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Message6")
-                                + " ", JSONChatColor.GREEN, null);
-
-                JSONChatExtra extraBuy = new JSONChatExtra(Language
-                        .getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Buy-Button"),
-                        JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-                extraBuy.setHoverEvent(
-                        JSONChatHoverEventType.SHOW_TEXT,
-                        Language.getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Buy-Button-Hover"));
-                extraBuy.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                        "/ic order buy");
-                messageBuy.addExtra(extraBuy);
-
-                messageBuy.sendToPlayer(player);
-            }
-
-            if (itemcase.canSell()) {
-                JSONChatMessage messageSell = new JSONChatMessage();
-                messageSell.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-                messageSell.addText(
-                        Language.getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Message7")
-                                + " ", JSONChatColor.GREEN, null);
-
-                JSONChatExtra extraSell = new JSONChatExtra(Language
-                        .getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Sell-Button"),
-                        JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-                extraSell.setHoverEvent(
-                        JSONChatHoverEventType.SHOW_TEXT,
-                        Language.getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Sell-Button-Hover"));
-                extraSell.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                        "/ic order sell");
-                messageSell.addExtra(extraSell);
-
-                messageSell.sendToPlayer(player);
-            }
-
-            JSONChatMessage messageCancel = new JSONChatMessage();
-            messageCancel.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-
-            JSONChatExtra extraCancel = new JSONChatExtra(Language
+            JSONChatExtra extraBuy = new JSONChatExtra(Language
                     .getLanguageFile().getMessage(
-                            "Player.ItemCase.Cancel-Order-Button"),
+                            "Player.ItemCase.Shop-Buy-Button"),
                     JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-            extraCancel.setHoverEvent(
+            extraBuy.setHoverEvent(
                     JSONChatHoverEventType.SHOW_TEXT,
                     Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Cancel-Order-Button-Hover"));
-            extraCancel.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                    "/ic order cancel");
+                            "Player.ItemCase.Shop-Buy-Button-Hover"));
+            extraBuy.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
+                    "/ic order buy");
+            messageBuy.addExtra(extraBuy);
 
-            messageCancel.addExtra(extraCancel);
-            messageCancel.sendToPlayer(player);
-
-            PlayerLogger.message(
-                    player,
-                    Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Message8"));
-
-            this.orders.put(player, new Order(itemcase));
+            messageBuy.sendToPlayer(player);
         }
+
+        if (itemcase.canSell()) {
+            JSONChatMessage messageSell = new JSONChatMessage();
+            messageSell.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
+            messageSell.addText(
+                    Language.getLanguageFile().getMessage(
+                            "Player.ItemCase.Shop-Message7")
+                            + " ", JSONChatColor.GREEN, null);
+
+            JSONChatExtra extraSell = new JSONChatExtra(Language
+                    .getLanguageFile().getMessage(
+                            "Player.ItemCase.Shop-Sell-Button"),
+                    JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
+            extraSell.setHoverEvent(
+                    JSONChatHoverEventType.SHOW_TEXT,
+                    Language.getLanguageFile().getMessage(
+                            "Player.ItemCase.Shop-Sell-Button-Hover"));
+            extraSell.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
+                    "/ic order sell");
+            messageSell.addExtra(extraSell);
+
+            messageSell.sendToPlayer(player);
+        }
+
+        JSONChatMessage messageCancel = new JSONChatMessage();
+        messageCancel.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
+
+        JSONChatExtra extraCancel = new JSONChatExtra(Language
+                .getLanguageFile().getMessage(
+                        "Player.ItemCase.Cancel-Order-Button"),
+                JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
+        extraCancel.setHoverEvent(
+                JSONChatHoverEventType.SHOW_TEXT,
+                Language.getLanguageFile().getMessage(
+                        "Player.ItemCase.Cancel-Order-Button-Hover"));
+        extraCancel.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
+                "/ic order cancel");
+
+        messageCancel.addExtra(extraCancel);
+        messageCancel.sendToPlayer(player);
+
+        PlayerLogger.message(
+                player,
+                Language.getLanguageFile().getMessage(
+                        "Player.ItemCase.Shop-Message8"));
+
+        this.orders.put(player, new Order(itemcase));
     }
 
     public void removePendingOrder(Player player) {
