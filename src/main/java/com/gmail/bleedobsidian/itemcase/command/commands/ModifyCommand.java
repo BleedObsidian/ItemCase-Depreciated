@@ -60,9 +60,6 @@ public class ModifyCommand {
                     return;
                 }
 
-                PlayerLogger.message(player,
-                        language.getMessage("Player.Permission-Itemcase"));
-
                 try {
                     Double.parseDouble(args[3]);
                 } catch (NumberFormatException e) {
@@ -88,9 +85,6 @@ public class ModifyCommand {
                             language.getMessage("Player.Permission-Itemcase"));
                     return;
                 }
-
-                PlayerLogger.message(player,
-                        language.getMessage("Player.Permission-Itemcase"));
 
                 try {
                     Double.parseDouble(args[3]);

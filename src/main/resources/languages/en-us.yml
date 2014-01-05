@@ -81,6 +81,9 @@ Player:
         Deposit: "(GREEN)Added (GOLD)%Amount% (GREEN)%Currency% to your account."
         Canceled: "(GREEN)Order canceled."
         No-Stock: "(RED)Sorry, this itemcase does not have enough stock."
+        Owner-Balance: "(RED)Sorry, this itemcase owner does not have enough money."
+        Owner-Buy: "(GREEN)Player (GOLD)%Player% (GREEN)bought (GOLD)%Amount% %Item%(GREEN)."
+        Owner-Sell: "(GREEN)Player (GOLD)%Player% (GREEN)sold (GOLD)%Amount% %Item%(GREEN)."
     Storage:
         Infinite: "(RED)This itemcase is infinite."
         Not-Shop: "(RED)Itemcase must be a shop."
