@@ -13,6 +13,13 @@ Console:
             Owner-Error: Failed to load saved owner of itemcase.
             Item-Error: Failed to load saved item data of itemcase.
     Command: You must be a player to use this command.
+    Vault:
+        Successful: Loaded Vault.
+        Unsuccessful: Failed to load Vault. (You need Vault and an Economy plugin installed too.)
+    Metrics:
+        Successful: Started Metrics.
+        Unsuccessful: Failed to start Metrics.
+        Disabled: Plugin Metrics Disabled!
 Player:
     ItemCase:
         Created: "(GREEN)Itemcase created."

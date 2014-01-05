@@ -34,9 +34,12 @@ import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.SelectionManager;
 import com.gmail.bleedobsidian.itemcase.managers.ShopManager;
 import com.gmail.bleedobsidian.itemcase.managers.WorldManager;
+import com.gmail.bleedobsidian.itemcase.util.metrics.Graphs;
+import com.gmail.bleedobsidian.itemcase.util.metrics.Metrics;
 
 public class ItemCase extends JavaPlugin {
     private ConfigFile config;
+    private Metrics metrics;
 
     private WorldManager worldManager;
     private ItemcaseManager itemcaseManager;
@@ -112,9 +115,40 @@ public class ItemCase extends JavaPlugin {
         }
 
         // Load Vault
-        if (!Vault.load(this)) {
-            PluginLogger.error("Failed to load Vault.");
-            return;
+        if (Vault.load(this)) {
+            PluginLogger.info(Language.getLanguageFile().getMessage(
+                    "Console.Vault.Successful"));
+        } else {
+            PluginLogger.warning(
+                    Language.getLanguageFile().getMessage(
+                            "Console.Vault.Unsuccessful"), true);
+        }
+
+        // Metrics
+        try {
+            this.metrics = new Metrics(this);
+
+            if (!metrics.isOptOut()) {
+                Graphs graphs = new Graphs(metrics, this.config);
+
+                graphs.createGraphs();
+
+                if (metrics.start()) {
+                    PluginLogger.info(Language.getLanguageFile().getMessage(
+                            "Console.Metrics.Successful"));
+                } else {
+                    PluginLogger.warning(
+                            Language.getLanguageFile().getMessage(
+                                    "Console.Metrics.Unsuccessful"), true);
+                }
+            } else {
+                PluginLogger.warning(Language.getLanguageFile().getMessage(
+                        "Console.Metrics.Disabled"));
+            }
+        } catch (IOException e) {
+            PluginLogger.warning(
+                    Language.getLanguageFile().getMessage(
+                            "Console.Metrics.Unsuccessful"), true);
         }
 
         // Create ItemcaseManager
