@@ -50,6 +50,7 @@ Player:
         Unknown-Type: "(RED)Types: (GOLD)showcase(RED), (GOLD)shop(RED)."
         Select: "(GREEN)Select an itemcase to modify."
         Cancel: "(GREEN)To cancel: (GOLD)/ic cancel"
+        Modify-Permission: "(RED)You don't own this itemcase!"
         Shop:
             Usage: "(RED)Usage: (GOLD)/ic modify shop [buy/sell] [price]"
             Invalid-Type: "(RED)Invalid type (GOLD)%type%(RED). (GOLD)BUY (RED)or (GOLD)SELL(RED)."
@@ -85,6 +86,7 @@ Player:
         Not-Shop: "(RED)Itemcase must be a shop."
         Select: "(GREEN)Select an itemcase to view the storage of."
         Cancel: "(GREEN)To cancel: (GOLD)/ic cancel"
+        Storage-Permission: "(RED)You don't own this itemcase!"
     Cancel:
         Canceled: "(GREEN)Itemcase selection canceled."
         Error: "(RED)You are not currently selecting an itemcase."

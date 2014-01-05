@@ -56,6 +56,13 @@ public class StorageCommand {
             return;
         }
 
+        if (!(itemcase.getOwnerName().equals(player.getName()) || player
+                .hasPermission("itemcase.storage.other"))) {
+            PlayerLogger.message(player,
+                    language.getMessage("Player.Storage.Storage-Permission"));
+            return;
+        }
+
         if (itemcase.isInfinite()) {
             PlayerLogger.message(player,
                     language.getMessage("Player.Storage.Infinite"));

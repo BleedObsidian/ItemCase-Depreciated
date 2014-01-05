@@ -34,5 +34,11 @@ permissions:
     itemcase.sell:
         description: Sell items to itemcase.
         
+    itemcase.modify.other:
+        description: Modify an itemcase you don't own.
+        
     itemcase.destroy.other:
         description: Destroy an itemcase you don't own.
+        
+    itemcase.storage.other:
+        description: Access & modify storage of an itemcase you don't own.

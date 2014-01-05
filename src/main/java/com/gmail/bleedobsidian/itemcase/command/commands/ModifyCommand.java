@@ -174,6 +174,13 @@ public class ModifyCommand {
             Itemcase itemcase, ItemcaseType type) {
         LanguageFile language = Language.getLanguageFile();
 
+        if (!(itemcase.getOwnerName().equals(player.getName()) || player
+                .hasPermission("itemcase.modify"))) {
+            PlayerLogger.message(player,
+                    language.getMessage("Player.Modify.Modify-Permission"));
+            return;
+        }
+
         itemcase.setType(type);
 
         if (type == ItemcaseType.SHOWCASE) {
@@ -201,6 +208,13 @@ public class ModifyCommand {
     public static void selectedInfinite(ItemCase plugin, Player player,
             String[] args, Itemcase itemcase) {
         LanguageFile language = Language.getLanguageFile();
+
+        if (!(itemcase.getOwnerName().equals(player.getName()) || player
+                .hasPermission("itemcase.modify"))) {
+            PlayerLogger.message(player,
+                    language.getMessage("Player.Modify.Modify-Permission"));
+            return;
+        }
 
         boolean value = Boolean.parseBoolean(args[2]);
         itemcase.setInfinite(value);
