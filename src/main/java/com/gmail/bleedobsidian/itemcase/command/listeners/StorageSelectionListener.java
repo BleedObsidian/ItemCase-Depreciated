@@ -15,35 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
 
-package com.gmail.bleedobsidian.itemcase.managers;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.gmail.bleedobsidian.itemcase.command.listeners;
 
 import org.bukkit.entity.Player;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
+import com.gmail.bleedobsidian.itemcase.command.commands.StorageCommand;
 import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
-public class SelectionManager {
-    private Map<Player, SelectionListener> pending = new HashMap<Player, SelectionListener>();
+public class StorageSelectionListener implements SelectionListener {
+    private final ItemCase plugin;
 
-    public void call(Player player, Itemcase itemcase) {
-        if (pending.containsKey(player)) {
-            pending.get(player).selected(player, itemcase);
-            pending.remove(player);
-        }
+    public StorageSelectionListener(ItemCase plugin) {
+        this.plugin = plugin;
     }
 
-    public void addPendingSelection(SelectionListener listener, Player player) {
-        this.pending.put(player, listener);
-    }
-
-    public void removePendingSelection(Player player) {
-        this.pending.remove(player);
-    }
-
-    public boolean isPendingSelection(Player player) {
-        return this.pending.get(player) == null ? false : true;
+    public void selected(Player player, Itemcase itemcase) {
+        StorageCommand.selected(plugin, player, itemcase);
     }
 }

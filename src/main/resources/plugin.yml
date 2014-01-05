@@ -25,6 +25,9 @@ permissions:
     itemcase.create.shop.sell:
         description: Create and destroy itemcases that buy items from players.
         
+    itemcase.create.shop.infinite:
+        description: Create and destroy itemcases that are infinite.
+        
     itemcase.buy:
         description: Buy items from itemcases.
         

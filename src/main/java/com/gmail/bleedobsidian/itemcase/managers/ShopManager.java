@@ -47,14 +47,28 @@ public class ShopManager {
                 player,
                 Language.getLanguageFile().getMessage(
                         "Player.ItemCase.Shop-Message1"));
-        PlayerLogger.message(
-                player,
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Shop-Message2",
-                        new String[] {
-                                "%Item%",
-                                itemcase.getItemStack().getItemMeta()
-                                        .getDisplayName() }));
+
+        if (itemcase.getItemStack().hasItemMeta()
+                && itemcase.getItemStack().getItemMeta().getDisplayName() != null) {
+            PlayerLogger.message(
+                    player,
+                    Language.getLanguageFile().getMessage(
+                            "Player.ItemCase.Shop-Message2",
+                            new String[] {
+                                    "%Item%",
+                                    itemcase.getItemStack().getItemMeta()
+                                            .getDisplayName() }));
+        } else {
+            PlayerLogger
+                    .message(
+                            player,
+                            Language.getLanguageFile().getMessage(
+                                    "Player.ItemCase.Shop-Message2",
+                                    new String[] {
+                                            "%Item%",
+                                            itemcase.getItemStack().getType()
+                                                    .name() }));
+        }
 
         if (itemcase.canBuy()) {
             if (itemcase.getBuyPrice() >= 1) {

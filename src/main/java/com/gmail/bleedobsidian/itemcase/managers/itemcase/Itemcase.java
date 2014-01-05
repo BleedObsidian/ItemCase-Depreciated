@@ -20,6 +20,7 @@ package com.gmail.bleedobsidian.itemcase.managers.itemcase;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -35,6 +36,9 @@ public class Itemcase {
 
     private double buyPrice = 0;
     private double sellPrice = 0;
+
+    private boolean isInfinite;
+    private Inventory inventory;
 
     private boolean isChunkLoaded;
 
@@ -64,6 +68,14 @@ public class Itemcase {
         if (!item.isDead()) {
             this.item.remove();
         }
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     public boolean isChunkLoaded() {
@@ -134,5 +146,13 @@ public class Itemcase {
 
     public void setSellPrice(double sellPrice) {
         this.sellPrice = sellPrice;
+    }
+
+    public boolean isInfinite() {
+        return isInfinite;
+    }
+
+    public void setInfinite(boolean isInfinite) {
+        this.isInfinite = isInfinite;
     }
 }

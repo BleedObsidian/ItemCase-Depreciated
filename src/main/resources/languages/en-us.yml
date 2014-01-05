@@ -16,10 +16,10 @@ Console:
 Player:
     ItemCase:
         Created: "(GREEN)Itemcase created."
-        Created-Permission: "(RED) You don't have permission to create an itemcase."
+        Created-Permission: "(RED)You don't have permission to create an itemcase."
         Destroyed: "(GREEN)Itemcase destroyed."
-        Destroyed-Permission: "(RED) You don't own this itemcase!"
-        Shop-Order-Processing1: "(RED) You already have an order processing."
+        Destroyed-Permission: "(RED)You don't own this itemcase!"
+        Shop-Order-Processing1: "(RED)You already have an order processing."
         Stop-Chat: "(GREEN)Paused chat..."
         Start-Chat: "(GREEN)Resumed chat..."
         Cancel-Order-Button: "[CANCEL ORDER]"
@@ -39,7 +39,7 @@ Player:
         Shop-Sell-Button: "[SELL]"
         Shop-Sell-Button-Hover: "Click to sell the current order."
     Modify:
-        Usage: "(RED)Usage: (GOLD)/ic modify [showcase/shop]"
+        Usage: "(RED)Usage: (GOLD)/ic modify [showcase/shop/infinite]"
         Unknown-Type: "(RED)Types: (GOLD)showcase(RED), (GOLD)shop(RED)."
         Select: "(GREEN)Select an itemcase to modify."
         Cancel: "(GREEN)To cancel: (GOLD)/ic cancel"
@@ -52,9 +52,13 @@ Player:
         Showcase:
             Usage: "(RED)Usage: (GOLD)/ic modify showcase"
             Successful: "(GREEN)Changed selected itemcase to a showcase."
+        Infinite:
+            Usage: "(RED)Usage: (GOLD)/ic modify infinite [true/false]"
+            Successful: "(GREEN)Changed selected itemcase to infinite: (GOLD)%Boolean%(GREEN)."
     Order:
         Usage: "(RED)Usage: (GOLD)/ic order [amount/buy/sell]"
         No-Order: "(RED)No current order in progress."
+        Already-Amount: "(RED)You are already setting the amount..."
         Amount-Message: "(GREEN)Enter Amount:"
         Amount-Set: "(GREEN)Changed order for (GOLD)%Amount% (GREEN)item(s)."
         Amount-End: "(GREEN)---------------------------------------"
@@ -68,6 +72,15 @@ Player:
         Withdraw: "(GREEN)Withdrew (GOLD)%Amount% (GREEN)%Currency% from your account."
         Deposit: "(GREEN)Added (GOLD)%Amount% (GREEN)%Currency% to your account."
         Canceled: "(GREEN)Order canceled."
+        No-Stock: "(RED)Sorry, this itemcase does not have enough stock."
+    Storage:
+        Infinite: "(RED)This itemcase is infinite."
+        Not-Shop: "(RED)Itemcase must be a shop."
+        Select: "(GREEN)Select an itemcase to view the storage of."
+        Cancel: "(GREEN)To cancel: (GOLD)/ic cancel"
+    Cancel:
+        Canceled: "(GREEN)Itemcase selection canceled."
+        Error: "(RED)You are not currently selecting an itemcase."
     Permission: "(RED)You don't have permission to use this command."
     Permission-Itemcase: "(RED)You don't have permission to do this."
     Syntax-Error: "(RED) Invalid command. (GOLD)/ic help (RED)for more."

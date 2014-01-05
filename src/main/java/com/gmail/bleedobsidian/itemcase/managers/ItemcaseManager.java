@@ -18,17 +18,21 @@
 package com.gmail.bleedobsidian.itemcase.managers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
@@ -37,14 +41,14 @@ import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import com.gmail.bleedobsidian.itemcase.tasks.ItemcaseWatcher;
 
 public class ItemcaseManager {
-    private JavaPlugin plugin;
+    private ItemCase plugin;
     private WorldManager worldManager;
 
     private ItemcaseWatcher itemcaseWatcher;
 
     private List<Itemcase> itemcases = new ArrayList<Itemcase>();
 
-    public ItemcaseManager(JavaPlugin plugin, WorldManager worldManager) {
+    public ItemcaseManager(ItemCase plugin, WorldManager worldManager) {
         this.plugin = plugin;
         this.worldManager = worldManager;
 
@@ -78,7 +82,15 @@ public class ItemcaseManager {
                     .set(path + ".Type", "SHOWCASE");
 
             saveFile.getConfigFile().getFileConfiguration()
-                    .set(path + ".Infinite", true);
+                    .set(path + ".Infinite", false);
+
+            itemcase.setInventory(Bukkit.createInventory(null, 54,
+                    "ItemCase Storage"));
+
+            saveFile.getConfigFile()
+                    .getFileConfiguration()
+                    .set(path + ".Inventory",
+                            this.serializeInventory(itemcase.getInventory()));
 
             saveFile.getConfigFile().save(plugin);
         }
@@ -113,7 +125,7 @@ public class ItemcaseManager {
                     + itemcase.getBlock().getLocation().getBlockZ();
 
             saveFile.getConfigFile().getFileConfiguration()
-                    .set(path + ".Infinite", true);
+                    .set(path + ".Infinite", itemcase.isInfinite());
 
             if (itemcase.getType() == ItemcaseType.SHOWCASE) {
                 saveFile.getConfigFile().getFileConfiguration()
@@ -139,6 +151,17 @@ public class ItemcaseManager {
                 } else {
                     saveFile.getConfigFile().getFileConfiguration()
                             .set(path + ".Shop.Sell", false);
+                }
+
+                if (!itemcase.isInfinite()) {
+                    saveFile.getConfigFile()
+                            .getFileConfiguration()
+                            .set(path + ".Inventory",
+                                    this.serializeInventory(itemcase
+                                            .getInventory()));
+                } else {
+                    saveFile.getConfigFile().getFileConfiguration()
+                            .set(path + ".Inventory", null);
                 }
 
                 saveFile.getConfigFile().getFileConfiguration()
@@ -283,6 +306,16 @@ public class ItemcaseManager {
                                             true);
                         }
 
+                        itemcase.setInfinite(saveFile.getConfigFile()
+                                .getFileConfiguration()
+                                .getBoolean(path + ".Infinite"));
+
+                        if (!itemcase.isInfinite()) {
+                            Inventory inventory = this.deserializeInventory(
+                                    saveFile, path + ".Inventory", 54);
+                            itemcase.setInventory(inventory);
+                        }
+
                         this.itemcases.add(itemcase);
                     }
                 }
@@ -321,5 +354,38 @@ public class ItemcaseManager {
         }
 
         return null;
+    }
+
+    public Map<String, Object> serializeInventory(Inventory inventory) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (inventory.getItem(i) != null) {
+                map.put("" + i, inventory.getItem(i).serialize());
+            }
+        }
+
+        return map;
+    }
+
+    public Inventory deserializeInventory(WorldFile config, String path,
+            int size) {
+        Map<String, Object> map = config.getConfigFile().getFileConfiguration()
+                .getConfigurationSection(path).getValues(false);
+        Inventory inventory = Bukkit.createInventory(null, size,
+                "ItemCase Storage");
+
+        for (Entry<String, Object> entry : map.entrySet()) {
+            inventory.setItem(
+                    Integer.parseInt(entry.getKey()),
+                    ItemStack.deserialize(config
+                            .getConfigFile()
+                            .getFileConfiguration()
+                            .getConfigurationSection(
+                                    path + "." + entry.getKey())
+                            .getValues(true)));
+        }
+
+        return inventory;
     }
 }

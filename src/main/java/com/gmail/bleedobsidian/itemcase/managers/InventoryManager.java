@@ -15,29 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
 
-package com.gmail.bleedobsidian.itemcase.command.listeners;
+package com.gmail.bleedobsidian.itemcase.managers;
+
+import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 
-import com.gmail.bleedobsidian.itemcase.ItemCase;
-import com.gmail.bleedobsidian.itemcase.command.commands.ModifyCommand;
-import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 
-public class ItemcaseSelectionListener implements SelectionListener {
-    private final ItemCase plugin;
-    private final ItemcaseType type;
-    private final String[] args;
+public class InventoryManager {
+    private HashMap<Player, Itemcase> openInventories = new HashMap<Player, Itemcase>();
 
-    public ItemcaseSelectionListener(ItemCase plugin, ItemcaseType type,
-            String[] args) {
-        this.plugin = plugin;
-        this.type = type;
-        this.args = args;
+    public void addOpenInventory(Player player, Itemcase itemcase) {
+        this.openInventories.put(player, itemcase);
     }
 
-    public void selected(Player player, Itemcase itemcase) {
-        ModifyCommand.selected(plugin, player, args, itemcase, type);
+    public void removeOpenInventory(Player player) {
+        this.openInventories.remove(player);
+    }
+
+    public boolean hasOpenInventory(Player player) {
+        return this.openInventories.containsKey(player) ? true : false;
+    }
+
+    public Itemcase getItemcaseForPlayer(Player player) {
+        return this.openInventories.get(player);
     }
 }

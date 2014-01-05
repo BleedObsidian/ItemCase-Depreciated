@@ -24,10 +24,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gmail.bleedobsidian.itemcase.command.ICCommandExecutor;
 import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.listeners.BlockListener;
+import com.gmail.bleedobsidian.itemcase.listeners.InventoryListener;
 import com.gmail.bleedobsidian.itemcase.listeners.PlayerListener;
 import com.gmail.bleedobsidian.itemcase.listeners.WorldListener;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 import com.gmail.bleedobsidian.itemcase.managers.AmountManager;
+import com.gmail.bleedobsidian.itemcase.managers.InventoryManager;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.SelectionManager;
 import com.gmail.bleedobsidian.itemcase.managers.ShopManager;
@@ -41,6 +43,7 @@ public class ItemCase extends JavaPlugin {
     private SelectionManager selectionManager;
     private AmountManager amountManager;
     private ShopManager shopManager;
+    private InventoryManager inventoryManager;
 
     @Override
     public void onEnable() {
@@ -124,7 +127,10 @@ public class ItemCase extends JavaPlugin {
         this.amountManager = new AmountManager(this);
 
         // Create ShopManager
-        this.shopManager = new ShopManager(this);
+        this.shopManager = new ShopManager();
+
+        // Create InventoryManager
+        this.inventoryManager = new InventoryManager();
 
         // Register Events
         this.registerEvents();
@@ -163,6 +169,8 @@ public class ItemCase extends JavaPlugin {
                 .registerEvents(new PlayerListener(this), this);
         this.getServer().getPluginManager()
                 .registerEvents(new WorldListener(this), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new InventoryListener(this), this);
     }
 
     public String getVersion() {
@@ -187,5 +195,9 @@ public class ItemCase extends JavaPlugin {
 
     public ShopManager getShopManager() {
         return this.shopManager;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return this.inventoryManager;
     }
 }

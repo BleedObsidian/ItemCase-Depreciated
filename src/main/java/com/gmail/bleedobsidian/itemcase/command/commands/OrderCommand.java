@@ -22,6 +22,7 @@ import java.util.ListIterator;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
@@ -56,6 +57,10 @@ public class OrderCommand {
         } else if (args[1].equalsIgnoreCase("cancel")) {
             PlayerLogger.message(player,
                     language.getMessage("Player.Order.Canceled"));
+            PlayerLogger.message(
+                    player,
+                    Language.getLanguageFile().getMessage(
+                            "Player.Order.Amount-End"));
             plugin.getShopManager().removePendingOrder(player);
             return;
         } else if (args[1].equalsIgnoreCase("buy")
@@ -79,6 +84,24 @@ public class OrderCommand {
                     .getItemcase().getBuyPrice()
                     * plugin.getShopManager().getOrder(player).getAmount();
 
+            if (!plugin.getShopManager().getOrder(player).getItemcase()
+                    .isInfinite()) {
+                double itemAmount = OrderCommand.getAmountOf(plugin
+                        .getShopManager().getOrder(player).getItemcase()
+                        .getInventory(),
+                        plugin.getShopManager().getOrder(player).getItemcase()
+                                .getItemStack().clone());
+
+                if (!(itemAmount >= plugin.getShopManager().getOrder(player)
+                        .getAmount())) {
+                    PlayerLogger.message(player,
+                            language.getMessage("Player.Order.No-Stock"));
+                    PlayerLogger.message(player, Language.getLanguageFile()
+                            .getMessage("Player.Order.Amount-End"));
+                    return;
+                }
+            }
+
             if (!(balance >= price)) {
                 PlayerLogger.message(player,
                         language.getMessage("Player.Order.Balance-Error"));
@@ -96,6 +119,12 @@ public class OrderCommand {
 
                 player.getInventory().addItem(items);
 
+                if (!plugin.getShopManager().getOrder(player).getItemcase()
+                        .isInfinite()) {
+                    plugin.getShopManager().getOrder(player).getItemcase()
+                            .getInventory().removeItem(items);
+                }
+
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Withdraw", new String[] { "%Amount%",
@@ -112,16 +141,28 @@ public class OrderCommand {
                                                     .currencyNameSingular() }));
                 }
 
-                PlayerLogger
-                        .message(player, language.getMessage(
-                                "Player.Order.Bought-Items",
-                                new String[] {
-                                        "%Amount%",
-                                        ""
-                                                + plugin.getShopManager()
-                                                        .getOrder(player)
-                                                        .getAmount(), "%Item%",
-                                        items.getItemMeta().getDisplayName() }));
+                if (items.hasItemMeta()
+                        && items.getItemMeta().getDisplayName() != null) {
+                    PlayerLogger.message(player, language.getMessage(
+                            "Player.Order.Bought-Items",
+                            new String[] {
+                                    "%Amount%",
+                                    ""
+                                            + plugin.getShopManager()
+                                                    .getOrder(player)
+                                                    .getAmount(), "%Item%",
+                                    items.getItemMeta().getDisplayName() }));
+                } else {
+                    PlayerLogger.message(player, language.getMessage(
+                            "Player.Order.Bought-Items",
+                            new String[] {
+                                    "%Amount%",
+                                    ""
+                                            + plugin.getShopManager()
+                                                    .getOrder(player)
+                                                    .getAmount(), "%Item%",
+                                    items.getType().name() }));
+                }
 
                 PlayerLogger.message(player, Language.getLanguageFile()
                         .getMessage("Player.Order.Amount-End"));
@@ -148,9 +189,9 @@ public class OrderCommand {
                         player.getWorld().getName());
             }
 
-            double itemAmount = OrderCommand.getAmountOf(player, plugin
-                    .getShopManager().getOrder(player).getItemcase()
-                    .getItemStack().clone());
+            double itemAmount = OrderCommand.getAmountOf(player.getInventory(),
+                    plugin.getShopManager().getOrder(player).getItemcase()
+                            .getItemStack().clone());
             double price = plugin.getShopManager().getOrder(player)
                     .getItemcase().getBuyPrice()
                     * plugin.getShopManager().getOrder(player).getAmount();
@@ -173,6 +214,12 @@ public class OrderCommand {
 
                 player.getInventory().removeItem(items);
 
+                if (!plugin.getShopManager().getOrder(player).getItemcase()
+                        .isInfinite()) {
+                    plugin.getShopManager().getOrder(player).getItemcase()
+                            .getInventory().addItem(items);
+                }
+
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Deposit", new String[] { "%Amount%",
@@ -189,16 +236,28 @@ public class OrderCommand {
                                                     .currencyNameSingular() }));
                 }
 
-                PlayerLogger
-                        .message(player, language.getMessage(
-                                "Player.Order.Sold-Items",
-                                new String[] {
-                                        "%Amount%",
-                                        ""
-                                                + plugin.getShopManager()
-                                                        .getOrder(player)
-                                                        .getAmount(), "%Item%",
-                                        items.getItemMeta().getDisplayName() }));
+                if (items.hasItemMeta()
+                        && items.getItemMeta().getDisplayName() != null) {
+                    PlayerLogger.message(player, language.getMessage(
+                            "Player.Order.Sold-Items",
+                            new String[] {
+                                    "%Amount%",
+                                    ""
+                                            + plugin.getShopManager()
+                                                    .getOrder(player)
+                                                    .getAmount(), "%Item%",
+                                    items.getItemMeta().getDisplayName() }));
+                } else {
+                    PlayerLogger.message(player, language.getMessage(
+                            "Player.Order.Sold-Items",
+                            new String[] {
+                                    "%Amount%",
+                                    ""
+                                            + plugin.getShopManager()
+                                                    .getOrder(player)
+                                                    .getAmount(), "%Item%",
+                                    items.getType().name() }));
+                }
 
                 PlayerLogger.message(player, Language.getLanguageFile()
                         .getMessage("Player.Order.Amount-End"));
@@ -213,9 +272,9 @@ public class OrderCommand {
         }
     }
 
-    private static int getAmountOf(Player player, ItemStack itemStack) {
+    private static int getAmountOf(Inventory inventory, ItemStack itemStack) {
         int amount = 0;
-        ListIterator<ItemStack> it = player.getInventory().iterator();
+        ListIterator<ItemStack> it = inventory.iterator();
 
         while (it.hasNext()) {
             ItemStack current = it.next();

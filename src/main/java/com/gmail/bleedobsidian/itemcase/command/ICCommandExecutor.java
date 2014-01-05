@@ -24,8 +24,10 @@ import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
+import com.gmail.bleedobsidian.itemcase.command.commands.CancelCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.OrderCommand;
+import com.gmail.bleedobsidian.itemcase.command.commands.StorageCommand;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 
@@ -66,6 +68,10 @@ public class ICCommandExecutor implements CommandExecutor {
             ModifyCommand.modify(plugin, player, args);
         } else if (args[0].equalsIgnoreCase("order")) {
             OrderCommand.order(plugin, player, args);
+        } else if (args[0].equalsIgnoreCase("storage")) {
+            StorageCommand.storage(plugin, player, args);
+        } else if (args[0].equalsIgnoreCase("cancel")) {
+            CancelCommand.cancel(plugin, player, args);
         } else {
             return false;
         }
