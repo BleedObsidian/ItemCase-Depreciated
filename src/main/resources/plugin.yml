@@ -42,3 +42,6 @@ permissions:
         
     itemcase.storage.other:
         description: Access & modify storage of an itemcase you don't own.
+        
+    itemcase.help:
+        description: View help about itemcase and the commands.

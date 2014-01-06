@@ -93,6 +93,16 @@ Player:
     Cancel:
         Canceled: "(GREEN)Itemcase selection canceled."
         Error: "(RED)You are not currently selecting an itemcase."
+    Help:
+        Message1: "(GREEN)--------------- ItemCase Help ---------------"
+        Message2: "(GOLD)/ic storage (GREEN)| Open a finite shops inventory."
+        Message3: "(GOLD)/ic modify [infinite/showcase/shop] (GREEN)| Change options of itemcase."
+        Message4: "(GOLD)/ic cancel (GREEN)| Cancel selection of itemcase."
+        Message5: "(GOLD)/ic order amount (GREEN)| Set the amount of items to order."
+        Message6: "(GOLD)/ic order buy (GREEN)| Buy the current order."
+        Message7: "(GOLD)/ic order sell (GREEN)| Sell the current order."
+        Message8: "(GOLD)/ic order cancel (GREEN)| Cancel current order."
+        Message9: "(GREEN)-------------------------------------------"
     Permission: "(RED)You don't have permission to use this command."
     Permission-Itemcase: "(RED)You don't have permission to do this."
     Syntax-Error: "(RED) Invalid command. (GOLD)/ic help (RED)for more."
