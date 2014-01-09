@@ -177,17 +177,23 @@ public class OrderCommand {
 
                         if (price > 1) {
                             PlayerLogger.message(owner, language.getMessage(
-                                    "Player.Order.Deposit", new String[] {
+                                    "Player.Order.Deposit",
+                                    new String[] {
                                             "%Amount%",
-                                            "" + price,
+                                            ""
+                                                    + Vault.getEconomy()
+                                                            .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
                                                     .currencyNamePlural() }));
                         } else {
                             PlayerLogger.message(owner, language.getMessage(
-                                    "Player.Order.Deposit", new String[] {
+                                    "Player.Order.Deposit",
+                                    new String[] {
                                             "%Amount%",
-                                            "" + price,
+                                            ""
+                                                    + Vault.getEconomy()
+                                                            .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
                                                     .currencyNameSingular() }));
@@ -213,14 +219,18 @@ public class OrderCommand {
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Withdraw", new String[] { "%Amount%",
-                                    "" + price, "%Currency%",
+                                    "" + Vault.getEconomy().format(price),
+                                    "%Currency%",
                                     Vault.getEconomy().currencyNamePlural() }));
                 } else {
-                    PlayerLogger.message(player,
-                            language.getMessage("Player.Order.Withdraw",
+                    PlayerLogger.message(player, language
+                            .getMessage(
+                                    "Player.Order.Withdraw",
                                     new String[] {
                                             "%Amount%",
-                                            "" + price,
+                                            ""
+                                                    + Vault.getEconomy()
+                                                            .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
                                                     .currencyNameSingular() }));
@@ -357,17 +367,23 @@ public class OrderCommand {
 
                         if (price > 1) {
                             PlayerLogger.message(owner, language.getMessage(
-                                    "Player.Order.Withdraw", new String[] {
+                                    "Player.Order.Withdraw",
+                                    new String[] {
                                             "%Amount%",
-                                            "" + price,
+                                            ""
+                                                    + Vault.getEconomy()
+                                                            .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
                                                     .currencyNamePlural() }));
                         } else {
                             PlayerLogger.message(owner, language.getMessage(
-                                    "Player.Order.Withdraw", new String[] {
+                                    "Player.Order.Withdraw",
+                                    new String[] {
                                             "%Amount%",
-                                            "" + price,
+                                            ""
+                                                    + Vault.getEconomy()
+                                                            .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
                                                     .currencyNameSingular() }));
@@ -396,14 +412,18 @@ public class OrderCommand {
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Deposit", new String[] { "%Amount%",
-                                    "" + price, "%Currency%",
+                                    "" + Vault.getEconomy().format(price),
+                                    "%Currency%",
                                     Vault.getEconomy().currencyNamePlural() }));
                 } else {
-                    PlayerLogger.message(player,
-                            language.getMessage("Player.Order.Deposit",
+                    PlayerLogger.message(player, language
+                            .getMessage(
+                                    "Player.Order.Deposit",
                                     new String[] {
                                             "%Amount%",
-                                            "" + price,
+                                            ""
+                                                    + Vault.getEconomy()
+                                                            .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
                                                     .currencyNameSingular() }));
