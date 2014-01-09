@@ -159,7 +159,11 @@ public class ShopManager {
         extra.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
                 "/ic order amount");
         message.addExtra(extra);
-
+        message.addText(
+                " "
+                        + Language.getLanguageFile().getMessage(
+                                "Player.ItemCase.Button-Idicator"),
+                JSONChatColor.GREEN, null);
         message.sendToPlayer(player);
 
         if (itemcase.canBuy()) {
@@ -181,7 +185,11 @@ public class ShopManager {
             extraBuy.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
                     "/ic order buy");
             messageBuy.addExtra(extraBuy);
-
+            messageBuy.addText(
+                    "                 "
+                            + Language.getLanguageFile().getMessage(
+                                    "Player.ItemCase.Button-Idicator"),
+                    JSONChatColor.GREEN, null);
             messageBuy.sendToPlayer(player);
         }
 
@@ -204,7 +212,11 @@ public class ShopManager {
             extraSell.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
                     "/ic order sell");
             messageSell.addExtra(extraSell);
-
+            messageSell.addText(
+                    "               "
+                            + Language.getLanguageFile().getMessage(
+                                    "Player.ItemCase.Button-Idicator"),
+                    JSONChatColor.GREEN, null);
             messageSell.sendToPlayer(player);
         }
 
@@ -223,6 +235,10 @@ public class ShopManager {
                 "/ic order cancel");
 
         messageCancel.addExtra(extraCancel);
+        message.addText(
+                Language.getLanguageFile().getMessage(
+                        "Player.ItemCase.Button-Idicator"),
+                JSONChatColor.GREEN, null);
         messageCancel.sendToPlayer(player);
 
         PlayerLogger.message(
