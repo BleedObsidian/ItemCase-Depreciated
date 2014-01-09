@@ -288,7 +288,7 @@ public class OrderCommand {
                     plugin.getShopManager().getOrder(player).getItemcase()
                             .getItemStack().clone());
             double price = plugin.getShopManager().getOrder(player)
-                    .getItemcase().getBuyPrice()
+                    .getItemcase().getSellPrice()
                     * plugin.getShopManager().getOrder(player).getAmount();
 
             if (itemAmount < plugin.getShopManager().getOrder(player)
