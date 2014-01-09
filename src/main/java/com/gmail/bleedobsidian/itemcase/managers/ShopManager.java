@@ -17,6 +17,7 @@
 
 package com.gmail.bleedobsidian.itemcase.managers;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -36,6 +37,8 @@ import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
 
 public class ShopManager {
     private HashMap<Player, Order> orders = new HashMap<Player, Order>();
+
+    private final DecimalFormat format = new DecimalFormat("0.00");
 
     public void addPendingOrder(Itemcase itemcase, Player player) {
         PlayerLogger.message(
@@ -81,28 +84,25 @@ public class ShopManager {
                                                 new String[] {
                                                         "%Cost%",
                                                         ""
-                                                                + Vault.getEconomy()
+                                                                + this.format
                                                                         .format(itemcase
                                                                                 .getBuyPrice()),
                                                         "%Currency%",
                                                         Vault.getEconomy()
                                                                 .currencyNamePlural() }));
             } else {
-                PlayerLogger
-                        .message(
-                                player,
-                                Language.getLanguageFile()
-                                        .getMessage(
-                                                "Player.ItemCase.Shop-Message3",
-                                                new String[] {
-                                                        "%Cost%",
-                                                        ""
-                                                                + Vault.getEconomy()
-                                                                        .format(itemcase
-                                                                                .getBuyPrice()),
-                                                        "%Currency%",
-                                                        Vault.getEconomy()
-                                                                .currencyNameSingular() }));
+                PlayerLogger.message(
+                        player,
+                        Language.getLanguageFile().getMessage(
+                                "Player.ItemCase.Shop-Message3",
+                                new String[] {
+                                        "%Cost%",
+                                        ""
+                                                + this.format.format(itemcase
+                                                        .getBuyPrice()),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                                .currencyNameSingular() }));
             }
         }
 
@@ -117,28 +117,25 @@ public class ShopManager {
                                                 new String[] {
                                                         "%Cost%",
                                                         ""
-                                                                + Vault.getEconomy()
+                                                                + this.format
                                                                         .format(itemcase
                                                                                 .getSellPrice()),
                                                         "%Currency%",
                                                         Vault.getEconomy()
                                                                 .currencyNamePlural() }));
             } else {
-                PlayerLogger
-                        .message(
-                                player,
-                                Language.getLanguageFile()
-                                        .getMessage(
-                                                "Player.ItemCase.Shop-Message4",
-                                                new String[] {
-                                                        "%Cost%",
-                                                        ""
-                                                                + Vault.getEconomy()
-                                                                        .format(itemcase
-                                                                                .getSellPrice()),
-                                                        "%Currency%",
-                                                        Vault.getEconomy()
-                                                                .currencyNameSingular() }));
+                PlayerLogger.message(
+                        player,
+                        Language.getLanguageFile().getMessage(
+                                "Player.ItemCase.Shop-Message4",
+                                new String[] {
+                                        "%Cost%",
+                                        ""
+                                                + this.format.format(itemcase
+                                                        .getSellPrice()),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                                .currencyNameSingular() }));
             }
         }
 

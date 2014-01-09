@@ -17,6 +17,7 @@
 
 package com.gmail.bleedobsidian.itemcase.command.commands;
 
+import java.text.DecimalFormat;
 import java.util.ListIterator;
 
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -34,6 +35,8 @@ import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 public class OrderCommand {
+    private static final DecimalFormat format = new DecimalFormat("0.00");
+
     public static void order(ItemCase plugin, Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
@@ -181,7 +184,7 @@ public class OrderCommand {
                                     new String[] {
                                             "%Amount%",
                                             ""
-                                                    + Vault.getEconomy()
+                                                    + OrderCommand.format
                                                             .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
@@ -192,7 +195,7 @@ public class OrderCommand {
                                     new String[] {
                                             "%Amount%",
                                             ""
-                                                    + Vault.getEconomy()
+                                                    + OrderCommand.format
                                                             .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
@@ -219,17 +222,17 @@ public class OrderCommand {
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Withdraw", new String[] { "%Amount%",
-                                    "" + Vault.getEconomy().format(price),
+                                    "" + OrderCommand.format.format(price),
                                     "%Currency%",
                                     Vault.getEconomy().currencyNamePlural() }));
                 } else {
-                    PlayerLogger.message(player, language
-                            .getMessage(
+                    PlayerLogger.message(player,
+                            language.getMessage(
                                     "Player.Order.Withdraw",
                                     new String[] {
                                             "%Amount%",
                                             ""
-                                                    + Vault.getEconomy()
+                                                    + OrderCommand.format
                                                             .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
@@ -371,7 +374,7 @@ public class OrderCommand {
                                     new String[] {
                                             "%Amount%",
                                             ""
-                                                    + Vault.getEconomy()
+                                                    + OrderCommand.format
                                                             .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
@@ -382,7 +385,7 @@ public class OrderCommand {
                                     new String[] {
                                             "%Amount%",
                                             ""
-                                                    + Vault.getEconomy()
+                                                    + OrderCommand.format
                                                             .format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
@@ -412,18 +415,15 @@ public class OrderCommand {
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Deposit", new String[] { "%Amount%",
-                                    "" + Vault.getEconomy().format(price),
+                                    "" + OrderCommand.format.format(price),
                                     "%Currency%",
                                     Vault.getEconomy().currencyNamePlural() }));
                 } else {
-                    PlayerLogger.message(player, language
-                            .getMessage(
-                                    "Player.Order.Deposit",
+                    PlayerLogger.message(player,
+                            language.getMessage("Player.Order.Deposit",
                                     new String[] {
                                             "%Amount%",
-                                            ""
-                                                    + Vault.getEconomy()
-                                                            .format(price),
+                                            OrderCommand.format.format(price),
                                             "%Currency%",
                                             Vault.getEconomy()
                                                     .currencyNameSingular() }));
