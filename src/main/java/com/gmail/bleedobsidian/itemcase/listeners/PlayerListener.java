@@ -56,9 +56,18 @@ public class PlayerListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK
+        if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)
                 && player.isSneaking()) {
             Block block = event.getClickedBlock();
+
+            if (block == null) {
+                if (player.getTargetBlock(null, 100) != null
+                        && player.getTargetBlock(null, 100).getType() != Material.AIR) {
+                    block = player.getTargetBlock(null, 100);
+                } else {
+                    return;
+                }
+            }
 
             if (block.getType() == Material.STEP
                     || block.getType() == Material.WOOD_STEP) {
