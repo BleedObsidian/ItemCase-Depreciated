@@ -89,12 +89,12 @@ public class ItemCase extends JavaPlugin {
             if (apiKey != null) {
                 if (apiKey.equals("")
                         || apiKey.equalsIgnoreCase("your_api_key")) {
-                    updater = new Updater(this, 0); // TODO: Project ID.
+                    updater = new Updater(this, 68764);
                 } else {
-                    updater = new Updater(this, 0, apiKey); // TODO: Project ID.
+                    updater = new Updater(this, 68764, apiKey);
                 }
             } else {
-                updater = new Updater(this, 0); // TODO: Project ID.
+                updater = new Updater(this, 68764);
             }
 
             if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
