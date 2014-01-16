@@ -156,6 +156,12 @@ public class ItemCase extends JavaPlugin {
                             "Console.Metrics.Unsuccessful"), true);
         }
 
+        // Load WorldGuard
+        if (WorldGuard.load(this)) {
+            PluginLogger.info(Language.getLanguageFile().getMessage(
+                    "Console.WorldGuard.Successful"));
+        }
+
         // Create ItemcaseManager
         this.itemcaseManager = new ItemcaseManager(this, this.worldManager);
 

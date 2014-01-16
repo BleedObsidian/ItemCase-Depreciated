@@ -6,6 +6,7 @@ author: BleedObsidian
 website: http://dev.bukkit.org/bukkit-plugins/itemcase/
 database: false
 depend: [Vault]
+softdepend: [WorldGuard]
 prefix: ItemCase
 
 main: com.gmail.bleedobsidian.itemcase.ItemCase

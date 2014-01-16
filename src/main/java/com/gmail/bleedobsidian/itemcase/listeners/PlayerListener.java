@@ -35,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
+import com.gmail.bleedobsidian.itemcase.WorldGuard;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatClickEventType;
@@ -76,6 +77,19 @@ public class PlayerListener implements Listener {
 
                     if (itemStack.getType() != Material.AIR) {
                         if (player.hasPermission("itemcase.create.showcase")) {
+                            if (WorldGuard.isEnabled()
+                                    && !WorldGuard.getWorldGuardPlugin()
+                                            .canBuild(player, block)) {
+                                PlayerLogger
+                                        .message(
+                                                player,
+                                                Language.getLanguageFile()
+                                                        .getMessage(
+                                                                "Player.ItemCase.Created-Region"));
+                                event.setCancelled(true);
+                                return;
+                            }
+
                             Location location = block.getLocation();
 
                             ItemStack itemStackCopy = itemStack.clone();

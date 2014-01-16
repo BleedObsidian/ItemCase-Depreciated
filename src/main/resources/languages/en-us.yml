@@ -16,6 +16,8 @@ Console:
     Vault:
         Successful: Loaded Vault.
         Unsuccessful: Failed to load Vault. (You need Vault and an Economy plugin installed too.)
+    WorldGuard:
+        Successful: Loaded WorldGuard.
     Metrics:
         Successful: Started Metrics.
         Unsuccessful: Failed to start Metrics.
@@ -24,6 +26,7 @@ Player:
     ItemCase:
         Created: "(GREEN)Itemcase created."
         Created-Permission: "(RED)You don't have permission to create an itemcase."
+        Created-Region: "(RED)You don't have permission to create an itemcase here."
         Destroyed: "(GREEN)Itemcase destroyed."
         Destroyed-Permission: "(RED)You don't own this itemcase!"
         Shop-Order-Processing1: "(RED)You already have an order processing."
