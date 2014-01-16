@@ -17,15 +17,19 @@
 
 package com.gmail.bleedobsidian.itemcase.managers.itemcase;
 
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class Itemcase {
     private Item item;
+    private ItemStack displayStack;
     private ItemStack itemStack;
     private Location blockLocation;
     private String player;
@@ -44,6 +48,13 @@ public class Itemcase {
 
     public Itemcase(ItemStack itemStack, Location blockLocation, String player) {
         this.itemStack = itemStack;
+
+        this.displayStack = itemStack.clone();
+        ItemMeta meta = displayStack.getItemMeta();
+        meta.setDisplayName(UUID.randomUUID().toString()); // Stop item
+                                                           // stacking.
+        this.displayStack.setItemMeta(meta);
+
         this.blockLocation = blockLocation;
         this.player = player;
 
@@ -59,8 +70,9 @@ public class Itemcase {
                     blockLocation.getBlockZ() + 0.5);
 
             this.item = blockLocation.getWorld().dropItem(itemLocation,
-                    this.itemStack);
+                    this.displayStack);
             this.item.setVelocity(new Vector(0.0, 0.1, 0.0));
+            this.item.setMetadata("ItemCase", new ItemcaseData());
         }
     }
 

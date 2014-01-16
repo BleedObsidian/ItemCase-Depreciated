@@ -52,6 +52,10 @@ public class ItemcaseWatcher implements Runnable {
                             .equals(Material.WOOD_STEP)) {
                 itemcase.getBlock().setType(Material.STEP);
             }
+
+            if (itemcase.getItem().getItemStack().getAmount() > 1) {
+                itemcase.getItem().getItemStack().setAmount(1);
+            }
         }
     }
 }

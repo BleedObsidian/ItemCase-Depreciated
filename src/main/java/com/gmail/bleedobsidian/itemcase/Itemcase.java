@@ -38,6 +38,8 @@ import com.gmail.bleedobsidian.itemcase.util.metrics.Graphs;
 import com.gmail.bleedobsidian.itemcase.util.metrics.Metrics;
 
 public class ItemCase extends JavaPlugin {
+    private static ItemCase instance;
+
     private ConfigFile config;
     private Metrics metrics;
 
@@ -50,6 +52,9 @@ public class ItemCase extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Set Instance
+        ItemCase.instance = this;
+
         // Setup Logger
         PluginLogger.setJavaPlugin(this);
 
@@ -205,6 +210,10 @@ public class ItemCase extends JavaPlugin {
                 .registerEvents(new WorldListener(this), this);
         this.getServer().getPluginManager()
                 .registerEvents(new InventoryListener(this), this);
+    }
+
+    public static ItemCase getInstance() {
+        return ItemCase.instance;
     }
 
     public String getVersion() {
