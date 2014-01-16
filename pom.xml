@@ -120,6 +120,8 @@
                   <exclude>org.bukkit</exclude>
                   <exclude>net.milkbowl.vault</exclude>
 				  <exclude>junit</exclude>
+				  <exclude>org.hamcrest</exclude>
+				  <exclude>com.sk89q.worldguard</exclude>
                 </excludes>
               </artifactSet>
           </configuration>
