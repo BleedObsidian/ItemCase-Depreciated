@@ -66,7 +66,7 @@ public class Itemcase {
         if (this.isChunkLoaded) {
             Location itemLocation = new Location(blockLocation.getWorld(),
                     blockLocation.getBlockX() + 0.5,
-                    blockLocation.getBlockY() + 1.0,
+                    blockLocation.getBlockY() + 1.5,
                     blockLocation.getBlockZ() + 0.5);
 
             this.item = blockLocation.getWorld().dropItem(itemLocation,

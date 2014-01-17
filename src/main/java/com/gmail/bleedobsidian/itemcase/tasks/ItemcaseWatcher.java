@@ -40,7 +40,7 @@ public class ItemcaseWatcher implements Runnable {
             Location blockLocation = itemcase.getBlock().getLocation();
 
             if (!((itemLocation.getX() == blockLocation.getBlockX() + 0.5)
-                    && ((itemLocation.getY() <= blockLocation.getBlockY() + 1) && (itemLocation
+                    && ((itemLocation.getY() <= blockLocation.getBlockY() + 2) && (itemLocation
                             .getY() >= blockLocation.getBlockY())) && (itemLocation
                         .getZ() == blockLocation.getBlockZ() + 0.5))) {
                 itemcase.despawnItem();
