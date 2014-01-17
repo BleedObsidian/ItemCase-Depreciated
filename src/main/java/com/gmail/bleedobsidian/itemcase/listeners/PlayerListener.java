@@ -37,6 +37,7 @@ import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.WorldGuard;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatClickEventType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatColor;
@@ -200,6 +201,13 @@ public class PlayerListener implements Listener {
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
         if (event.getItem().hasMetadata("ItemCase")) {
             event.setCancelled(true);
+        } else { // Fail safe
+            for (Itemcase itemcase : this.plugin.getItemcaseManager()
+                    .getItemcases()) {
+                if (event.getItem().equals(itemcase.getItem())) {
+                    event.setCancelled(true);
+                }
+            }
         }
     }
 
