@@ -243,10 +243,11 @@ public class ShopManager {
                 Language.getLanguageFile().getMessage(
                         "Player.ItemCase.Shop-Message8"));
 
-        this.orders.put(player, new Order(itemcase));
+        this.orders.put(player, new Order(itemcase, player));
     }
 
     public void removePendingOrder(Player player) {
+        this.getOrder(player).cancel();
         this.orders.remove(player);
         PlayerLogger.message(
                 player,

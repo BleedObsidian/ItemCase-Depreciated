@@ -84,6 +84,7 @@ Player:
         Withdraw: "(GREEN)Withdrew (GOLD)%Amount% (GREEN)%Currency% from your account."
         Deposit: "(GREEN)Added (GOLD)%Amount% (GREEN)%Currency% to your account."
         Canceled: "(GREEN)Order canceled."
+        Timeout: "(RED)Order timed out."
         No-Stock: "(RED)Sorry, this itemcase does not have enough stock."
         Owner-Balance: "(RED)Sorry, this itemcase owner does not have enough money."
         Owner-Buy: "(GREEN)Player (GOLD)%Player% (GREEN)bought (GOLD)%Amount% %Item%(GREEN)."
