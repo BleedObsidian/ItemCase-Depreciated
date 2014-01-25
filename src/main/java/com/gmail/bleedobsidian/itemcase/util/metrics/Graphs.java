@@ -19,22 +19,11 @@ public class Graphs {
     private void graph_CheckForUpdate() {
         Graph graph = metrics.createGraph("Servers Cheking For An Update");
 
-        graph.addPlotter(new Metrics.Plotter("Checking For Update") {
+        graph.addPlotter(new Metrics.Plotter("Checking For An Update") {
             @Override
             public int getValue() {
                 if (config.getFileConfiguration().getBoolean(
                         "Updates.Check-For-Update")) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-
-        graph.addPlotter(new Metrics.Plotter("Not Checking For Update") {
-            @Override
-            public int getValue() {
-                if (!config.getFileConfiguration().getBoolean("CheckForUpdate")) {
                     return 1;
                 } else {
                     return 0;
