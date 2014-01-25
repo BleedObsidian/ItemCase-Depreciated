@@ -154,7 +154,7 @@ public class ShopManager {
                 Language.getLanguageFile().getMessage(
                         "Player.ItemCase.Shop-Amount-Button-Hover"));
         extra.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                "/ic order amount");
+                "/itemc order amount");
         message.addExtra(extra);
         message.addText(
                 " "
@@ -180,7 +180,7 @@ public class ShopManager {
                     Language.getLanguageFile().getMessage(
                             "Player.ItemCase.Shop-Buy-Button-Hover"));
             extraBuy.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                    "/ic order buy");
+                    "/itemc order buy");
             messageBuy.addExtra(extraBuy);
             messageBuy.addText(
                     "                 "
@@ -207,7 +207,7 @@ public class ShopManager {
                     Language.getLanguageFile().getMessage(
                             "Player.ItemCase.Shop-Sell-Button-Hover"));
             extraSell.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                    "/ic order sell");
+                    "/itemc order sell");
             messageSell.addExtra(extraSell);
             messageSell.addText(
                     "               "
@@ -229,7 +229,7 @@ public class ShopManager {
                 Language.getLanguageFile().getMessage(
                         "Player.ItemCase.Cancel-Order-Button-Hover"));
         extraCancel.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                "/ic order cancel");
+                "/itemc order cancel");
 
         messageCancel.addExtra(extraCancel);
         message.addText(

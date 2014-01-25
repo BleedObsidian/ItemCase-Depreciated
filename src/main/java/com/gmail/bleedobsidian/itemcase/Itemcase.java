@@ -186,7 +186,7 @@ public class ItemCase extends JavaPlugin {
                 "Console.Itemcases-Created"));
 
         // Register command
-        this.getCommand("ic").setExecutor(new ICCommandExecutor(this));
+        this.getCommand("itemc").setExecutor(new ICCommandExecutor(this));
 
         PluginLogger.info(Language.getLanguageFile().getMessage(
                 "Console.Enabled",

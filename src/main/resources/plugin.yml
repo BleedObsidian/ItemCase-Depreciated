@@ -12,9 +12,9 @@ prefix: ItemCase
 main: com.gmail.bleedobsidian.itemcase.ItemCase
 
 commands:
-    ic:
+    itemc:
         description: Main ItemCase alias command.
-        aliases: [itemcase, case]
+        aliases: [itemcase, case, ic]
 
 permissions:
     itemcase.create.showcase:
