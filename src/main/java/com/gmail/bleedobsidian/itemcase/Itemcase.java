@@ -103,8 +103,8 @@ public class ItemCase extends JavaPlugin {
             }
 
             if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
-                PluginLogger
-                        .warning("A new version of AreaProtect is available!");
+                PluginLogger.warning(Language.getLanguageFile().getMessage(
+                        "Console.Update-Available"));
             } else if (updater.getResult() != Updater.UpdateResult.NO_UPDATE) {
                 if (updater.getResult() == Updater.UpdateResult.ERROR_APIKEY) {
                     PluginLogger.warning("Failed to check for updates!", true);
