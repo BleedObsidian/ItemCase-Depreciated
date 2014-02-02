@@ -111,6 +111,16 @@ public class ItemcaseManager {
 
             saveFile.getConfigFile().getFileConfiguration().set(path, null);
             saveFile.getConfigFile().save(this.plugin);
+
+            for (ItemStack itemStack : itemcase.getInventory().getContents()) {
+                if (itemStack != null) {
+                    itemcase.getBlock()
+                            .getWorld()
+                            .dropItemNaturally(
+                                    itemcase.getBlock().getLocation(),
+                                    itemStack);
+                }
+            }
         }
     }
 
