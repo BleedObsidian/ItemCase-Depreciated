@@ -19,8 +19,10 @@ package com.gmail.bleedobsidian.itemcase.managers.itemcase;
 
 import java.util.UUID;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -73,13 +75,21 @@ public class Itemcase {
                     this.displayStack);
             this.item.setVelocity(new Vector(0.0, 0.1, 0.0));
             this.item.setMetadata("ItemCase", new ItemcaseData());
+
+            Chunk chunk = blockLocation.getChunk();
+
+            for (Entity entity : chunk.getEntities()) {
+                if (entity.getLocation().getBlock().getLocation()
+                        .equals(this.blockLocation)
+                        && entity instanceof Item && !entity.equals(this.item)) {
+                    entity.remove();
+                }
+            }
         }
     }
 
     public void despawnItem() {
-        if (!item.isDead()) {
-            this.item.remove();
-        }
+        this.item.remove();
     }
 
     public Inventory getInventory() {
