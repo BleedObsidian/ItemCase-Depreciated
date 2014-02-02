@@ -1,5 +1,5 @@
 name: ItemCase
-version: 1.0
+version: 1.2
 description: ItemCase is a Bukkit plugin allowing you to showcase items on slabs.
 load: POSTWORLD
 author: BleedObsidian
