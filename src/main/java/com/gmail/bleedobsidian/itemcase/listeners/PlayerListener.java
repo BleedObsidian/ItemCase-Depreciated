@@ -108,15 +108,6 @@ public class PlayerListener implements Listener {
                                                 "Player.ItemCase.Created"));
                                 event.setCancelled(true);
                             } else {
-                                event.setCancelled(true);
-
-                                PlayerLogger
-                                        .message(
-                                                player,
-                                                Language.getLanguageFile()
-                                                        .getMessage(
-                                                                "Player.ItemCase.Created-Permission"));
-
                                 return;
                             }
                         }
@@ -195,6 +186,8 @@ public class PlayerListener implements Listener {
                                                 "Player.Order.Amount-End"));
                             }
                         }
+                    } else {
+                        return;
                     }
                 }
             }
