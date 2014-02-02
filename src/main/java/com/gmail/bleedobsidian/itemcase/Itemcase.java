@@ -226,6 +226,10 @@ public class ItemCase extends JavaPlugin {
         return this.getDescription().getVersion();
     }
 
+    public ConfigFile getConfigFile() {
+        return this.config;
+    }
+
     public WorldManager getWorldManager() {
         return this.worldManager;
     }

@@ -12,3 +12,8 @@ Updates:
     Check-For-Update: true
     # Use a custom API key for the ServerMods API. (Optional)
     API-Key: your_api_key
+   
+#Blocks that can be used for ItemCases.   
+Blocks:
+    - 44 #Slab
+    - 126 #Wooded Slabs

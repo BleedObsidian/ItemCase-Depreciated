@@ -70,51 +70,55 @@ public class PlayerListener implements Listener {
                 }
             }
 
-            if (block.getType() == Material.STEP
-                    || block.getType() == Material.WOOD_STEP) {
-                if (!this.plugin.getItemcaseManager().isItemcaseAt(
-                        block.getLocation())) {
-                    ItemStack itemStack = player.getItemInHand();
+            for (int id : this.plugin.getConfigFile().getFileConfiguration()
+                    .getIntegerList("Blocks")) {
+                if (block.getType().getId() == id) {
+                    if (!this.plugin.getItemcaseManager().isItemcaseAt(
+                            block.getLocation())) {
+                        ItemStack itemStack = player.getItemInHand();
 
-                    if (itemStack.getType() != Material.AIR) {
-                        if (player.hasPermission("itemcase.create.showcase")) {
-                            if (WorldGuard.isEnabled()
-                                    && !WorldGuard.getWorldGuardPlugin()
-                                            .canBuild(player, block)) {
+                        if (itemStack.getType() != Material.AIR) {
+                            if (player
+                                    .hasPermission("itemcase.create.showcase")) {
+                                if (WorldGuard.isEnabled()
+                                        && !WorldGuard.getWorldGuardPlugin()
+                                                .canBuild(player, block)) {
+                                    PlayerLogger
+                                            .message(
+                                                    player,
+                                                    Language.getLanguageFile()
+                                                            .getMessage(
+                                                                    "Player.ItemCase.Created-Region"));
+                                    event.setCancelled(true);
+                                    return;
+                                }
+
+                                Location location = block.getLocation();
+
+                                ItemStack itemStackCopy = itemStack.clone();
+                                itemStackCopy.setAmount(1);
+
+                                this.plugin.getItemcaseManager()
+                                        .createItemcase(itemStackCopy,
+                                                location, player);
+
+                                PlayerLogger.message(
+                                        player,
+                                        Language.getLanguageFile().getMessage(
+                                                "Player.ItemCase.Created"));
+                                event.setCancelled(true);
+                            } else {
+                                event.setCancelled(true);
+
                                 PlayerLogger
                                         .message(
                                                 player,
                                                 Language.getLanguageFile()
                                                         .getMessage(
-                                                                "Player.ItemCase.Created-Region"));
-                                event.setCancelled(true);
+                                                                "Player.ItemCase.Created-Permission"));
+
                                 return;
                             }
-
-                            Location location = block.getLocation();
-
-                            ItemStack itemStackCopy = itemStack.clone();
-                            itemStackCopy.setAmount(1);
-
-                            this.plugin.getItemcaseManager().createItemcase(
-                                    itemStackCopy, location, player);
-
-                            PlayerLogger.message(
-                                    player,
-                                    Language.getLanguageFile().getMessage(
-                                            "Player.ItemCase.Created"));
-                            event.setCancelled(true);
-                        } else {
-                            event.setCancelled(true);
-
-                            PlayerLogger
-                                    .message(
-                                            player,
-                                            Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Player.ItemCase.Created-Permission"));
-
-                            return;
                         }
                     }
                 }

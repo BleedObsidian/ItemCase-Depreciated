@@ -20,6 +20,7 @@ package com.gmail.bleedobsidian.itemcase.tasks;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
@@ -47,14 +48,14 @@ public class ItemcaseWatcher implements Runnable {
                 itemcase.spawnItem();
             }
 
-            if (!itemcase.getBlock().getType().equals(Material.STEP)
-                    && !itemcase.getBlock().getType()
-                            .equals(Material.WOOD_STEP)) {
-                itemcase.getBlock().setType(Material.STEP);
-            }
-
             if (itemcase.getItem().getItemStack().getAmount() > 1) {
                 itemcase.getItem().getItemStack().setAmount(1);
+            }
+
+            if (!ItemCase.getInstance().getConfigFile().getFileConfiguration()
+                    .getIntegerList("Blocks")
+                    .contains(itemcase.getBlock().getType().getId())) {
+                itemcase.getBlock().setType(Material.STEP);
             }
         }
     }
