@@ -26,25 +26,27 @@ public class Language {
     private static String language;
 
     public static void setLangauge(String language, JavaPlugin plugin) {
-	Language.language = language;
-	Language.languageFile = new LanguageFile(language);
+        Language.language = language;
+        Language.languageFile = new LanguageFile(language);
 
-	Language.languageFile.load(plugin);
+        Language.languageFile.load(plugin);
     }
 
     public static boolean exists(String language) {
-	if (language.equals("en-us")) {
-	    return true;
-	} else {
-	    return false;
-	}
+        if (language.equals("en-us")) {
+            return true;
+        } else if (language.equals("de-de")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static LanguageFile getLanguageFile() {
-	return Language.languageFile;
+        return Language.languageFile;
     }
 
     public static String getLanguage() {
-	return Language.language;
+        return Language.language;
     }
 }
