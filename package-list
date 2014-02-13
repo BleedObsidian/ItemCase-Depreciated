@@ -3,6 +3,7 @@ com.gmail.bleedobsidian.itemcase.command
 com.gmail.bleedobsidian.itemcase.command.commands
 com.gmail.bleedobsidian.itemcase.command.listeners
 com.gmail.bleedobsidian.itemcase.configurations
+com.gmail.bleedobsidian.itemcase.events
 com.gmail.bleedobsidian.itemcase.listeners
 com.gmail.bleedobsidian.itemcase.loggers
 com.gmail.bleedobsidian.itemcase.managers
