@@ -1,0 +1,14 @@
+com.gmail.bleedobsidian.itemcase
+com.gmail.bleedobsidian.itemcase.command
+com.gmail.bleedobsidian.itemcase.command.commands
+com.gmail.bleedobsidian.itemcase.command.listeners
+com.gmail.bleedobsidian.itemcase.configurations
+com.gmail.bleedobsidian.itemcase.listeners
+com.gmail.bleedobsidian.itemcase.loggers
+com.gmail.bleedobsidian.itemcase.managers
+com.gmail.bleedobsidian.itemcase.managers.interfaces
+com.gmail.bleedobsidian.itemcase.managers.itemcase
+com.gmail.bleedobsidian.itemcase.managers.orders
+com.gmail.bleedobsidian.itemcase.tasks
+com.gmail.bleedobsidian.itemcase.util.metrics
+com.gmail.bleedobsidian.itemcase.util.tellraw
