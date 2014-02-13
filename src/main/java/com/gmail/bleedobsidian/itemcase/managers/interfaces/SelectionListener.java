@@ -21,6 +21,19 @@ import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * An interface listener for commands needing to use itemcase selection.
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public interface SelectionListener {
+    /**
+     * An itemcase was selected.
+     * 
+     * @param player
+     *            - Player.
+     * @param itemcase
+     *            - Itemcase selected.
+     */
     public void selected(Player player, Itemcase itemcase);
 }

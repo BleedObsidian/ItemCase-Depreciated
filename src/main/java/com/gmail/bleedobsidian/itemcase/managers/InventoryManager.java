@@ -23,21 +23,51 @@ import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * A manager to keep track of open inventories for ItemCase. (Only used
+ * internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class InventoryManager {
     private HashMap<Player, Itemcase> openInventories = new HashMap<Player, Itemcase>();
 
+    /**
+     * Add inventory to open list.
+     * 
+     * @param player
+     *            - Player.
+     * @param itemcase
+     *            - Itemcase.
+     */
     public void addOpenInventory(Player player, Itemcase itemcase) {
         this.openInventories.put(player, itemcase);
     }
 
+    /**
+     * Remove inventory from open list.
+     * 
+     * @param player
+     *            - Player.
+     */
     public void removeOpenInventory(Player player) {
         this.openInventories.remove(player);
     }
 
+    /**
+     * @param player
+     *            - Player.
+     * @return - If player is viewing inventory.
+     */
     public boolean hasOpenInventory(Player player) {
         return this.openInventories.containsKey(player) ? true : false;
     }
 
+    /**
+     * @param player
+     *            - Player.
+     * @return - Get itemcase from open inventory.
+     */
     public Itemcase getItemcaseForPlayer(Player player) {
         return this.openInventories.get(player);
     }

@@ -23,8 +23,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * This API class allows you to easily send messages to the console of a
- * JavaPlugin.
+ * This class allows you to easily send messages to the console of a JavaPlugin.
+ * (Only used internally)
  * 
  * @author Jesse Prescott
  */

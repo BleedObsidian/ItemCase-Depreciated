@@ -4,11 +4,12 @@ ItemCase
 ItemCase is a Bukkit plugin allowing you to showcase items on slabs. You can also use these item cases to create shops that players can buy from.
 
 [Bukkit] Page
+[Javadoc] Documentation
 
 Source
 ------
 The latest and greatest source can be found on [GitHub].  
-Download the latest builds on [Bukkit].  
+Download the latest builds on [Bukkit].
 
 Compiling
 ---------
@@ -31,3 +32,4 @@ Coding and Pull Request Formatting
 [License]: http://www.gnu.org/licenses/gpl.html
 [GitHub]: http://github.com/BleedObsidian/ItemCase/
 [Bukkit]: http://dev.bukkit.org/bukkit-plugins/itemcase/
+[Javadoc]: http://bleedobsidian.github.io/ItemCase/

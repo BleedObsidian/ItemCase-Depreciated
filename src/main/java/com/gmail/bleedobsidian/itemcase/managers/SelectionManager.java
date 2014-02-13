@@ -25,9 +25,23 @@ import org.bukkit.entity.Player;
 import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * A manager to handle all selection listeners. (Only used internally, please
+ * use API)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class SelectionManager {
     private Map<Player, SelectionListener> pending = new HashMap<Player, SelectionListener>();
 
+    /**
+     * Receive event call.
+     * 
+     * @param player
+     *            - Player.
+     * @param itemcase
+     *            - Itemcase.
+     */
     public void call(Player player, Itemcase itemcase) {
         if (pending.containsKey(player)) {
             pending.get(player).selected(player, itemcase);
@@ -35,14 +49,35 @@ public class SelectionManager {
         }
     }
 
+    /**
+     * Add a pending selection to the open list.
+     * 
+     * @param listener
+     *            - Listener.
+     * @param player
+     *            - Player.
+     */
     public void addPendingSelection(SelectionListener listener, Player player) {
         this.pending.put(player, listener);
     }
 
+    /**
+     * Remove a pending selection to the closed list.
+     * 
+     * @param player
+     *            - Player.
+     */
     public void removePendingSelection(Player player) {
         this.pending.remove(player);
     }
 
+    /**
+     * If player is pending an itemcase selection.
+     * 
+     * @param player
+     *            - Player.
+     * @return - If pending selection or not.
+     */
     public boolean isPendingSelection(Player player) {
         return this.pending.get(player) == null ? false : true;
     }

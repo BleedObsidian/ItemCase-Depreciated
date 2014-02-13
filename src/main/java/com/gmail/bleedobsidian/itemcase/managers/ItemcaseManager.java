@@ -40,6 +40,12 @@ import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import com.gmail.bleedobsidian.itemcase.tasks.ItemcaseWatcher;
 
+/**
+ * A manager to handle all itemcases. (Only used internally, please use the API
+ * instead)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ItemcaseManager {
     private ItemCase plugin;
     private WorldManager worldManager;
@@ -48,6 +54,14 @@ public class ItemcaseManager {
 
     private List<Itemcase> itemcases = new ArrayList<Itemcase>();
 
+    /**
+     * New ItemcaseManager.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param worldManager
+     *            - WorldManager.
+     */
     public ItemcaseManager(ItemCase plugin, WorldManager worldManager) {
         this.plugin = plugin;
         this.worldManager = worldManager;
@@ -57,7 +71,18 @@ public class ItemcaseManager {
                 .scheduleSyncRepeatingTask(plugin, itemcaseWatcher, 10, 40);
     }
 
-    public void createItemcase(ItemStack itemStack, Location blockLocation,
+    /**
+     * Create new Itemcase.
+     * 
+     * @param itemStack
+     *            - ItemStack.
+     * @param blockLocation
+     *            - Bukkit block location.
+     * @param player
+     *            - Player.
+     * @return - Itemcase.
+     */
+    public Itemcase createItemcase(ItemStack itemStack, Location blockLocation,
             Player player) {
         World world = player.getWorld();
         WorldFile saveFile = this.worldManager.getWorldFile(world);
@@ -93,10 +118,21 @@ public class ItemcaseManager {
                             this.serializeInventory(itemcase.getInventory()));
 
             saveFile.getConfigFile().save(plugin);
+
+            return itemcase;
+        } else {
+            return null;
         }
     }
 
-    public void destroyItemcase(Itemcase itemcase) {
+    /**
+     * Destroy Itemcase.
+     * 
+     * @param itemcase
+     *            - Itemcase.
+     * @return - If successful.
+     */
+    public boolean destroyItemcase(Itemcase itemcase) {
         WorldFile saveFile = this.worldManager.getWorldFile(itemcase.getBlock()
                 .getWorld());
 
@@ -121,9 +157,19 @@ public class ItemcaseManager {
                                     itemStack);
                 }
             }
+
+            return true;
+        } else {
+            return false;
         }
     }
 
+    /**
+     * Save Itemcase into config.
+     * 
+     * @param itemcase
+     *            - Itemcase.
+     */
     public void saveItemcase(Itemcase itemcase) {
         World world = itemcase.getBlock().getWorld();
         WorldFile saveFile = this.worldManager.getWorldFile(world);
@@ -184,6 +230,9 @@ public class ItemcaseManager {
         }
     }
 
+    /**
+     * Load all saved itemcases and create them.
+     */
     public void loadItemcases() {
         for (World world : this.worldManager.getWorlds()) {
             WorldFile saveFile = this.worldManager.getWorldFile(world);
@@ -333,6 +382,9 @@ public class ItemcaseManager {
         }
     }
 
+    /**
+     * Unload all Itemcases.
+     */
     public void unloadItemcases() {
         List<Itemcase> itemcases = new ArrayList<Itemcase>(this.itemcases);
 
@@ -342,10 +394,18 @@ public class ItemcaseManager {
         }
     }
 
+    /**
+     * @return - List of all created Itemcases.
+     */
     public List<Itemcase> getItemcases() {
         return this.itemcases;
     }
 
+    /**
+     * @param blockLocation
+     *            - Bukkit block location.
+     * @return - If itemcase is at given location.
+     */
     public boolean isItemcaseAt(Location blockLocation) {
         for (Itemcase itemcase : this.itemcases) {
             if (itemcase.getBlock().getLocation().equals(blockLocation)) {
@@ -356,6 +416,11 @@ public class ItemcaseManager {
         return false;
     }
 
+    /**
+     * @param blockLocation
+     *            - Bukkit block.
+     * @return - Get itemcase at given location. (Null if doesn't exist)
+     */
     public Itemcase getItemcaseAt(Location blockLocation) {
         for (Itemcase itemcase : this.itemcases) {
             if (itemcase.getBlock().getLocation().equals(blockLocation)) {
@@ -366,6 +431,11 @@ public class ItemcaseManager {
         return null;
     }
 
+    /**
+     * @param inventory
+     *            - Serialize given inventory.
+     * @return - Serialized map value.
+     */
     public Map<String, Object> serializeInventory(Inventory inventory) {
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -378,6 +448,15 @@ public class ItemcaseManager {
         return map;
     }
 
+    /**
+     * @param config
+     *            - WorldFile.
+     * @param path
+     *            - Path.
+     * @param size
+     *            - Size.
+     * @return - Inventory.
+     */
     public Inventory deserializeInventory(WorldFile config, String path,
             int size) {
         Map<String, Object> map = config.getConfigFile().getFileConfiguration()

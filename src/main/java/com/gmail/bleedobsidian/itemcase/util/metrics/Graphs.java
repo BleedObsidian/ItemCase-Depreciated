@@ -3,15 +3,31 @@ package com.gmail.bleedobsidian.itemcase.util.metrics;
 import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.util.metrics.Metrics.Graph;
 
+/**
+ * A metrics graph handler. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class Graphs {
     private Metrics metrics;
     private ConfigFile config;
 
+    /**
+     * New Graphs.
+     * 
+     * @param metrics
+     *            - Metrics.
+     * @param config
+     *            - Config.
+     */
     public Graphs(Metrics metrics, ConfigFile config) {
         this.metrics = metrics;
         this.config = config;
     }
 
+    /**
+     * Create metrics graphs.
+     */
     public void createGraphs() {
         this.graph_CheckForUpdate();
     }

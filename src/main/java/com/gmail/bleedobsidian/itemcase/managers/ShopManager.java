@@ -35,11 +35,25 @@ import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatFormat;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
 
+/**
+ * A manager to handle all pending orders and transactions. (Only used
+ * internally, please use API)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ShopManager {
     private HashMap<Player, Order> orders = new HashMap<Player, Order>();
 
     private final DecimalFormat format = new DecimalFormat("0.00");
 
+    /**
+     * Add new pending order.
+     * 
+     * @param itemcase
+     *            - Itemcase.
+     * @param player
+     *            - Player.
+     */
     public void addPendingOrder(Itemcase itemcase, Player player) {
         PlayerLogger.message(
                 player,
@@ -246,6 +260,12 @@ public class ShopManager {
         this.orders.put(player, new Order(itemcase, player));
     }
 
+    /**
+     * Remove pending order.
+     * 
+     * @param player
+     *            - Player.
+     */
     public void removePendingOrder(Player player) {
         this.getOrder(player).cancel();
         this.orders.remove(player);
@@ -255,10 +275,24 @@ public class ShopManager {
                         "Player.ItemCase.Start-Chat"));
     }
 
+    /**
+     * If player has a current pending order.
+     * 
+     * @param player
+     *            - Player.
+     * @return - If player has current pending order.
+     */
     public boolean isPendingOrder(Player player) {
         return this.orders.containsKey(player) ? true : false;
     }
 
+    /**
+     * Get current pending order.
+     * 
+     * @param player
+     *            - Player.
+     * @return - Current pending order (Null if no order pending)
+     */
     public Order getOrder(Player player) {
         if (this.isPendingOrder(player)) {
             return this.orders.get(player);
@@ -267,6 +301,11 @@ public class ShopManager {
         }
     }
 
+    /**
+     * Get all current orders.
+     * 
+     * @return - List of all orders.
+     */
     public HashMap<Player, Order> getOrders() {
         return this.orders;
     }

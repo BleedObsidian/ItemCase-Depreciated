@@ -24,13 +24,27 @@ import com.gmail.bleedobsidian.itemcase.command.commands.StorageCommand;
 import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * Storage Command Selection Listen
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class StorageSelectionListener implements SelectionListener {
     private final ItemCase plugin;
 
+    /**
+     * New StorageSelectionListener.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     */
     public StorageSelectionListener(ItemCase plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * On selection.
+     */
     public void selected(Player player, Itemcase itemcase) {
         StorageCommand.selected(plugin, player, itemcase);
     }

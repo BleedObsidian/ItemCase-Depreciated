@@ -28,7 +28,22 @@ import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 
+/**
+ * Modify Command. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ModifyCommand {
+    /**
+     * Run command.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param player
+     *            - Player.
+     * @param args
+     *            - Arguments.
+     */
     public static void modify(ItemCase plugin, Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
@@ -164,6 +179,16 @@ public class ModifyCommand {
         }
     }
 
+    /**
+     * Received selection.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param player
+     *            - Player.
+     * @param itemcase
+     *            - Selected Itemcase.
+     */
     public static void selected(ItemCase plugin, Player player, String[] args,
             Itemcase itemcase, ItemcaseType type) {
         LanguageFile language = Language.getLanguageFile();
@@ -199,6 +224,16 @@ public class ModifyCommand {
         plugin.getItemcaseManager().saveItemcase(itemcase);
     }
 
+    /**
+     * Received selection.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param player
+     *            - Player.
+     * @param itemcase
+     *            - Selected Itemcase.
+     */
     public static void selectedInfinite(ItemCase plugin, Player player,
             String[] args, Itemcase itemcase) {
         LanguageFile language = Language.getLanguageFile();

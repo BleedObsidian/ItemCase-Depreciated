@@ -37,6 +37,11 @@ import com.gmail.bleedobsidian.itemcase.managers.WorldManager;
 import com.gmail.bleedobsidian.itemcase.util.metrics.Graphs;
 import com.gmail.bleedobsidian.itemcase.util.metrics.Metrics;
 
+/**
+ * Main ItemCase plugin.
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ItemCase extends JavaPlugin {
     private static ItemCase instance;
 
@@ -50,10 +55,15 @@ public class ItemCase extends JavaPlugin {
     private ShopManager shopManager;
     private InventoryManager inventoryManager;
 
+    private ItemCaseAPI api;
+
     @Override
     public void onEnable() {
         // Set Instance
         ItemCase.instance = this;
+
+        // Set API
+        this.api = new ItemCaseAPI(this);
 
         // Setup Logger
         PluginLogger.setJavaPlugin(this);
@@ -218,38 +228,72 @@ public class ItemCase extends JavaPlugin {
                 .registerEvents(new InventoryListener(this), this);
     }
 
+    /**
+     * @return - Running instance of ItemCase.
+     */
     public static ItemCase getInstance() {
         return ItemCase.instance;
     }
 
+    /**
+     * @return - ItemCase API.
+     */
+    public ItemCaseAPI getAPI() {
+        return this.api;
+    }
+
+    /**
+     * @return - Version of ItemCase.
+     */
     public String getVersion() {
         return this.getDescription().getVersion();
     }
 
+    /**
+     * @return - Configuration File.
+     */
     public ConfigFile getConfigFile() {
         return this.config;
     }
 
+    /**
+     * @return - WorldManager.
+     */
     public WorldManager getWorldManager() {
         return this.worldManager;
     }
 
+    /**
+     * @return - ItemcaseManager.
+     */
     public ItemcaseManager getItemcaseManager() {
         return this.itemcaseManager;
     }
 
+    /**
+     * @return - SelectionManager.
+     */
     public SelectionManager getSelectionManager() {
         return this.selectionManager;
     }
 
+    /**
+     * @return - AmountManager.
+     */
     public AmountManager getAmountManager() {
         return this.amountManager;
     }
 
+    /**
+     * @return - ShopManager.
+     */
     public ShopManager getShopManager() {
         return this.shopManager;
     }
 
+    /**
+     * @return - InventoryManager.
+     */
     public InventoryManager getInventoryManager() {
         return this.inventoryManager;
     }

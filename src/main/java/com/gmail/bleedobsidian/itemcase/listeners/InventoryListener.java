@@ -24,9 +24,20 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 
+/**
+ * Inventory related event listener. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class InventoryListener implements Listener {
     private ItemCase plugin;
 
+    /**
+     * New InventoryListener.
+     * 
+     * @param plugin
+     *            - ItemCase Plugin.
+     */
     public InventoryListener(ItemCase plugin) {
         this.plugin = plugin;
     }

@@ -21,7 +21,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
- * This API class allows you to easily send messages to a player.
+ * This class allows you to easily send messages to a player. (Only used internally)
  * 
  * @author Jesse Prescott
  */

@@ -28,10 +28,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
 
+/**
+ * A manager to handle all world configs. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class WorldManager {
     private List<World> worlds = new ArrayList<World>();
     private HashMap<String, WorldFile> worldSaveFiles = new HashMap<String, WorldFile>();
 
+    /**
+     * New WorldManager.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     */
     public WorldManager(JavaPlugin plugin) {
         this.worlds = plugin.getServer().getWorlds();
 
@@ -42,6 +53,14 @@ public class WorldManager {
         }
     }
 
+    /**
+     * Load world files.
+     * 
+     * @param plugin
+     *            - ItemCase Plugin.
+     * @throws IOException
+     *             - Failed to load files.
+     */
     public void load(JavaPlugin plugin) throws IOException {
         for (Map.Entry<String, WorldFile> entry : this.worldSaveFiles
                 .entrySet()) {
@@ -49,14 +68,31 @@ public class WorldManager {
         }
     }
 
+    /**
+     * @return - All worlds.
+     */
     public List<World> getWorlds() {
         return this.worlds;
     }
 
+    /**
+     * Get config for given world.
+     * 
+     * @param world
+     *            - World.
+     * @return - WorldFile.
+     */
     public WorldFile getWorldFile(World world) {
         return this.worldSaveFiles.get(world.getName());
     }
 
+    /**
+     * Get config for given world.
+     * 
+     * @param world
+     *            - World Name.
+     * @return - WorldFile.
+     */
     public WorldFile getWorldFile(String worldName) {
         return this.worldSaveFiles.get(worldName);
     }

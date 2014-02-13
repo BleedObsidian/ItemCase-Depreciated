@@ -21,10 +21,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 
+/**
+ * A Language Handler to manage the dialect of ItemCase.
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class Language {
     private static LanguageFile languageFile;
     private static String language;
 
+    /**
+     * Set locale.
+     * 
+     * @param language
+     *            - Locale string.
+     * @param plugin
+     *            - ItemCase plugin.
+     */
     public static void setLangauge(String language, JavaPlugin plugin) {
         Language.language = language;
         Language.languageFile = new LanguageFile(language);
@@ -32,6 +45,11 @@ public class Language {
         Language.languageFile.load(plugin);
     }
 
+    /**
+     * @param language
+     *            - Locale string.
+     * @return - If locale exists.
+     */
     public static boolean exists(String language) {
         if (language.equals("en-us")) {
             return true;
@@ -42,10 +60,16 @@ public class Language {
         }
     }
 
+    /**
+     * @return - LanguageFile for set language.
+     */
     public static LanguageFile getLanguageFile() {
         return Language.languageFile;
     }
 
+    /**
+     * @return - Set Language.
+     */
     public static String getLanguage() {
         return Language.language;
     }

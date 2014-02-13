@@ -17,6 +17,11 @@
 
 package com.gmail.bleedobsidian.itemcase.managers.itemcase;
 
+/**
+ * Itemcase Type.
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public enum ItemcaseType {
     SHOWCASE, SHOP;
 }

@@ -23,7 +23,22 @@ import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 
+/**
+ * Cancel command. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class CancelCommand {
+    /**
+     * Run command.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param player
+     *            - Player.
+     * @param args
+     *            - Arguments.
+     */
     public static void cancel(ItemCase plugin, Player player, String[] args) {
         if (plugin.getSelectionManager().isPendingSelection(player)) {
             plugin.getSelectionManager().removePendingSelection(player);

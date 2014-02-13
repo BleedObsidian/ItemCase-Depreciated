@@ -22,6 +22,11 @@ import org.bukkit.plugin.Plugin;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 
+/**
+ * Itemcase item metadata value. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ItemcaseData implements MetadataValue {
     public boolean asBoolean() {
         return true;

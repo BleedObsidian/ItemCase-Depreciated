@@ -32,9 +32,20 @@ import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * Block related event listener. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class BlockListener implements Listener {
     private ItemCase plugin;
 
+    /**
+     * New BlockListener.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     */
     public BlockListener(ItemCase plugin) {
         this.plugin = plugin;
     }

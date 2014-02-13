@@ -25,11 +25,26 @@ import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 
+/**
+ * Modify Command Selection Listener. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ModifySelectionListener implements SelectionListener {
     private final ItemCase plugin;
     private ItemcaseType type;
     private final String[] args;
 
+    /**
+     * New ModifySelectionListener.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param type
+     *            - ItemcaseType.
+     * @param args
+     *            - Arguments.
+     */
     public ModifySelectionListener(ItemCase plugin, ItemcaseType type,
             String[] args) {
         this.plugin = plugin;
@@ -37,11 +52,22 @@ public class ModifySelectionListener implements SelectionListener {
         this.args = args;
     }
 
+    /**
+     * New ModifySelectionListener.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param args
+     *            - Arguments.
+     */
     public ModifySelectionListener(ItemCase plugin, String[] args) {
         this.plugin = plugin;
         this.args = args;
     }
 
+    /**
+     * On selection.
+     */
     public void selected(Player player, Itemcase itemcase) {
         if (this.type != null) {
             ModifyCommand.selected(plugin, player, args, itemcase, type);

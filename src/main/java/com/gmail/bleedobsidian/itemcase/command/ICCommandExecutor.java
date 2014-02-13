@@ -32,13 +32,27 @@ import com.gmail.bleedobsidian.itemcase.command.commands.StorageCommand;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 
+/**
+ * Main command executor. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ICCommandExecutor implements CommandExecutor {
     private final ItemCase plugin;
 
+    /**
+     * Create new command executor.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     */
     public ICCommandExecutor(ItemCase plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * On command execute.
+     */
     public boolean onCommand(CommandSender sender, Command command,
             String label, String[] args) {
         if (sender instanceof Player) {

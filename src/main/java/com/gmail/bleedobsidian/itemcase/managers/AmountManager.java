@@ -25,23 +25,54 @@ import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 
+/**
+ * A manager to handle amount setting of orders. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class AmountManager {
     private final ItemCase plugin;
 
     private ArrayList<Player> pendingAmounts = new ArrayList<Player>();
 
+    /**
+     * New AmountManager.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     */
     public AmountManager(ItemCase plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Add pending amount listener.
+     * 
+     * @param player
+     *            - Player.
+     */
     public void addPendingAmount(Player player) {
         this.pendingAmounts.add(player);
     }
 
+    /**
+     * Remove pending amount listener.
+     * 
+     * @param player
+     *            - Player.
+     */
     public void removePendingAmount(Player player) {
         this.pendingAmounts.remove(player);
     }
 
+    /**
+     * Set the amount of pending amount.
+     * 
+     * @param player
+     *            - Player.
+     * @param amount
+     *            - Given amount.
+     */
     public void setPendingAmount(Player player, int amount) {
         this.plugin.getShopManager().getOrder(player).setAmount(amount);
         this.removePendingAmount(player);
@@ -56,6 +87,11 @@ public class AmountManager {
                         .getMessage("Player.Order.Amount-End"));
     }
 
+    /**
+     * @param player
+     *            - Player.
+     * @return - If order is awaiting amount value from player.
+     */
     public boolean isPendingAmount(Player player) {
         return this.pendingAmounts.contains(player) ? true : false;
     }

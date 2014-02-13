@@ -25,11 +25,24 @@ import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * Represents an order.
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class Order {
     private final Itemcase itemcase;
     private final int taskID;
     private int amount = 1;
 
+    /**
+     * New order.
+     * 
+     * @param itemcase
+     *            - Itemcase.
+     * @param player
+     *            - Player.
+     */
     public Order(Itemcase itemcase, final Player player) {
         this.itemcase = itemcase;
 
@@ -53,20 +66,33 @@ public class Order {
                 }, 600).getTaskId();
     }
 
+    /**
+     * Cancel order.
+     */
     public void cancel() {
         if (Bukkit.getScheduler().isQueued(this.taskID)) {
             Bukkit.getScheduler().cancelTask(this.taskID);
         }
     }
 
+    /**
+     * @return - Itemcase.
+     */
     public Itemcase getItemcase() {
         return itemcase;
     }
 
+    /**
+     * @return - Set amount of items.
+     */
     public int getAmount() {
         return amount;
     }
 
+    /**
+     * @param amount
+     *            - Amount player entered.
+     */
     public void setAmount(int amount) {
         this.amount = amount;
     }

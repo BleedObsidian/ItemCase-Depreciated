@@ -34,9 +34,24 @@ import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * Order Command. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class OrderCommand {
     private static final DecimalFormat format = new DecimalFormat("0.00");
 
+    /**
+     * Run command.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param player
+     *            - Player.
+     * @param args
+     *            - Arguments.
+     */
     public static void order(ItemCase plugin, Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 

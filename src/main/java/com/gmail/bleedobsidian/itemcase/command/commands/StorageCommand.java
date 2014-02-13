@@ -26,7 +26,22 @@ import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * Storage Command. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class StorageCommand {
+    /**
+     * Run command.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param player
+     *            - Player.
+     * @param args
+     *            - Arguments.
+     */
     public static void storage(ItemCase plugin, Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
@@ -46,6 +61,16 @@ public class StorageCommand {
                 language.getMessage("Player.Storage.Cancel"));
     }
 
+    /**
+     * Received selection.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     * @param player
+     *            - Player.
+     * @param itemcase
+     *            - Selected Itemcase.
+     */
     public static void selected(ItemCase plugin, Player player,
             Itemcase itemcase) {
         LanguageFile language = Language.getLanguageFile();

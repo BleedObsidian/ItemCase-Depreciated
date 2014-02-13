@@ -25,9 +25,20 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * World related event listener. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class WorldListener implements Listener {
     private ItemCase plugin;
 
+    /**
+     * New WorldListener.
+     * 
+     * @param plugin
+     *            - ItemCase plugin.
+     */
     public WorldListener(ItemCase plugin) {
         this.plugin = plugin;
     }

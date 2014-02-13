@@ -24,9 +24,20 @@ import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
+/**
+ * A bukkit task to watch and monitor all itemcases. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class ItemcaseWatcher implements Runnable {
     private ItemcaseManager itemcaseManager;
 
+    /**
+     * New ItemcaseWatcher.
+     * 
+     * @param itemcaseManager
+     *            - ItemcaseManager.
+     */
     public ItemcaseWatcher(ItemcaseManager itemcaseManager) {
         this.itemcaseManager = itemcaseManager;
     }

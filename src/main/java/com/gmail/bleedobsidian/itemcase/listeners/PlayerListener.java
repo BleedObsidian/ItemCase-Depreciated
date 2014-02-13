@@ -46,9 +46,20 @@ import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatFormat;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
 
+/**
+ * Player related event listener. (Only used internally)
+ * 
+ * @author BleedObsidian (Jesse Prescott)
+ */
 public class PlayerListener implements Listener {
     private ItemCase plugin;
 
+    /**
+     * New PlayerListener.
+     * 
+     * @param plugin
+     *            - ItemCase Plugin.
+     */
     public PlayerListener(ItemCase plugin) {
         this.plugin = plugin;
     }
