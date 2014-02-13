@@ -19,6 +19,7 @@ package com.gmail.bleedobsidian.itemcase.managers.orders;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
@@ -32,8 +33,10 @@ import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
  */
 public class Order {
     private final Itemcase itemcase;
-    private final int taskID;
+    private final ItemStack item;
     private int amount = 1;
+
+    private final int taskID;
 
     /**
      * New order.
@@ -43,8 +46,9 @@ public class Order {
      * @param player
      *            - Player.
      */
-    public Order(Itemcase itemcase, final Player player) {
+    public Order(Itemcase itemcase, final Player player, ItemStack item) {
         this.itemcase = itemcase;
+        this.item = item;
 
         this.taskID = Bukkit.getScheduler()
                 .runTaskLater(ItemCase.getInstance(), new Runnable() {
@@ -95,5 +99,12 @@ public class Order {
      */
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    /**
+     * @return - ItemStack.
+     */
+    public ItemStack getItem() {
+        return item;
     }
 }

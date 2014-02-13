@@ -257,7 +257,8 @@ public class ShopManager {
                 Language.getLanguageFile().getMessage(
                         "Player.ItemCase.Shop-Message8"));
 
-        this.orders.put(player, new Order(itemcase, player));
+        this.orders.put(player,
+                new Order(itemcase, player, itemcase.getItemStack()));
     }
 
     /**

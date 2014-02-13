@@ -31,6 +31,8 @@ import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.Vault;
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
+import com.gmail.bleedobsidian.itemcase.events.ItemcaseBuyEvent;
+import com.gmail.bleedobsidian.itemcase.events.ItemcaseSellEvent;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
@@ -125,6 +127,15 @@ public class OrderCommand {
             if (!(balance >= price)) {
                 PlayerLogger.message(player,
                         language.getMessage("Player.Order.Balance-Error"));
+                return;
+            }
+
+            ItemcaseBuyEvent event = new ItemcaseBuyEvent(plugin
+                    .getShopManager().getOrder(player).getItemcase(), player,
+                    plugin.getShopManager().getOrder(player));
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
                 return;
             }
 
@@ -325,6 +336,15 @@ public class OrderCommand {
                     return;
                 }
 
+                ItemcaseSellEvent event = new ItemcaseSellEvent(plugin
+                        .getShopManager().getOrder(player).getItemcase(),
+                        player, plugin.getShopManager().getOrder(player));
+                Bukkit.getPluginManager().callEvent(event);
+
+                if (event.isCancelled()) {
+                    return;
+                }
+
                 EconomyResponse responseOwner = Vault.getEconomy()
                         .withdrawPlayer(itemcase.getOwnerName(),
                                 player.getWorld().getName(), price);
@@ -408,6 +428,15 @@ public class OrderCommand {
                         }
                     }
                 }
+            }
+
+            ItemcaseBuyEvent event = new ItemcaseBuyEvent(plugin
+                    .getShopManager().getOrder(player).getItemcase(), player,
+                    plugin.getShopManager().getOrder(player));
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
+                return;
             }
 
             EconomyResponse response = Vault.getEconomy().depositPlayer(

@@ -35,6 +35,8 @@ import org.bukkit.inventory.ItemStack;
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
+import com.gmail.bleedobsidian.itemcase.events.ItemcaseCreateEvent;
+import com.gmail.bleedobsidian.itemcase.events.ItemcaseDestroyEvent;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
@@ -91,6 +93,14 @@ public class ItemcaseManager {
             Itemcase itemcase = new Itemcase(itemStack, blockLocation,
                     player.getName());
 
+            ItemcaseCreateEvent event = new ItemcaseCreateEvent(itemcase,
+                    player);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
+                return null;
+            }
+
             this.itemcases.add(itemcase);
 
             String path = "Itemcases." + blockLocation.getBlockX() + "/"
@@ -130,13 +140,23 @@ public class ItemcaseManager {
      * 
      * @param itemcase
      *            - Itemcase.
+     * @param player
+     *            - Player that caused event (Can be null)
      * @return - If successful.
      */
-    public boolean destroyItemcase(Itemcase itemcase) {
+    public boolean destroyItemcase(Itemcase itemcase, Player player) {
         WorldFile saveFile = this.worldManager.getWorldFile(itemcase.getBlock()
                 .getWorld());
 
         if (saveFile != null) {
+            ItemcaseDestroyEvent event = new ItemcaseDestroyEvent(itemcase,
+                    player);
+            Bukkit.getPluginManager().callEvent(event);
+
+            if (event.isCancelled()) {
+                return false;
+            }
+
             itemcase.despawnItem();
             this.itemcases.remove(itemcase);
 

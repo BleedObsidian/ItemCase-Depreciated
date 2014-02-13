@@ -63,7 +63,7 @@ public class BlockListener implements Listener {
                             || event.getPlayer().hasPermission(
                                     "itemcase.destroy.other")) {
                         this.plugin.getItemcaseManager().destroyItemcase(
-                                itemcase);
+                                itemcase, event.getPlayer());
 
                         PlayerLogger.message(
                                 event.getPlayer(),
