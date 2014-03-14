@@ -22,6 +22,7 @@ import java.util.UUID;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
@@ -89,8 +90,12 @@ public class Itemcase {
                     blockLocation.getBlockY() + 1.5,
                     blockLocation.getBlockZ() + 0.5);
 
+            net.minecraft.server.v1_7_R1.ItemStack stack = CraftItemStack
+                    .asNMSCopy(this.displayStack);
+            stack.count = 0;
+
             this.item = blockLocation.getWorld().dropItem(itemLocation,
-                    this.displayStack);
+                    CraftItemStack.asBukkitCopy(stack));
             this.item.setVelocity(new Vector(0.0, 0.1, 0.0));
             this.item.setMetadata("ItemCase", new ItemcaseData());
 
