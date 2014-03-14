@@ -299,10 +299,12 @@ public class ItemcaseManager {
                         Location location = new Location(world, locations[0],
                                 locations[1], locations[2]);
 
-                        if (!location.getBlock().getType()
-                                .equals(Material.STEP)
-                                && !location.getBlock().getType()
-                                        .equals(Material.WOOD_STEP)) {
+                        if (!ItemCase
+                                .getInstance()
+                                .getConfigFile()
+                                .getFileConfiguration()
+                                .getIntegerList("Blocks")
+                                .contains(location.getBlock().getType().getId())) {
                             location.getBlock().setType(Material.STEP);
                         }
 
