@@ -52,6 +52,8 @@ public class HelpCommand {
         PlayerLogger.message(player,
                 language.getMessage("Player.Help.Message1"));
         PlayerLogger.message(player,
+                language.getMessage("Player.Help.Message10"));
+        PlayerLogger.message(player,
                 language.getMessage("Player.Help.Message2"));
         PlayerLogger.message(player,
                 language.getMessage("Player.Help.Message3"));

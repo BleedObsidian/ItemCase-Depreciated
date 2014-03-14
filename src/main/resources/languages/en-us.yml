@@ -27,6 +27,7 @@ Player:
         Created: "(GREEN)Itemcase created."
         Created-Permission: "(RED)You don't have permission to create an itemcase."
         Created-Region: "(RED)You don't have permission to create an itemcase here."
+        Created-Block: "(RED)This block can't be used as an ItemCase."
         Destroyed: "(GREEN)Itemcase destroyed."
         Destroyed-Permission: "(RED)You don't own this itemcase!"
         Shop-Order-Processing1: "(RED)You already have an order processing."
@@ -100,6 +101,7 @@ Player:
         Error: "(RED)You are not currently selecting an itemcase."
     Help:
         Message1: "(GREEN)--------------- ItemCase Help ---------------"
+        Message10: "(GOLD)/ic create (GREEN)| Create new ItemCase."
         Message2: "(GOLD)/ic storage (GREEN)| Open a finite shops inventory."
         Message3: "(GOLD)/ic modify [infinite/showcase/shop] (GREEN)| Change options of itemcase."
         Message4: "(GOLD)/ic cancel (GREEN)| Cancel selection of itemcase."

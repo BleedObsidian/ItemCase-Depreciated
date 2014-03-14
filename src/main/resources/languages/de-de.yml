@@ -27,6 +27,7 @@ Player:
         Created: "(GREEN)ItemCase erstellt."
         Created-Permission: "(RED)Du hast keine Berechtigung für das Erstellen eines ItemCases."
         Created-Region: "(RED)Du hast keine Berechtigung für das Erstellen eines ItemCases in dieser Region."
+        Created-Block: "(RED)Dieser Block kann nicht als ItemCase verwendet werden."
         Destroyed: "(GREEN)ItemCase gelöscht."
         Destroyed-Permission: "(RED)Du besitzt dieses ItemCase nicht!"
         Shop-Order-Processing1: "(RED)Du bestellst bereits etwas."
@@ -99,6 +100,7 @@ Player:
         Error: "(RED)Es wurde kein ItemCase ausgewählt."
     Help:
         Message1: "(GREEN)--------------- ItemCase Hilfe ---------------"
+        Message10: "(GOLD)/ic create (GREEN)| Erstellen Sie neue ItemCase."
         Message2: "(GOLD)/ic storage (GREEN)| Öffne ein Shop-Lager"
         Message3: "(GOLD)/ic modify [infinite/showcase/shop] (GREEN)| Ändere den Typ des ItemCases."
         Message4: "(GOLD)/ic cancel (GREEN)| Abbruch der Auswahl eines ItemCases."

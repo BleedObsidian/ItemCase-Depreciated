@@ -5,6 +5,11 @@
 
 #Locale: en-us, de-de
 Locale: en-us
+
+#General Options
+Options:
+    #Disable ItemCase creation via sneaking and right clicking
+    Disable-Sneak-Create: false
     
 #Update options
 Updates:

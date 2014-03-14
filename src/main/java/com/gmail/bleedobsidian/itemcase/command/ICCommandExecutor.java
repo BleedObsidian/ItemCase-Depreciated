@@ -25,6 +25,7 @@ import org.bukkit.entity.Player;
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.command.commands.CancelCommand;
+import com.gmail.bleedobsidian.itemcase.command.commands.CreateCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.HelpCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.OrderCommand;
@@ -79,7 +80,9 @@ public class ICCommandExecutor implements CommandExecutor {
     }
 
     private boolean proccessCommand(Player player, String[] args) {
-        if (args[0].equalsIgnoreCase("modify")) {
+        if (args[0].equalsIgnoreCase("create")) {
+            CreateCommand.create(plugin, player, args);
+        } else if (args[0].equalsIgnoreCase("modify")) {
             ModifyCommand.modify(plugin, player, args);
         } else if (args[0].equalsIgnoreCase("order")) {
             OrderCommand.order(plugin, player, args);
