@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -108,7 +109,7 @@ public class ItemcaseManager {
                     + blockLocation.getBlockZ();
 
             saveFile.getConfigFile().getFileConfiguration()
-                    .set(path + ".Owner", player.getName());
+                    .set(path + ".Owner", player.getUniqueId());
 
             saveFile.getConfigFile().getFileConfiguration()
                     .set(path + ".Item", itemStack.serialize());
@@ -308,11 +309,11 @@ public class ItemcaseManager {
                             location.getBlock().setType(Material.STEP);
                         }
 
-                        String playerName = saveFile.getConfigFile()
+                        String ownerString = saveFile.getConfigFile()
                                 .getFileConfiguration()
                                 .getString(path + ".Owner");
 
-                        if (playerName == null) {
+                        if (ownerString == null) {
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
@@ -326,6 +327,21 @@ public class ItemcaseManager {
                                                             "Console.Errors.Itemcase-Loader.Owner-Error"),
                                             true);
                             continue;
+                        }
+
+                        String playerName;
+                        try {
+                            playerName = Bukkit.getOfflinePlayer(
+                                    UUID.fromString(ownerString)).getName();
+                        } catch (IllegalArgumentException e) {
+                            playerName = ownerString;
+
+                            saveFile.getConfigFile()
+                                    .getFileConfiguration()
+                                    .set(path + ".Owner",
+                                            Bukkit.getOfflinePlayer(ownerString)
+                                                    .getUniqueId().toString());
+                            saveFile.getConfigFile().save(plugin);
                         }
 
                         Map<String, Object> itemValues;
