@@ -55,6 +55,8 @@ public class Language {
             return true;
         } else if (language.equals("de-de")) {
             return true;
+        } else if (language.equals("nl-nl")) {
+            return true;
         } else {
             return false;
         }

@@ -1,0 +1,115 @@
+#-------------------- EN-US --------------------#
+
+Console:
+    Enabled: ItemCase v%Version% ingeschakeld!
+    Disabled: ItemCase v%Version% uitgeschakeld!
+    Update-Available: Een nieuwere versie van Itemcase is beschikbaar!
+    Itemcases-Created: Opgeslagen Itemcases geladen en gemaakt.
+    Itemcases-Destroyed: Itemcases opgeslagen en vernietigd.
+    Errors:
+        Itemcase-Loader:
+            Load-Error: Kon een opgeslagen Itemcase niet laden.
+            Parse-Error: Kon opgeslagen locatie van een Itemcase niet analyseren.
+            Owner-Error: Kon opgeslagen eigenaar van een Itemcase niet laden.
+            Item-Error: Kon opgeslagen item data van Itemcase niet laden.
+    Command: Je moet een speler zijn om dit commando uit te voeren.
+    Vault:
+        Successful: Vault geladen.
+        Unsuccessful: Kon Vault niet laden. (Je moet ook Vault en een Economy plugin installeren.)
+    WorldGuard:
+        Successful: WorldGuard geladen.
+    Metrics:
+        Successful: Metrics gestart.
+        Unsuccessful: Kon Metrics niet start.
+        Disabled: Plugin Metrics uitgeschakeld!
+Player:
+    ItemCase:
+        Created: "(GREEN)Itemcase gemaakt."
+        Created-Permission: "(RED)Je hebt geen permissie om een Itemcase te maken."
+        Created-Region: "(RED)Je hebt geen permissie om hier een Itemcase te maken."
+        Created-Block: "(RED)Dit blok kan niet gebruikt worden als Itemcase."
+        Destroyed: "(GREEN)Itemcase vernietigd."
+        Destroyed-Permission: "(RED)Jij beheert deze Itemcase niet!"
+        Shop-Order-Processing1: "(RED)Je bent al met een andere bestelling bezig."
+        Stop-Chat: "(GREEN)Chat gepauseerd..."
+        Start-Chat: "(GREEN)Chat hervat..."
+        Cancel-Order-Button: "[ANNULEER BESTELLING]"
+        Cancel-Order-Button-Hover: "Annuleer huidige bestelling."
+        Shop-Message1: "(GREEN)----------------- ItemCase -----------------"
+        Shop-Message2: "(GREEN)Item: (GOLD)%Item%"
+        Shop-Message3: "(GREEN)Inkoopprijs: (GOLD)%Cost% (GREEN)%Currency%"
+        Shop-Message4: "(GREEN)Verkoopprijs: (GOLD)%Cost% (GREEN)%Currency%"
+        Shop-Message5: "Hoeveelheid: "
+        Shop-Message6: "Koop: "
+        Shop-Message7: "Verkoop: "
+        Shop-Message8: "(GREEN)-------------------------------------------"
+        Shop-Amount-Button: "[STEL HOEVEELHEID IN]"
+        Shop-Amount-Button-Hover: "Verander de hoeveelheid items om te (ver)kopen."
+        Shop-Buy-Button: "[KOOP]"
+        Shop-Buy-Button-Hover: "Klik om de huidige bestelling te kopen."
+        Shop-Sell-Button: "[VERKOOP]"
+        Shop-Sell-Button-Hover: "Klik om de huidige bestelling te verkopen."
+        Button-Idicator: " <--- Knop (Klikbaar)"
+    Modify:
+        Usage: "(RED)Gebruik: (GOLD)/ic modify [showcase/shop/infinite]"
+        Unknown-Type: "(RED)Soorten: (GOLD)showcase(RED), (GOLD)shop(RED)."
+        Select: "(GREEN)Selecteer een Itemcase om aan te passen."
+        Cancel: "(GREEN)Om te annuleren: (GOLD)/ic cancel"
+        Modify-Permission: "(RED)Jij beheert deze itemcase niet!"
+        Shop:
+            Usage: "(RED)Gebruik: (GOLD)/ic modify shop [buy/sell] [price]"
+            Invalid-Type: "(RED)Ongeldige soort (GOLD)%type%(RED). (GOLD)BUY (RED)of (GOLD)SELL(RED)."
+            Invalid-Price: "(RED)Geen geldige prijs."
+            Buy: "(GREEN)Geselecteerde itemcase maakt het nu mogelijk voor spelers om items te kopen."
+            Sell: "(GREEN)Geselecteerde itemcase maakt het nu mogelijk voor spelers om items te verkopen."
+        Showcase:
+            Usage: "(RED)Gebruik: (GOLD)/ic modify showcase"
+            Successful: "(GREEN)Geselecteerde Itemcase is nu een Showcase."
+        Infinite:
+            Usage: "(RED)Gebruik: (GOLD)/ic modify infinite [true/false]"
+            Successful: "(GREEN)Geselecteerde Itemcase is nu infinite: (GOLD)%Boolean%(GREEN)."
+    Order:
+        Usage: "(RED)Gebruik: (GOLD)/ic order [amount/buy/sell]"
+        No-Order: "(RED)Momenteel geen bestelling bezig."
+        Already-Amount: "(RED)Je bent al bezig met de hoeveelheid in te stellen..."
+        Amount-Message: "(GREEN)Voer hoeveelheid in:"
+        Amount-Set: "(GREEN)Veranderde bestelling voor (GOLD)%Amount% (GREEN)item(s)."
+        Amount-End: "(GREEN)---------------------------------------"
+        Amount-Error1: "(RED)Ongeldige hoeveelheid."
+        Amount-Error2: "(RED)Instellen van hoeveelheid geannuleerd."
+        Balance-Error: "(RED)Je hebt niet genoeg geld."
+        Item-Error: "(RED)Je hebt niet genoeg items."
+        Transaction-Error: "(RED)Transactie gefaald."
+        Bought-Items: "(GOLD)%Amount% %Item%(GREEN) gekocht."
+        Sold-Items: "(GOLD)%Amount% %Item%(GREEN) verkocht."
+        Withdraw: "(GOLD)%Amount% (GREEN)%Currency% opgenomen van je rekening."
+        Deposit: "(GOLD)%Amount% (GREEN)%Currency% toegevoegd aan je rekening."
+        Canceled: "(GREEN)Bestelling geannuleerd."
+        Timeout: "(RED)Bestelling time-out."
+        No-Stock: "(RED)Sorry, deze Itemcase heeft niet genoeg voorraad."
+        Owner-Balance: "(RED)Sorry, de eigenaar van deze Itemcase heeft niet genoeg geld."
+        Owner-Buy: "(GREEN)Speler (GOLD)%Player% (GREEN)kocht (GOLD)%Amount% %Item%(GREEN)."
+        Owner-Sell: "(GREEN)Speler (GOLD)%Player% (GREEN)verkocht (GOLD)%Amount% %Item%(GREEN)."
+    Storage:
+        Infinite: "(RED)Deze Itemcase is infinite."
+        Not-Shop: "(RED)Itemcase moet een winkel zijn."
+        Select: "(GREEN)Selecteer een Itemcase om de voorraad te bekijken."
+        Cancel: "(GREEN)Om te annuleren: (GOLD)/ic cancel"
+        Storage-Permission: "(RED)Jij beheert deze Itemcase niet!"
+    Cancel:
+        Canceled: "(GREEN)Itemcase selectie geannuleerd."
+        Error: "(RED)Je bent momenteel niet bezig met het selecteren van een Itemcase."
+    Help:
+        Message1: "(GREEN)--------------- ItemCase Help ---------------"
+        Message10: "(GOLD)/ic create (GREEN)| Maak een nieuwe Itemcase."
+        Message2: "(GOLD)/ic storage (GREEN)| Open de inventaris van een finite winkel."
+        Message3: "(GOLD)/ic modify [infinite/showcase/shop] (GREEN)| Opties van Itemcase wijzigen."
+        Message4: "(GOLD)/ic cancel (GREEN)| Annuleer Itemcase selectie."
+        Message5: "(GOLD)/ic order amount (GREEN)| Stel de hoeveelheid items in om te bestellen."
+        Message6: "(GOLD)/ic order buy (GREEN)| Koop de huidige bestelling."
+        Message7: "(GOLD)/ic order sell (GREEN)| Verkoop de huidige bestelling."
+        Message8: "(GOLD)/ic order cancel (GREEN)| Annuleer de huidige bestelling."
+        Message9: "(GREEN)-------------------------------------------"
+    Permission: "(RED)Je hebt geen permissie voor dit commando."
+    Permission-Itemcase: "(RED)Je hebt geen permissie om dit te doen."
+    Syntax-Error: "(RED) Ongeldig commando. (GOLD)/ic help (RED)voor meer info."
