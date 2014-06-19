@@ -20,7 +20,7 @@ Console:
         Successful: WorldGuard geladen.
     Metrics:
         Successful: Metrics gestart.
-        Unsuccessful: Kon Metrics niet start.
+        Unsuccessful: Kon Metrics niet starten.
         Disabled: Plugin Metrics uitgeschakeld!
 Player:
     ItemCase:
@@ -91,7 +91,7 @@ Player:
         Owner-Buy: "(GREEN)Speler (GOLD)%Player% (GREEN)kocht (GOLD)%Amount% %Item%(GREEN)."
         Owner-Sell: "(GREEN)Speler (GOLD)%Player% (GREEN)verkocht (GOLD)%Amount% %Item%(GREEN)."
     Storage:
-        Infinite: "(RED)Deze Itemcase is infinite."
+        Infinite: "(RED)Deze Itemcase heeft een oneindige voorraad."
         Not-Shop: "(RED)Itemcase moet een winkel zijn."
         Select: "(GREEN)Selecteer een Itemcase om de voorraad te bekijken."
         Cancel: "(GREEN)Om te annuleren: (GOLD)/ic cancel"
