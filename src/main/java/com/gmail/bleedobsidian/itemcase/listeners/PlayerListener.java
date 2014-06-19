@@ -207,8 +207,6 @@ public class PlayerListener implements Listener {
                                                                     "Player.Order.Amount-End"));
                                 }
                             }
-                        } else {
-                            return;
                         }
                     }
                 }
