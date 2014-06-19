@@ -109,7 +109,7 @@ public class ItemcaseManager {
                     + blockLocation.getBlockZ();
 
             saveFile.getConfigFile().getFileConfiguration()
-                    .set(path + ".Owner", player.getUniqueId());
+                    .set(path + ".Owner", player.getUniqueId().toString());
 
             saveFile.getConfigFile().getFileConfiguration()
                     .set(path + ".Item", itemStack.serialize());
@@ -254,6 +254,7 @@ public class ItemcaseManager {
     /**
      * Load all saved itemcases and create them.
      */
+    @SuppressWarnings("deprecation")
     public void loadItemcases() {
         for (World world : this.worldManager.getWorlds()) {
             WorldFile saveFile = this.worldManager.getWorldFile(world);
