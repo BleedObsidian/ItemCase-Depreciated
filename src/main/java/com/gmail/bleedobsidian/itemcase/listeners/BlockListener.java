@@ -91,8 +91,8 @@ public class BlockListener implements Listener {
         if (!event.isCancelled()) {
             Block block = event.getBlockAgainst();
 
-            if (this.plugin.getItemcaseManager().isItemcaseAt(
-                    block.getLocation())) {
+            if (!(this.plugin.getItemcaseManager().isItemcaseAt(
+                    block.getLocation()) && event.getPlayer().isSneaking())) {
                 event.setCancelled(true);
             }
         }
