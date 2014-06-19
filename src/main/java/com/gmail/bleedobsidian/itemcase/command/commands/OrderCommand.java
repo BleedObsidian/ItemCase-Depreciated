@@ -54,6 +54,7 @@ public class OrderCommand {
      * @param args
      *            - Arguments.
      */
+    @SuppressWarnings("deprecation")
     public static void order(ItemCase plugin, Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 

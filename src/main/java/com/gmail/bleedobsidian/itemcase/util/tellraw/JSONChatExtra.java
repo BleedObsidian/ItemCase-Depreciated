@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
 public class JSONChatExtra {
     private JSONObject chatExtra;
 
+    @SuppressWarnings("unchecked")
     public JSONChatExtra(String text, JSONChatColor color,
             List<JSONChatFormat> formats) {
         chatExtra = new JSONObject();
@@ -17,6 +18,7 @@ public class JSONChatExtra {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void setClickEvent(JSONChatClickEventType action, String value) {
         JSONObject clickEvent = new JSONObject();
         clickEvent.put("action", action.getTypeString());
@@ -24,6 +26,7 @@ public class JSONChatExtra {
         chatExtra.put("clickEvent", clickEvent);
     }
 
+    @SuppressWarnings("unchecked")
     public void setHoverEvent(JSONChatHoverEventType action, String value) {
         JSONObject hoverEvent = new JSONObject();
         hoverEvent.put("action", action.getTypeString());

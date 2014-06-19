@@ -64,6 +64,7 @@ public class PlayerListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!ItemCase.getInstance().getConfigFile().getFileConfiguration()

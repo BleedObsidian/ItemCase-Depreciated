@@ -45,6 +45,7 @@ public class CreateCommand {
      * @param args
      *            - Arguments.
      */
+    @SuppressWarnings("deprecation")
     public static void create(ItemCase plugin, Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 

@@ -47,6 +47,7 @@ public class LanguageFile {
      * 
      * @param plugin
      */
+    @SuppressWarnings("deprecation")
     public void load(JavaPlugin plugin) {
         InputStream stream = plugin.getResource("languages/" + this.name);
         this.fileConfiguration = YamlConfiguration.loadConfiguration(stream);

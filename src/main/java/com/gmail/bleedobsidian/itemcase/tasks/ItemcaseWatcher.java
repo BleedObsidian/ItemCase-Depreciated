@@ -42,6 +42,7 @@ public class ItemcaseWatcher implements Runnable {
         this.itemcaseManager = itemcaseManager;
     }
 
+    @SuppressWarnings("deprecation")
     public void run() {
         for (Itemcase itemcase : this.itemcaseManager.getItemcases()) {
             if (itemcase.getItem().isDead()) {

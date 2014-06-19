@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 public class JSONChatMessage {
     private ArrayList<JSONObject> chatObjects = new ArrayList<JSONObject>();
 
+    @SuppressWarnings("unchecked")
     public void addText(String text, JSONChatColor color,
             List<JSONChatFormat> formats) {
         JSONObject chatObject = new JSONObject();
@@ -32,6 +33,7 @@ public class JSONChatMessage {
         this.chatObjects.add(chatObject);
     }
 
+    @SuppressWarnings("unchecked")
     public void addExtra(JSONChatExtra extraObject) {
         JSONObject chatObject = new JSONObject();
 
