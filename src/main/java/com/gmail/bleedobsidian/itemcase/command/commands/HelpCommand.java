@@ -14,33 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command.commands;
 
-import org.bukkit.entity.Player;
-
-import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import org.bukkit.entity.Player;
 
 /**
  * Help Command. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class HelpCommand {
+
     /**
      * Run command.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param args
-     *            - Arguments.
+     *
+     * @param player Player that ran command.
+     * @param args Command arguments.
      */
-    public static void help(ItemCase plugin, Player player, String[] args) {
+    public static void help(Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
         if (!player.hasPermission("itemcase.help")) {

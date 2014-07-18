@@ -14,26 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.managers.interfaces;
 
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import org.bukkit.entity.Player;
 
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-
 /**
- * An interface listener for commands needing to use itemcase selection.
- * 
+ * An interface listener for commands needing to use Itemcase selection.
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public interface SelectionListener {
+
     /**
      * An itemcase was selected.
-     * 
-     * @param player
-     *            - Player.
-     * @param itemcase
-     *            - Itemcase selected.
+     *
+     * @param player Player.
+     * @param itemcase Itemcase selected.
      */
     public void selected(Player player, Itemcase itemcase);
 }

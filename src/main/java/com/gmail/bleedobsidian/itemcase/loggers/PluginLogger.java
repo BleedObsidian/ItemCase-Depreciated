@@ -14,28 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.loggers;
 
 import java.util.logging.Level;
-
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * This class allows you to easily send messages to the console of a JavaPlugin.
  * (Only used internally)
- * 
- * @author Jesse Prescott
+ *
+ * @author BleedObsidian (Jesse Prescott)
  */
 public class PluginLogger {
+
+    /**
+     * JavaPlugin.
+     */
     private static JavaPlugin plugin;
 
     /**
      * Set the JavaPlugin to use for the logger.
-     * 
-     * @param plugin
-     *            - JavaPlugin to use logger from.
+     *
+     * @param plugin JavaPlugin to use logger from.
      */
     public static void setJavaPlugin(JavaPlugin plugin) {
         PluginLogger.plugin = plugin;
@@ -43,9 +44,8 @@ public class PluginLogger {
 
     /**
      * Send info message to console.
-     * 
-     * @param message
-     *            - Message to send.
+     *
+     * @param message Message to send.
      */
     public static void info(String message) {
         PluginLogger.plugin.getLogger().info(message);
@@ -53,9 +53,8 @@ public class PluginLogger {
 
     /**
      * Send warning message to console.
-     * 
-     * @param message
-     *            - Message to send.
+     *
+     * @param message Message to send.
      */
     public static void warning(String message) {
         PluginLogger.plugin
@@ -63,16 +62,14 @@ public class PluginLogger {
                 .getConsoleSender()
                 .sendMessage(
                         "[" + PluginLogger.plugin.getDescription().getPrefix()
-                                + "] " + ChatColor.YELLOW + message);
+                        + "] " + ChatColor.YELLOW + message);
     }
 
     /**
      * Send warning message to console in red or not.
-     * 
-     * @param message
-     *            - Message to send.
-     * @param red
-     *            - If message should be red.
+     *
+     * @param message Message to send.
+     * @param red If message should be red.
      */
     public static void warning(String message, boolean red) {
         if (red) {
@@ -81,9 +78,9 @@ public class PluginLogger {
                     .getConsoleSender()
                     .sendMessage(
                             "["
-                                    + PluginLogger.plugin.getDescription()
-                                            .getPrefix() + "] " + ChatColor.RED
-                                    + message);
+                            + PluginLogger.plugin.getDescription()
+                            .getPrefix() + "] " + ChatColor.RED
+                            + message);
         } else {
             PluginLogger.warning(message);
         }
@@ -91,9 +88,8 @@ public class PluginLogger {
 
     /**
      * Send error message to console.
-     * 
-     * @param message
-     *            - Message to send.
+     *
+     * @param message Message to send.
      */
     public static void error(String message) {
         PluginLogger.plugin.getLogger().severe(message);
@@ -101,13 +97,11 @@ public class PluginLogger {
 
     /**
      * Send error message to console along with exception.
-     * 
-     * @param message
-     *            - Message to send.
-     * @param e
-     *            - Exception to display.
+     *
+     * @param message Message to send.
+     * @param exception Exception to display.
      */
-    public static void error(String message, Exception e) {
-        PluginLogger.plugin.getLogger().log(Level.SEVERE, message, e);
+    public static void error(String message, Exception exception) {
+        PluginLogger.plugin.getLogger().log(Level.SEVERE, message, exception);
     }
 }

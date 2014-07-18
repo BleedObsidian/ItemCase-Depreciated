@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase;
 
 import java.io.BufferedReader;
@@ -23,7 +22,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
 import org.bukkit.plugin.Plugin;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,47 +29,82 @@ import org.json.simple.JSONValue;
 
 /**
  * This class allows you to access the ServerMods API to retrieve the latest
- * game version, downloads ect.
- * 
- * @author Jesse Prescott
+ * game version and downloads. (Only used internally)
+ *
+ * @author BleedObsidian (Jesse Prescott)
  */
 public class Updater {
+
+    /**
+     * URL to connect to.
+     */
     private URL url;
 
+    /**
+     * Base API URL.
+     */
     private final String URL_HOST = "https://api.curseforge.com/";
+
+    /**
+     * Query.
+     */
     private final String URL_QUERY = "servermods/files?projectIds=";
 
+    /**
+     * Plugin instance.
+     */
     private final Plugin plugin;
 
+    /**
+     * API Key.
+     */
     private final String apiKey;
 
-    private Thread thread;
+    /**
+     * Thread.
+     */
+    private final Thread thread;
 
+    /**
+     * UpdateResult.
+     */
     private UpdateResult result;
+
+    /**
+     * Version type.
+     */
     private String versionType;
+
+    /**
+     * Version game version.
+     */
     private String versionGameVersion;
+
+    /**
+     * Version name.
+     */
     private String versionName;
+
+    /**
+     * Version link.
+     */
     private String versionLink;
 
     /**
-     * Create new Updater.
-     * 
-     * @param plugin
-     *            - Plugin to reference version data against.
-     * @param projectID
-     *            - ProjectID of plugin on bukkit.
-     * @param options
-     *            - Custom options for updater.
+     * New Updater.
+     *
+     * @param plugin Plugin to reference version data against.
+     * @param projectID ProjectID of plugin on Bukkit.
      */
     public Updater(Plugin plugin, int projectID) {
         this.plugin = plugin;
-
         this.apiKey = null;
 
         try {
             this.url = new URL(this.URL_HOST + this.URL_QUERY + projectID);
         } catch (MalformedURLException e) {
             this.result = UpdateResult.ERROR_ID;
+            this.thread = null;
             return;
         }
 
@@ -80,26 +113,21 @@ public class Updater {
     }
 
     /**
-     * Create new Updater.
-     * 
-     * @param plugin
-     *            - Plugin to reference version data against.
-     * @param projectID
-     *            - ProjectID of plugin on bukkit.
-     * @param apiKey
-     *            - Custom API key to use for ServerMods API.
-     * @param options
-     *            - Custom options for updater.
+     * New Updater with custom API key.
+     *
+     * @param plugin Plugin to reference version data against.
+     * @param projectID ProjectID of plugin on Bukkit.
+     * @param apiKey Custom API key to use for ServerMods API.
      */
     public Updater(Plugin plugin, int projectID, String apiKey) {
         this.plugin = plugin;
-
         this.apiKey = apiKey;
 
         try {
             this.url = new URL(this.URL_HOST + this.URL_QUERY + projectID);
         } catch (MalformedURLException e) {
             this.result = UpdateResult.ERROR_ID;
+            this.thread = null;
             return;
         }
 
@@ -148,21 +176,21 @@ public class Updater {
     }
 
     /**
-     * Wait for update proccess to finish.
+     * Wait/hang for update process.
      */
     private void waitForThread() {
         if ((this.thread != null) && this.thread.isAlive()) {
             try {
                 this.thread.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                return;
             }
         }
     }
 
     /**
      * Query ServerMods API for project variables.
-     * 
+     *
      * @return If successful or not.
      */
     private boolean query() {
@@ -214,9 +242,8 @@ public class Updater {
 
     /**
      * Check for new version.
-     * 
-     * @param title
-     *            - Title of latest file.
+     *
+     * @param title Title of latest file.
      * @return If new version is available or not.
      */
     private boolean versionCheck(String title) {
@@ -232,7 +259,11 @@ public class Updater {
         }
     }
 
+    /**
+     * Update thread.
+     */
     public class UpdateRunnable implements Runnable {
+
         public void run() {
             if (Updater.this.url != null) {
                 if (Updater.this.query()) {
@@ -242,7 +273,11 @@ public class Updater {
         }
     }
 
+    /**
+     * An enum contain all possible Update Results.
+     */
     public enum UpdateResult {
+
         /**
          * An update is available.
          */

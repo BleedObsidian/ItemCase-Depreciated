@@ -14,14 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.managers;
-
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-
-import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.Vault;
@@ -34,25 +27,34 @@ import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatExtra;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatFormat;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.HashMap;
+import org.bukkit.entity.Player;
 
 /**
  * A manager to handle all pending orders and transactions. (Only used
  * internally, please use API)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ShopManager {
+
+    /**
+     * Current orders.
+     */
     private HashMap<Player, Order> orders = new HashMap<Player, Order>();
 
+    /**
+     * DecimalFormat to display currencies with.
+     */
     private final DecimalFormat format = new DecimalFormat("0.00");
 
     /**
      * Add new pending order.
-     * 
-     * @param itemcase
-     *            - Itemcase.
-     * @param player
-     *            - Player.
+     *
+     * @param itemcase Itemcase.
+     * @param player Player.
      */
     public void addPendingOrder(Itemcase itemcase, Player player) {
         PlayerLogger.message(
@@ -71,20 +73,20 @@ public class ShopManager {
                     player,
                     Language.getLanguageFile().getMessage(
                             "Player.ItemCase.Shop-Message2",
-                            new String[] {
-                                    "%Item%",
-                                    itemcase.getItemStack().getItemMeta()
-                                            .getDisplayName() }));
+                            new String[]{
+                                "%Item%",
+                                itemcase.getItemStack().getItemMeta()
+                                .getDisplayName()}));
         } else {
             PlayerLogger
                     .message(
                             player,
                             Language.getLanguageFile().getMessage(
                                     "Player.ItemCase.Shop-Message2",
-                                    new String[] {
-                                            "%Item%",
-                                            itemcase.getItemStack().getType()
-                                                    .name() }));
+                                    new String[]{
+                                        "%Item%",
+                                        itemcase.getItemStack().getType()
+                                        .name()}));
         }
 
         if (itemcase.canBuy()) {
@@ -93,30 +95,30 @@ public class ShopManager {
                         .message(
                                 player,
                                 Language.getLanguageFile()
-                                        .getMessage(
-                                                "Player.ItemCase.Shop-Message3",
-                                                new String[] {
-                                                        "%Cost%",
-                                                        ""
-                                                                + this.format
-                                                                        .format(itemcase
-                                                                                .getBuyPrice()),
-                                                        "%Currency%",
-                                                        Vault.getEconomy()
-                                                                .currencyNamePlural() }));
+                                .getMessage(
+                                        "Player.ItemCase.Shop-Message3",
+                                        new String[]{
+                                            "%Cost%",
+                                            ""
+                                            + this.format
+                                            .format(itemcase
+                                                    .getBuyPrice()),
+                                            "%Currency%",
+                                            Vault.getEconomy()
+                                            .currencyNamePlural()}));
             } else {
                 PlayerLogger.message(
                         player,
                         Language.getLanguageFile().getMessage(
                                 "Player.ItemCase.Shop-Message3",
-                                new String[] {
-                                        "%Cost%",
-                                        ""
-                                                + this.format.format(itemcase
-                                                        .getBuyPrice()),
-                                        "%Currency%",
-                                        Vault.getEconomy()
-                                                .currencyNameSingular() }));
+                                new String[]{
+                                    "%Cost%",
+                                    ""
+                                    + this.format.format(itemcase
+                                            .getBuyPrice()),
+                                    "%Currency%",
+                                    Vault.getEconomy()
+                                    .currencyNameSingular()}));
             }
         }
 
@@ -126,30 +128,30 @@ public class ShopManager {
                         .message(
                                 player,
                                 Language.getLanguageFile()
-                                        .getMessage(
-                                                "Player.ItemCase.Shop-Message4",
-                                                new String[] {
-                                                        "%Cost%",
-                                                        ""
-                                                                + this.format
-                                                                        .format(itemcase
-                                                                                .getSellPrice()),
-                                                        "%Currency%",
-                                                        Vault.getEconomy()
-                                                                .currencyNamePlural() }));
+                                .getMessage(
+                                        "Player.ItemCase.Shop-Message4",
+                                        new String[]{
+                                            "%Cost%",
+                                            ""
+                                            + this.format
+                                            .format(itemcase
+                                                    .getSellPrice()),
+                                            "%Currency%",
+                                            Vault.getEconomy()
+                                            .currencyNamePlural()}));
             } else {
                 PlayerLogger.message(
                         player,
                         Language.getLanguageFile().getMessage(
                                 "Player.ItemCase.Shop-Message4",
-                                new String[] {
-                                        "%Cost%",
-                                        ""
-                                                + this.format.format(itemcase
-                                                        .getSellPrice()),
-                                        "%Currency%",
-                                        Vault.getEconomy()
-                                                .currencyNameSingular() }));
+                                new String[]{
+                                    "%Cost%",
+                                    ""
+                                    + this.format.format(itemcase
+                                            .getSellPrice()),
+                                    "%Currency%",
+                                    Vault.getEconomy()
+                                    .currencyNameSingular()}));
             }
         }
 
@@ -158,7 +160,7 @@ public class ShopManager {
         message.addText(
                 Language.getLanguageFile().getMessage(
                         "Player.ItemCase.Shop-Message5")
-                        + " ", JSONChatColor.GREEN, null);
+                + " ", JSONChatColor.GREEN, null);
 
         JSONChatExtra extra = new JSONChatExtra(Language.getLanguageFile()
                 .getMessage("Player.ItemCase.Shop-Amount-Button"),
@@ -172,8 +174,8 @@ public class ShopManager {
         message.addExtra(extra);
         message.addText(
                 " "
-                        + Language.getLanguageFile().getMessage(
-                                "Player.ItemCase.Button-Idicator"),
+                + Language.getLanguageFile().getMessage(
+                        "Player.ItemCase.Button-Idicator"),
                 JSONChatColor.GREEN, null);
         message.sendToPlayer(player);
 
@@ -183,7 +185,7 @@ public class ShopManager {
             messageBuy.addText(
                     Language.getLanguageFile().getMessage(
                             "Player.ItemCase.Shop-Message6")
-                            + " ", JSONChatColor.GREEN, null);
+                    + " ", JSONChatColor.GREEN, null);
 
             JSONChatExtra extraBuy = new JSONChatExtra(Language
                     .getLanguageFile().getMessage(
@@ -198,8 +200,8 @@ public class ShopManager {
             messageBuy.addExtra(extraBuy);
             messageBuy.addText(
                     "                 "
-                            + Language.getLanguageFile().getMessage(
-                                    "Player.ItemCase.Button-Idicator"),
+                    + Language.getLanguageFile().getMessage(
+                            "Player.ItemCase.Button-Idicator"),
                     JSONChatColor.GREEN, null);
             messageBuy.sendToPlayer(player);
         }
@@ -210,7 +212,7 @@ public class ShopManager {
             messageSell.addText(
                     Language.getLanguageFile().getMessage(
                             "Player.ItemCase.Shop-Message7")
-                            + " ", JSONChatColor.GREEN, null);
+                    + " ", JSONChatColor.GREEN, null);
 
             JSONChatExtra extraSell = new JSONChatExtra(Language
                     .getLanguageFile().getMessage(
@@ -225,8 +227,8 @@ public class ShopManager {
             messageSell.addExtra(extraSell);
             messageSell.addText(
                     "               "
-                            + Language.getLanguageFile().getMessage(
-                                    "Player.ItemCase.Button-Idicator"),
+                    + Language.getLanguageFile().getMessage(
+                            "Player.ItemCase.Button-Idicator"),
                     JSONChatColor.GREEN, null);
             messageSell.sendToPlayer(player);
         }
@@ -263,9 +265,8 @@ public class ShopManager {
 
     /**
      * Remove pending order.
-     * 
-     * @param player
-     *            - Player.
+     *
+     * @param player Player.
      */
     public void removePendingOrder(Player player) {
         this.getOrder(player).cancel();
@@ -278,21 +279,19 @@ public class ShopManager {
 
     /**
      * If player has a current pending order.
-     * 
-     * @param player
-     *            - Player.
-     * @return - If player has current pending order.
+     *
+     * @param player Player.
+     * @return If player has current pending order.
      */
     public boolean isPendingOrder(Player player) {
-        return this.orders.containsKey(player) ? true : false;
+        return this.orders.containsKey(player);
     }
 
     /**
      * Get current pending order.
-     * 
-     * @param player
-     *            - Player.
-     * @return - Current pending order (Null if no order pending)
+     *
+     * @param player Player.
+     * @return Current pending order (Null if no order pending)
      */
     public Order getOrder(Player player) {
         if (this.isPendingOrder(player)) {
@@ -304,8 +303,8 @@ public class ShopManager {
 
     /**
      * Get all current orders.
-     * 
-     * @return - List of all orders.
+     *
+     * @return List of all orders.
      */
     public HashMap<Player, Order> getOrders() {
         return this.orders;

@@ -14,35 +14,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.events;
 
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-
 /**
  * An event that is fired when an Itemcase is destroyed.
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ItemcaseDestroyEvent extends Event implements Cancellable {
+
+    /**
+     * HandlerList.
+     */
     private static final HandlerList handlers = new HandlerList();
+
+    /**
+     * If event is cancelled.
+     */
     private boolean isCancelled;
 
+    /**
+     * Itemcase that was destroyed.
+     */
     private final Itemcase itemcase;
+
+    /**
+     * Player that destroyed Itemcase.
+     */
     private final Player player;
 
     /**
      * New ItemcaseDestroyEvent.
-     * 
-     * @param itemcase
-     *            - Itemcase involved.
-     * @param player
-     *            - Player involved.
+     *
+     * @param itemcase Itemcase that was destroyed.
+     * @param player Player that destroyed Itemcase.
      */
     public ItemcaseDestroyEvent(Itemcase itemcase, Player player) {
         this.itemcase = itemcase;
@@ -50,14 +61,14 @@ public class ItemcaseDestroyEvent extends Event implements Cancellable {
     }
 
     /**
-     * @return - Itemcase destoryed.
+     * @return - Itemcase that was destroyed.
      */
     public Itemcase getItemcase() {
         return itemcase;
     }
 
     /**
-     * @return - Player who created it. (Could be null)
+     * @return - Player that destroyed Itemcase.
      */
     public Player getPlayer() {
         return player;
@@ -68,14 +79,23 @@ public class ItemcaseDestroyEvent extends Event implements Cancellable {
         return handlers;
     }
 
+    /**
+     * @return HandlerList.
+     */
     public static HandlerList getHandlerList() {
         return handlers;
     }
 
+    /**
+     * @return If event is cancelled.
+     */
     public boolean isCancelled() {
         return this.isCancelled;
     }
 
+    /**
+     * @param isCancelled If event is cancelled.
+     */
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
     }

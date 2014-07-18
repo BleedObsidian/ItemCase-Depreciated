@@ -14,31 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.managers;
 
-import java.util.HashMap;
-
-import org.bukkit.entity.Player;
-
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import java.util.HashMap;
+import org.bukkit.entity.Player;
 
 /**
  * A manager to keep track of open inventories for ItemCase. (Only used
  * internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class InventoryManager {
-    private HashMap<Player, Itemcase> openInventories = new HashMap<Player, Itemcase>();
+
+    /**
+     * Open Itemcase inventories.
+     */
+    private final HashMap<Player, Itemcase> openInventories = new HashMap<Player, Itemcase>();
 
     /**
      * Add inventory to open list.
-     * 
-     * @param player
-     *            - Player.
-     * @param itemcase
-     *            - Itemcase.
+     *
+     * @param player Player.
+     * @param itemcase Itemcase.
      */
     public void addOpenInventory(Player player, Itemcase itemcase) {
         this.openInventories.put(player, itemcase);
@@ -46,27 +45,24 @@ public class InventoryManager {
 
     /**
      * Remove inventory from open list.
-     * 
-     * @param player
-     *            - Player.
+     *
+     * @param player Player.
      */
     public void removeOpenInventory(Player player) {
         this.openInventories.remove(player);
     }
 
     /**
-     * @param player
-     *            - Player.
-     * @return - If player is viewing inventory.
+     * @param player Player.
+     * @return If player is viewing inventory.
      */
     public boolean hasOpenInventory(Player player) {
-        return this.openInventories.containsKey(player) ? true : false;
+        return this.openInventories.containsKey(player);
     }
 
     /**
-     * @param player
-     *            - Player.
-     * @return - Get itemcase from open inventory.
+     * @param player Player.
+     * @return Get Itemcase from open inventory.
      */
     public Itemcase getItemcaseForPlayer(Player player) {
         return this.openInventories.get(player);

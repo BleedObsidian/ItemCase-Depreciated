@@ -14,37 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.tasks;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
-import com.gmail.bleedobsidian.itemcase.ItemCase;
-import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-
 /**
- * A bukkit task to watch and monitor all itemcases. (Only used internally)
- * 
+ * A Bukkit task to watch and monitor all Itemcases. (Only used internally)
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ItemcaseWatcher implements Runnable {
-    private ItemcaseManager itemcaseManager;
 
-    /**
-     * New ItemcaseWatcher.
-     * 
-     * @param itemcaseManager
-     *            - ItemcaseManager.
-     */
-    public ItemcaseWatcher(ItemcaseManager itemcaseManager) {
-        this.itemcaseManager = itemcaseManager;
-    }
-
-    @SuppressWarnings("deprecation")
+    @Override
     public void run() {
-        for (Itemcase itemcase : this.itemcaseManager.getItemcases()) {
+        for (Itemcase itemcase : ItemCase.getInstance().getItemcaseManager().
+                getItemcases()) {
             if (itemcase.getItem().isDead()) {
                 itemcase.spawnItem();
             }
@@ -53,9 +40,9 @@ public class ItemcaseWatcher implements Runnable {
             Location blockLocation = itemcase.getBlock().getLocation();
 
             if (!((itemLocation.getX() == blockLocation.getBlockX() + 0.5)
-                    && ((itemLocation.getY() <= blockLocation.getBlockY() + 2) && (itemLocation
-                            .getY() >= blockLocation.getBlockY())) && (itemLocation
-                        .getZ() == blockLocation.getBlockZ() + 0.5))) {
+                    && ((itemLocation.getY() <= blockLocation.getBlockY() + 2) && (itemLocation.
+                    getY() >= blockLocation.getBlockY())) && (itemLocation
+                    .getZ() == blockLocation.getBlockZ() + 0.5))) {
                 itemcase.despawnItem();
                 itemcase.spawnItem();
             }

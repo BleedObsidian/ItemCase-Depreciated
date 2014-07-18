@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command.commands;
-
-import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
@@ -25,24 +22,22 @@ import com.gmail.bleedobsidian.itemcase.command.listeners.StorageSelectionListen
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import org.bukkit.entity.Player;
 
 /**
  * Storage Command. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class StorageCommand {
+
     /**
      * Run command.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param args
-     *            - Arguments.
+     *
+     * @param player Player that ran command.
+     * @param args Command arguments.
      */
-    public static void storage(ItemCase plugin, Player player, String[] args) {
+    public static void storage(Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
         if (!(player.hasPermission("itemcase.create.shop.buy") || player
@@ -52,8 +47,9 @@ public class StorageCommand {
             return;
         }
 
-        StorageSelectionListener listener = new StorageSelectionListener(plugin);
-        plugin.getSelectionManager().addPendingSelection(listener, player);
+        StorageSelectionListener listener = new StorageSelectionListener();
+        ItemCase.getInstance().getSelectionManager().addPendingSelection(
+                listener, player);
 
         PlayerLogger.message(player,
                 language.getMessage("Player.Storage.Select"));
@@ -63,15 +59,11 @@ public class StorageCommand {
 
     /**
      * Received selection.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param itemcase
-     *            - Selected Itemcase.
+     *
+     * @param player Player that selected an Itemcase.
+     * @param itemcase Selected Itemcase.
      */
-    public static void selected(ItemCase plugin, Player player,
+    public static void selected(Player player,
             Itemcase itemcase) {
         LanguageFile language = Language.getLanguageFile();
 
@@ -95,6 +87,7 @@ public class StorageCommand {
         }
 
         player.openInventory(itemcase.getInventory());
-        plugin.getInventoryManager().addOpenInventory(player, itemcase);
+        ItemCase.getInstance().getInventoryManager().addOpenInventory(player,
+                itemcase);
     }
 }

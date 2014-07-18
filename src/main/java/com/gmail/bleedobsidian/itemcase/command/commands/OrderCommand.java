@@ -14,18 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command.commands;
-
-import java.text.DecimalFormat;
-import java.util.ListIterator;
-
-import net.milkbowl.vault.economy.EconomyResponse;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
@@ -35,28 +24,35 @@ import com.gmail.bleedobsidian.itemcase.events.ItemcaseBuyEvent;
 import com.gmail.bleedobsidian.itemcase.events.ItemcaseSellEvent;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import java.text.DecimalFormat;
+import java.util.ListIterator;
+import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Order Command. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class OrderCommand {
+
+    /**
+     * DecimalFormat to format currency with.
+     */
     private static final DecimalFormat format = new DecimalFormat("0.00");
 
     /**
      * Run command.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param args
-     *            - Arguments.
+     *
+     * @param player Player that ran command.
+     * @param args Command arguments.
      */
-    @SuppressWarnings("deprecation")
-    public static void order(ItemCase plugin, Player player, String[] args) {
+    public static void order(Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
+        ItemCase plugin = ItemCase.getInstance();
 
         if (!(args.length == 2)) {
             PlayerLogger.message(player,
@@ -64,7 +60,7 @@ public class OrderCommand {
             return;
         }
 
-        if (!plugin.getShopManager().isPendingOrder(player)) {
+        if (!ItemCase.getInstance().getShopManager().isPendingOrder(player)) {
             PlayerLogger.message(player,
                     language.getMessage("Player.Order.No-Order"));
             return;
@@ -88,7 +84,7 @@ public class OrderCommand {
             return;
         } else if (args[1].equalsIgnoreCase("buy")
                 && plugin.getShopManager().getOrder(player).getItemcase()
-                        .canBuy()) {
+                .canBuy()) {
             if (!player.hasPermission("itemcase.buy")) {
                 PlayerLogger.message(player,
                         language.getMessage("Player.Permission-Itemcase"));
@@ -113,7 +109,7 @@ public class OrderCommand {
                         .getShopManager().getOrder(player).getItemcase()
                         .getInventory(),
                         plugin.getShopManager().getOrder(player).getItemcase()
-                                .getItemStack().clone());
+                        .getItemStack().clone());
 
                 if (!(itemAmount >= plugin.getShopManager().getOrder(player)
                         .getAmount())) {
@@ -148,7 +144,7 @@ public class OrderCommand {
                 EconomyResponse responseOwner = Vault.getEconomy()
                         .depositPlayer(
                                 plugin.getShopManager().getOrder(player)
-                                        .getItemcase().getOwnerName(),
+                                .getItemcase().getOwnerName(),
                                 player.getWorld().getName(), price);
 
                 if (!responseOwner.transactionSuccess()) {
@@ -159,7 +155,7 @@ public class OrderCommand {
                 } else {
                     if (Bukkit.getOfflinePlayer(
                             plugin.getShopManager().getOrder(player)
-                                    .getItemcase().getOwnerName()).isOnline()) {
+                            .getItemcase().getOwnerName()).isOnline()) {
                         Player owner = (Player) Bukkit.getPlayer(plugin
                                 .getShopManager().getOrder(player)
                                 .getItemcase().getOwnerName());
@@ -167,66 +163,66 @@ public class OrderCommand {
                         if (plugin.getShopManager().getOrder(player)
                                 .getItemcase().getItemStack().hasItemMeta()
                                 && plugin.getShopManager().getOrder(player)
-                                        .getItemcase().getItemStack()
-                                        .getItemMeta().getDisplayName() != null) {
+                                .getItemcase().getItemStack()
+                                .getItemMeta().getDisplayName() != null) {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Owner-Buy",
-                                    new String[] {
-                                            "%Player%",
-                                            player.getName(),
-                                            "%Amount%",
-                                            ""
-                                                    + plugin.getShopManager()
-                                                            .getOrder(player)
-                                                            .getAmount(),
-                                            "%Item%",
-                                            plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getItemcase()
-                                                    .getItemStack()
-                                                    .getItemMeta()
-                                                    .getDisplayName() }));
+                                    new String[]{
+                                        "%Player%",
+                                        player.getName(),
+                                        "%Amount%",
+                                        ""
+                                        + plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getAmount(),
+                                        "%Item%",
+                                        plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getItemcase()
+                                        .getItemStack()
+                                        .getItemMeta()
+                                        .getDisplayName()}));
                         } else {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Owner-Buy",
-                                    new String[] {
-                                            "%Player%",
-                                            player.getName(),
-                                            "%Amount%",
-                                            ""
-                                                    + plugin.getShopManager()
-                                                            .getOrder(player)
-                                                            .getAmount(),
-                                            "%Item%",
-                                            plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getItemcase()
-                                                    .getItemStack().getType()
-                                                    .name() }));
+                                    new String[]{
+                                        "%Player%",
+                                        player.getName(),
+                                        "%Amount%",
+                                        ""
+                                        + plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getAmount(),
+                                        "%Item%",
+                                        plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getItemcase()
+                                        .getItemStack().getType()
+                                        .name()}));
                         }
 
                         if (price > 1) {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Deposit",
-                                    new String[] {
-                                            "%Amount%",
-                                            ""
-                                                    + OrderCommand.format
-                                                            .format(price),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                                    .currencyNamePlural() }));
+                                    new String[]{
+                                        "%Amount%",
+                                        ""
+                                        + OrderCommand.format
+                                        .format(price),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                        .currencyNamePlural()}));
                         } else {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Deposit",
-                                    new String[] {
-                                            "%Amount%",
-                                            ""
-                                                    + OrderCommand.format
-                                                            .format(price),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                                    .currencyNameSingular() }));
+                                    new String[]{
+                                        "%Amount%",
+                                        ""
+                                        + OrderCommand.format
+                                        .format(price),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                        .currencyNameSingular()}));
                         }
                     }
                 }
@@ -248,45 +244,45 @@ public class OrderCommand {
 
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
-                            "Player.Order.Withdraw", new String[] { "%Amount%",
-                                    "" + OrderCommand.format.format(price),
-                                    "%Currency%",
-                                    Vault.getEconomy().currencyNamePlural() }));
+                            "Player.Order.Withdraw", new String[]{"%Amount%",
+                                "" + OrderCommand.format.format(price),
+                                "%Currency%",
+                                Vault.getEconomy().currencyNamePlural()}));
                 } else {
                     PlayerLogger.message(player,
                             language.getMessage(
                                     "Player.Order.Withdraw",
-                                    new String[] {
-                                            "%Amount%",
-                                            ""
-                                                    + OrderCommand.format
-                                                            .format(price),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                                    .currencyNameSingular() }));
+                                    new String[]{
+                                        "%Amount%",
+                                        ""
+                                        + OrderCommand.format
+                                        .format(price),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                        .currencyNameSingular()}));
                 }
 
                 if (items.hasItemMeta()
                         && items.getItemMeta().getDisplayName() != null) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Bought-Items",
-                            new String[] {
-                                    "%Amount%",
-                                    ""
-                                            + plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getAmount(), "%Item%",
-                                    items.getItemMeta().getDisplayName() }));
+                            new String[]{
+                                "%Amount%",
+                                ""
+                                + plugin.getShopManager()
+                                .getOrder(player)
+                                .getAmount(), "%Item%",
+                                items.getItemMeta().getDisplayName()}));
                 } else {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Bought-Items",
-                            new String[] {
-                                    "%Amount%",
-                                    ""
-                                            + plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getAmount(), "%Item%",
-                                    items.getType().name() }));
+                            new String[]{
+                                "%Amount%",
+                                ""
+                                + plugin.getShopManager()
+                                .getOrder(player)
+                                .getAmount(), "%Item%",
+                                items.getType().name()}));
                 }
 
                 PlayerLogger.message(player, Language.getLanguageFile()
@@ -301,7 +297,7 @@ public class OrderCommand {
             }
         } else if (args[1].equalsIgnoreCase("sell")
                 && plugin.getShopManager().getOrder(player).getItemcase()
-                        .canSell()) {
+                .canSell()) {
             if (!player.hasPermission("itemcase.sell")) {
                 PlayerLogger.message(player,
                         language.getMessage("Player.Permission-Itemcase"));
@@ -316,7 +312,7 @@ public class OrderCommand {
 
             double itemAmount = OrderCommand.getAmountOf(player.getInventory(),
                     plugin.getShopManager().getOrder(player).getItemcase()
-                            .getItemStack().clone());
+                    .getItemStack().clone());
             double price = plugin.getShopManager().getOrder(player)
                     .getItemcase().getSellPrice()
                     * plugin.getShopManager().getOrder(player).getAmount();
@@ -358,7 +354,7 @@ public class OrderCommand {
                 } else {
                     if (Bukkit.getOfflinePlayer(
                             plugin.getShopManager().getOrder(player)
-                                    .getItemcase().getOwnerName()).isOnline()) {
+                            .getItemcase().getOwnerName()).isOnline()) {
                         Player owner = (Player) Bukkit.getPlayer(plugin
                                 .getShopManager().getOrder(player)
                                 .getItemcase().getOwnerName());
@@ -366,66 +362,66 @@ public class OrderCommand {
                         if (plugin.getShopManager().getOrder(player)
                                 .getItemcase().getItemStack().hasItemMeta()
                                 && plugin.getShopManager().getOrder(player)
-                                        .getItemcase().getItemStack()
-                                        .getItemMeta().getDisplayName() != null) {
+                                .getItemcase().getItemStack()
+                                .getItemMeta().getDisplayName() != null) {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Owner-Sell",
-                                    new String[] {
-                                            "%Player%",
-                                            player.getName(),
-                                            "%Amount%",
-                                            ""
-                                                    + plugin.getShopManager()
-                                                            .getOrder(player)
-                                                            .getAmount(),
-                                            "%Item%",
-                                            plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getItemcase()
-                                                    .getItemStack()
-                                                    .getItemMeta()
-                                                    .getDisplayName() }));
+                                    new String[]{
+                                        "%Player%",
+                                        player.getName(),
+                                        "%Amount%",
+                                        ""
+                                        + plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getAmount(),
+                                        "%Item%",
+                                        plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getItemcase()
+                                        .getItemStack()
+                                        .getItemMeta()
+                                        .getDisplayName()}));
                         } else {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Owner-Sell",
-                                    new String[] {
-                                            "%Player%",
-                                            player.getName(),
-                                            "%Amount%",
-                                            ""
-                                                    + plugin.getShopManager()
-                                                            .getOrder(player)
-                                                            .getAmount(),
-                                            "%Item%",
-                                            plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getItemcase()
-                                                    .getItemStack().getType()
-                                                    .name() }));
+                                    new String[]{
+                                        "%Player%",
+                                        player.getName(),
+                                        "%Amount%",
+                                        ""
+                                        + plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getAmount(),
+                                        "%Item%",
+                                        plugin.getShopManager()
+                                        .getOrder(player)
+                                        .getItemcase()
+                                        .getItemStack().getType()
+                                        .name()}));
                         }
 
                         if (price > 1) {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Withdraw",
-                                    new String[] {
-                                            "%Amount%",
-                                            ""
-                                                    + OrderCommand.format
-                                                            .format(price),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                                    .currencyNamePlural() }));
+                                    new String[]{
+                                        "%Amount%",
+                                        ""
+                                        + OrderCommand.format
+                                        .format(price),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                        .currencyNamePlural()}));
                         } else {
                             PlayerLogger.message(owner, language.getMessage(
                                     "Player.Order.Withdraw",
-                                    new String[] {
-                                            "%Amount%",
-                                            ""
-                                                    + OrderCommand.format
-                                                            .format(price),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                                    .currencyNameSingular() }));
+                                    new String[]{
+                                        "%Amount%",
+                                        ""
+                                        + OrderCommand.format
+                                        .format(price),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                        .currencyNameSingular()}));
                         }
                     }
                 }
@@ -459,42 +455,42 @@ public class OrderCommand {
 
                 if (price > 1) {
                     PlayerLogger.message(player, language.getMessage(
-                            "Player.Order.Deposit", new String[] { "%Amount%",
-                                    "" + OrderCommand.format.format(price),
-                                    "%Currency%",
-                                    Vault.getEconomy().currencyNamePlural() }));
+                            "Player.Order.Deposit", new String[]{"%Amount%",
+                                "" + OrderCommand.format.format(price),
+                                "%Currency%",
+                                Vault.getEconomy().currencyNamePlural()}));
                 } else {
                     PlayerLogger.message(player,
                             language.getMessage("Player.Order.Deposit",
-                                    new String[] {
-                                            "%Amount%",
-                                            OrderCommand.format.format(price),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                                    .currencyNameSingular() }));
+                                    new String[]{
+                                        "%Amount%",
+                                        OrderCommand.format.format(price),
+                                        "%Currency%",
+                                        Vault.getEconomy()
+                                        .currencyNameSingular()}));
                 }
 
                 if (items.hasItemMeta()
                         && items.getItemMeta().getDisplayName() != null) {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Sold-Items",
-                            new String[] {
-                                    "%Amount%",
-                                    ""
-                                            + plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getAmount(), "%Item%",
-                                    items.getItemMeta().getDisplayName() }));
+                            new String[]{
+                                "%Amount%",
+                                ""
+                                + plugin.getShopManager()
+                                .getOrder(player)
+                                .getAmount(), "%Item%",
+                                items.getItemMeta().getDisplayName()}));
                 } else {
                     PlayerLogger.message(player, language.getMessage(
                             "Player.Order.Sold-Items",
-                            new String[] {
-                                    "%Amount%",
-                                    ""
-                                            + plugin.getShopManager()
-                                                    .getOrder(player)
-                                                    .getAmount(), "%Item%",
-                                    items.getType().name() }));
+                            new String[]{
+                                "%Amount%",
+                                ""
+                                + plugin.getShopManager()
+                                .getOrder(player)
+                                .getAmount(), "%Item%",
+                                items.getType().name()}));
                 }
 
                 PlayerLogger.message(player, Language.getLanguageFile()
@@ -510,6 +506,13 @@ public class OrderCommand {
         }
     }
 
+    /**
+     * Get amount of ItemStack items in inventory.
+     *
+     * @param inventory Inventory.
+     * @param itemStack ItemStack to count.
+     * @return Amount of items.
+     */
     private static int getAmountOf(Inventory inventory, ItemStack itemStack) {
         int amount = 0;
         ListIterator<ItemStack> it = inventory.iterator();

@@ -14,34 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command.commands;
-
-import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import org.bukkit.entity.Player;
 
 /**
  * Cancel command. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class CancelCommand {
+
     /**
      * Run command.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param args
-     *            - Arguments.
+     *
+     * @param player Player that ran command.
+     * @param args Command arguments.
      */
-    public static void cancel(ItemCase plugin, Player player, String[] args) {
-        if (plugin.getSelectionManager().isPendingSelection(player)) {
-            plugin.getSelectionManager().removePendingSelection(player);
+    public static void cancel(Player player, String[] args) {
+        if (ItemCase.getInstance().getSelectionManager().isPendingSelection(
+                player)) {
+            ItemCase.getInstance().getSelectionManager().removePendingSelection(
+                    player);
 
             PlayerLogger.message(
                     player,
@@ -51,7 +48,7 @@ public class CancelCommand {
         } else {
             PlayerLogger.message(player,
                     Language.getLanguageFile()
-                            .getMessage("Player.Cancel.Error"));
+                    .getMessage("Player.Cancel.Error"));
             return;
         }
     }

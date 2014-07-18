@@ -5,20 +5,26 @@ import com.gmail.bleedobsidian.itemcase.util.metrics.Metrics.Graph;
 
 /**
  * A metrics graph handler. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class Graphs {
+
+    /**
+     * Metrics instance.
+     */
     private Metrics metrics;
+
+    /**
+     * ConfigFile.
+     */
     private ConfigFile config;
 
     /**
      * New Graphs.
-     * 
-     * @param metrics
-     *            - Metrics.
-     * @param config
-     *            - Config.
+     *
+     * @param metrics Metrics.
+     * @param config Config.
      */
     public Graphs(Metrics metrics, ConfigFile config) {
         this.metrics = metrics;
@@ -32,6 +38,9 @@ public class Graphs {
         this.graph_CheckForUpdate();
     }
 
+    /**
+     * Graph: Checking For An Update.
+     */
     private void graph_CheckForUpdate() {
         Graph graph = metrics.createGraph("Servers Cheking For An Update");
 

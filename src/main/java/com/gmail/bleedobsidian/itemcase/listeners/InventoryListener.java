@@ -14,44 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.listeners;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-import com.gmail.bleedobsidian.itemcase.ItemCase;
-
 /**
  * Inventory related event listener. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class InventoryListener implements Listener {
-    private ItemCase plugin;
-
-    /**
-     * New InventoryListener.
-     * 
-     * @param plugin
-     *            - ItemCase Plugin.
-     */
-    public InventoryListener(ItemCase plugin) {
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getPlayer() instanceof Player) {
-            if (this.plugin.getInventoryManager().hasOpenInventory(
+            if (ItemCase.getInstance().getInventoryManager().hasOpenInventory(
                     (Player) event.getPlayer())) {
-                this.plugin.getItemcaseManager().saveItemcase(
-                        this.plugin.getInventoryManager().getItemcaseForPlayer(
+                ItemCase.getInstance().getItemcaseManager().saveItemcase(
+                        ItemCase.getInstance().getInventoryManager().
+                        getItemcaseForPlayer(
                                 (Player) event.getPlayer()));
-                this.plugin.getInventoryManager().removeOpenInventory(
-                        (Player) event.getPlayer());
+                ItemCase.getInstance().getInventoryManager().
+                        removeOpenInventory(
+                                (Player) event.getPlayer());
             }
         }
     }

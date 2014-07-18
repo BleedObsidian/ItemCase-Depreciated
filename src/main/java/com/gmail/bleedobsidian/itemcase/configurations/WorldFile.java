@@ -14,28 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.configurations;
 
 import java.io.IOException;
-
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * This class allows you to create a world specific ConfigFile.
- * 
+ *
  * @author Jesse Prescott
  */
 public class WorldFile {
+
+    /**
+     * Bukkit World.
+     */
     private World world;
+
+    /**
+     * ConfigFile.
+     */
     private ConfigFile configFile;
 
     /**
-     * Create a new world config.
-     * 
-     * @param world
-     *            - World.
+     * New world config.
+     *
+     * @param world World.
      */
     public WorldFile(World world) {
         this.world = world;
@@ -46,10 +51,9 @@ public class WorldFile {
 
     /**
      * Load/Create world config file.
-     * 
-     * @param plugin
-     *            - JavaPlugin.
-     * @return If successful.
+     *
+     * @param plugin JavaPlugin.
+     * @throws java.io.IOException Fails to load config file.
      */
     public void load(JavaPlugin plugin) throws IOException {
         this.configFile.load(plugin);
@@ -57,7 +61,7 @@ public class WorldFile {
 
     /**
      * Get ConfigFile of world.
-     * 
+     *
      * @return ConfigFile.
      */
     public ConfigFile getConfigFile() {
@@ -66,7 +70,7 @@ public class WorldFile {
 
     /**
      * Get world.
-     * 
+     *
      * @return World.
      */
     public World getWorld() {

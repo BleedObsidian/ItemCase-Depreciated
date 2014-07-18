@@ -14,39 +14,53 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.events;
 
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.managers.orders.Order;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-import com.gmail.bleedobsidian.itemcase.managers.orders.Order;
-
 /**
- * An event that is fired when a player sells an item to an itemcase.
- * 
+ * An event that is fired when a player sells an item to an Itemcase.
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ItemcaseSellEvent extends Event implements Cancellable {
+
+    /**
+     * HandlerList.
+     */
     private static final HandlerList handlers = new HandlerList();
+
+    /**
+     * If event is cancelled.
+     */
     private boolean isCancelled;
 
+    /**
+     * Itemcase that was sold to.
+     */
     private final Itemcase itemcase;
+
+    /**
+     * Player that sold to Itemcase.
+     */
     private final Player player;
+
+    /**
+     * Order.
+     */
     private final Order order;
 
     /**
      * New ItemcaseSellEvent.
-     * 
-     * @param itemcase
-     *            - Itemcase.
-     * @param player
-     *            - Player.
-     * @param order
-     *            - Order.
+     *
+     * @param itemcase Itemcase that was sold to.
+     * @param player Player that sold to Itemcase.
+     * @param order Order.
      */
     public ItemcaseSellEvent(Itemcase itemcase, Player player, Order order) {
         this.itemcase = itemcase;
@@ -55,21 +69,21 @@ public class ItemcaseSellEvent extends Event implements Cancellable {
     }
 
     /**
-     * @return - Itemcase.
+     * @return Itemcase that was sold to.
      */
     public Itemcase getItemcase() {
         return itemcase;
     }
 
     /**
-     * @return - Player who sold.
+     * @return Player that sold to Itemcase.
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * @return - Sold Order.
+     * @return Order.
      */
     public Order getOrder() {
         return order;
@@ -80,14 +94,23 @@ public class ItemcaseSellEvent extends Event implements Cancellable {
         return handlers;
     }
 
+    /**
+     * @return HandlerList.
+     */
     public static HandlerList getHandlerList() {
         return handlers;
     }
 
+    /**
+     * @return If event is cancelled.
+     */
     public boolean isCancelled() {
         return this.isCancelled;
     }
 
+    /**
+     * @param isCancelled If event is cancelled.
+     */
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;
     }

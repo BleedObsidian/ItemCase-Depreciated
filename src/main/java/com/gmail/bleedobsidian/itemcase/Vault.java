@@ -14,47 +14,49 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase;
 
 import net.milkbowl.vault.economy.Economy;
-
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * This class allows you to load and access vault's economy plugins.
- * 
- * @author Jesse Prescott
+ * This class allows you to load and access vault's economy plugins. (Only used
+ * internally)
+ *
+ * @author BleedObsidian (Jesse Prescott)
  */
 public class Vault {
+
+    /**
+     * Economy API.
+     */
     private static Economy economy;
 
     /**
      * Load vault and an economy plugin.
-     * 
-     * @param plugin
-     *            - JavaPlugin.
+     *
+     * @param plugin JavaPlugin.
      * @return If successfully loaded.
      */
     public static boolean load(JavaPlugin plugin) {
-	RegisteredServiceProvider<Economy> economyProvider = plugin.getServer()
-		.getServicesManager()
-		.getRegistration(net.milkbowl.vault.economy.Economy.class);
+        RegisteredServiceProvider<Economy> economyProvider = plugin.getServer()
+                .getServicesManager()
+                .getRegistration(net.milkbowl.vault.economy.Economy.class);
 
-	if (economyProvider != null) {
-	    Vault.economy = economyProvider.getProvider();
-	}
+        if (economyProvider != null) {
+            Vault.economy = economyProvider.getProvider();
+        }
 
-	return (economy != null);
+        return (economy != null);
     }
 
     /**
-     * Get economy plugin.
-     * 
+     * Get economy API.
+     *
      * @return Economy plugin.
      */
     public static Economy getEconomy() {
-	return Vault.economy;
+        return Vault.economy;
     }
 }

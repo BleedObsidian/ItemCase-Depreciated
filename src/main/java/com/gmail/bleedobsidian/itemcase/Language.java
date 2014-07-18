@@ -14,29 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase;
 
+import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
-
 /**
- * A Language Handler to manage the dialect of ItemCase.
- * 
+ * A Language Handler to manage the dialect of ItemCase. (Only used internally)
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class Language {
+
+    /**
+     * LanguageFile.
+     */
     private static LanguageFile languageFile;
+
+    /**
+     * Language in use.
+     */
     private static String language;
 
     /**
      * Set locale.
-     * 
-     * @param language
-     *            - Locale string.
-     * @param plugin
-     *            - ItemCase plugin.
+     *
+     * @param language Locale string.
+     * @param plugin ItemCase plugin.
      */
     public static void setLangauge(String language, JavaPlugin plugin) {
         Language.language = language;
@@ -46,11 +50,12 @@ public class Language {
     }
 
     /**
-     * @param language
-     *            - Locale string.
-     * @return - If locale exists.
+     * If given locale string is valid and isValid.
+     *
+     * @param language Locale string.
+     * @return If locale isValid.
      */
-    public static boolean exists(String language) {
+    public static boolean isValid(String language) {
         if (language.equals("en-us")) {
             return true;
         } else if (language.equals("de-de")) {
@@ -63,14 +68,14 @@ public class Language {
     }
 
     /**
-     * @return - LanguageFile for set language.
+     * @return LanguageFile for set language.
      */
     public static LanguageFile getLanguageFile() {
         return Language.languageFile;
     }
 
     /**
-     * @return - Set Language.
+     * @return Set Language.
      */
     public static String getLanguage() {
         return Language.language;

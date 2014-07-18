@@ -14,39 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command.commands;
-
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.WorldGuard;
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Create command. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class CreateCommand {
+
     /**
      * Run command.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param args
-     *            - Arguments.
+     *
+     * @param player Player that ran command.
+     * @param args Command arguments.
      */
-    @SuppressWarnings("deprecation")
-    public static void create(ItemCase plugin, Player player, String[] args) {
+    public static void create(Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
         if (!player.hasPermission("itemcase.create.showcase")) {
@@ -89,7 +83,7 @@ public class CreateCommand {
 
         PlayerLogger.message(player,
                 Language.getLanguageFile()
-                        .getMessage("Player.ItemCase.Created"));
+                .getMessage("Player.ItemCase.Created"));
         return;
     }
 }

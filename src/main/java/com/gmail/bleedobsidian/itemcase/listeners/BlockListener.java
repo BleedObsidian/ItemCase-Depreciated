@@ -14,12 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.listeners;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
+import com.gmail.bleedobsidian.itemcase.Language;
+import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,33 +29,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.gmail.bleedobsidian.itemcase.ItemCase;
-import com.gmail.bleedobsidian.itemcase.Language;
-import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-
 /**
  * Block related event listener. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class BlockListener implements Listener {
-    private ItemCase plugin;
-
-    /**
-     * New BlockListener.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     */
-    public BlockListener(ItemCase plugin) {
-        this.plugin = plugin;
-    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
         if (!event.isCancelled()) {
-            List<Itemcase> itemcases = new ArrayList<Itemcase>(this.plugin
+            List<Itemcase> itemcases = new ArrayList<Itemcase>(ItemCase.
+                    getInstance()
                     .getItemcaseManager().getItemcases());
 
             for (Itemcase itemcase : itemcases) {
@@ -62,8 +49,9 @@ public class BlockListener implements Listener {
                             event.getPlayer().getName())
                             || event.getPlayer().hasPermission(
                                     "itemcase.destroy.other")) {
-                        this.plugin.getItemcaseManager().destroyItemcase(
-                                itemcase, event.getPlayer());
+                        ItemCase.getInstance().getItemcaseManager().
+                                destroyItemcase(
+                                        itemcase, event.getPlayer());
 
                         PlayerLogger.message(
                                 event.getPlayer(),
@@ -76,8 +64,8 @@ public class BlockListener implements Listener {
                                 .message(
                                         event.getPlayer(),
                                         Language.getLanguageFile()
-                                                .getMessage(
-                                                        "Player.ItemCase.Destroyed-Permission"));
+                                        .getMessage(
+                                                "Player.ItemCase.Destroyed-Permission"));
 
                         return;
                     }
@@ -91,7 +79,7 @@ public class BlockListener implements Listener {
         if (!event.isCancelled()) {
             Block block = event.getBlockAgainst();
 
-            if (this.plugin.getItemcaseManager().isItemcaseAt(
+            if (ItemCase.getInstance().getItemcaseManager().isItemcaseAt(
                     block.getLocation())) {
                 if (!event.getPlayer().isSneaking()) {
                     event.setCancelled(true);

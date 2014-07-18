@@ -14,11 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command.commands;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
@@ -27,24 +23,23 @@ import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 /**
  * Modify Command. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ModifyCommand {
+
     /**
      * Run command.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param args
-     *            - Arguments.
+     *
+     * @param player Player that ran command.
+     * @param args Command arguments.
      */
-    public static void modify(ItemCase plugin, Player player, String[] args) {
+    public static void modify(Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
         if (!(args.length >= 2)) {
@@ -63,8 +58,8 @@ public class ModifyCommand {
             if (!(args[2].equalsIgnoreCase("buy") || args[2]
                     .equalsIgnoreCase("sell"))) {
                 PlayerLogger.message(player, language.getMessage(
-                        "Player.Modify.Shop.Invalid-Type", new String[] {
-                                "%type%", args[2] }));
+                        "Player.Modify.Shop.Invalid-Type", new String[]{
+                            "%type%", args[2]}));
                 return;
             }
 
@@ -84,9 +79,10 @@ public class ModifyCommand {
                 }
 
                 ModifySelectionListener listener = new ModifySelectionListener(
-                        plugin, ItemcaseType.SHOP, args);
-                plugin.getSelectionManager().addPendingSelection(listener,
-                        player);
+                        ItemcaseType.SHOP, args);
+                ItemCase.getInstance().getSelectionManager().
+                        addPendingSelection(listener,
+                                player);
 
                 PlayerLogger.message(player,
                         language.getMessage("Player.Modify.Select"));
@@ -110,9 +106,10 @@ public class ModifyCommand {
                 }
 
                 ModifySelectionListener listener = new ModifySelectionListener(
-                        plugin, ItemcaseType.SHOP, args);
-                plugin.getSelectionManager().addPendingSelection(listener,
-                        player);
+                        ItemcaseType.SHOP, args);
+                ItemCase.getInstance().getSelectionManager().
+                        addPendingSelection(listener,
+                                player);
 
                 PlayerLogger.message(player,
                         language.getMessage("Player.Modify.Select"));
@@ -134,8 +131,9 @@ public class ModifyCommand {
             }
 
             ModifySelectionListener listener = new ModifySelectionListener(
-                    plugin, ItemcaseType.SHOWCASE, args);
-            plugin.getSelectionManager().addPendingSelection(listener, player);
+                    ItemcaseType.SHOWCASE, args);
+            ItemCase.getInstance().getSelectionManager().addPendingSelection(
+                    listener, player);
 
             PlayerLogger.message(player,
                     language.getMessage("Player.Modify.Select"));
@@ -162,9 +160,9 @@ public class ModifyCommand {
                 return;
             }
 
-            ModifySelectionListener listener = new ModifySelectionListener(
-                    plugin, args);
-            plugin.getSelectionManager().addPendingSelection(listener, player);
+            ModifySelectionListener listener = new ModifySelectionListener(args);
+            ItemCase.getInstance().getSelectionManager().addPendingSelection(
+                    listener, player);
 
             PlayerLogger.message(player,
                     language.getMessage("Player.Modify.Select"));
@@ -181,15 +179,13 @@ public class ModifyCommand {
 
     /**
      * Received selection.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param itemcase
-     *            - Selected Itemcase.
+     *
+     * @param player Player.
+     * @param args Command arguments.
+     * @param itemcase Selected Itemcase.
+     * @param type ItemCaseType.
      */
-    public static void selected(ItemCase plugin, Player player, String[] args,
+    public static void selected(Player player, String[] args,
             Itemcase itemcase, ItemcaseType type) {
         LanguageFile language = Language.getLanguageFile();
 
@@ -221,20 +217,17 @@ public class ModifyCommand {
             }
         }
 
-        plugin.getItemcaseManager().saveItemcase(itemcase);
+        ItemCase.getInstance().getItemcaseManager().saveItemcase(itemcase);
     }
 
     /**
      * Received selection.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param player
-     *            - Player.
-     * @param itemcase
-     *            - Selected Itemcase.
+     *
+     * @param player Player.
+     * @param args Command arguments.
+     * @param itemcase Selected Itemcase.
      */
-    public static void selectedInfinite(ItemCase plugin, Player player,
+    public static void selectedInfinite(Player player,
             String[] args, Itemcase itemcase) {
         LanguageFile language = Language.getLanguageFile();
 
@@ -250,10 +243,10 @@ public class ModifyCommand {
 
         itemcase.setInventory(Bukkit.createInventory(null, 54,
                 "ItemCase Storage"));
-        plugin.getItemcaseManager().saveItemcase(itemcase);
+        ItemCase.getInstance().getItemcaseManager().saveItemcase(itemcase);
 
         PlayerLogger.message(player, language.getMessage(
-                "Player.Modify.Infinite.Successful", new String[] {
-                        "%Boolean%", "" + value }));
+                "Player.Modify.Infinite.Successful", new String[]{
+                    "%Boolean%", "" + value}));
     }
 }

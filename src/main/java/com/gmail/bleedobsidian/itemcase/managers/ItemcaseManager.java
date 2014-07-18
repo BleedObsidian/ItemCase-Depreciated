@@ -14,24 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.managers;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
@@ -42,53 +25,62 @@ import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import com.gmail.bleedobsidian.itemcase.tasks.ItemcaseWatcher;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * A manager to handle all itemcases. (Only used internally, please use the API
  * instead)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ItemcaseManager {
-    private ItemCase plugin;
-    private WorldManager worldManager;
 
-    private ItemcaseWatcher itemcaseWatcher;
+    /**
+     * ItemcaseWatcher.
+     */
+    private final ItemcaseWatcher itemcaseWatcher;
 
-    private List<Itemcase> itemcases = new ArrayList<Itemcase>();
+    /**
+     * Loaded Itemcases.
+     */
+    private final List<Itemcase> itemcases = new ArrayList<Itemcase>();
 
     /**
      * New ItemcaseManager.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param worldManager
-     *            - WorldManager.
      */
-    public ItemcaseManager(ItemCase plugin, WorldManager worldManager) {
-        this.plugin = plugin;
-        this.worldManager = worldManager;
-
-        this.itemcaseWatcher = new ItemcaseWatcher(this);
-        plugin.getServer().getScheduler()
-                .scheduleSyncRepeatingTask(plugin, itemcaseWatcher, 10, 40);
+    public ItemcaseManager() {
+        this.itemcaseWatcher = new ItemcaseWatcher();
+        ItemCase.getInstance().getServer().getScheduler()
+                .scheduleSyncRepeatingTask(ItemCase.getInstance(),
+                        itemcaseWatcher, 10, 40);
     }
 
     /**
      * Create new Itemcase.
-     * 
-     * @param itemStack
-     *            - ItemStack.
-     * @param blockLocation
-     *            - Bukkit block location.
-     * @param player
-     *            - Player.
-     * @return - Itemcase.
+     *
+     * @param itemStack ItemStack.
+     * @param blockLocation Bukkit block location.
+     * @param player Player.
+     * @return Itemcase.
      */
     public Itemcase createItemcase(ItemStack itemStack, Location blockLocation,
             Player player) {
         World world = player.getWorld();
-        WorldFile saveFile = this.worldManager.getWorldFile(world);
+        WorldFile saveFile = ItemCase.getInstance().getWorldManager().
+                getWorldFile(world);
 
         if (saveFile != null) {
             Itemcase itemcase = new Itemcase(itemStack, blockLocation,
@@ -128,7 +120,7 @@ public class ItemcaseManager {
                     .set(path + ".Inventory",
                             this.serializeInventory(itemcase.getInventory()));
 
-            saveFile.getConfigFile().save(plugin);
+            saveFile.getConfigFile().save(ItemCase.getInstance());
 
             return itemcase;
         } else {
@@ -138,16 +130,15 @@ public class ItemcaseManager {
 
     /**
      * Destroy Itemcase.
-     * 
-     * @param itemcase
-     *            - Itemcase.
-     * @param player
-     *            - Player that caused event (Can be null)
-     * @return - If successful.
+     *
+     * @param itemcase Itemcase.
+     * @param player Player that caused event (Can be null)
+     * @return If successful.
      */
     public boolean destroyItemcase(Itemcase itemcase, Player player) {
-        WorldFile saveFile = this.worldManager.getWorldFile(itemcase.getBlock()
-                .getWorld());
+        WorldFile saveFile = ItemCase.getInstance().getWorldManager().
+                getWorldFile(itemcase.getBlock()
+                        .getWorld());
 
         if (saveFile != null) {
             ItemcaseDestroyEvent event = new ItemcaseDestroyEvent(itemcase,
@@ -167,7 +158,7 @@ public class ItemcaseManager {
                     + itemcase.getBlock().getLocation().getBlockZ();
 
             saveFile.getConfigFile().getFileConfiguration().set(path, null);
-            saveFile.getConfigFile().save(this.plugin);
+            saveFile.getConfigFile().save(ItemCase.getInstance());
 
             for (ItemStack itemStack : itemcase.getInventory().getContents()) {
                 if (itemStack != null) {
@@ -187,13 +178,13 @@ public class ItemcaseManager {
 
     /**
      * Save Itemcase into config.
-     * 
-     * @param itemcase
-     *            - Itemcase.
+     *
+     * @param itemcase Itemcase.
      */
     public void saveItemcase(Itemcase itemcase) {
         World world = itemcase.getBlock().getWorld();
-        WorldFile saveFile = this.worldManager.getWorldFile(world);
+        WorldFile saveFile = ItemCase.getInstance().getWorldManager().
+                getWorldFile(world);
 
         if (saveFile != null) {
             String path = "Itemcases."
@@ -247,17 +238,17 @@ public class ItemcaseManager {
                         .set(path + ".Shop.SellPrice", itemcase.getSellPrice());
             }
 
-            saveFile.getConfigFile().save(plugin);
+            saveFile.getConfigFile().save(ItemCase.getInstance());
         }
     }
 
     /**
-     * Load all saved itemcases and create them.
+     * Load all saved Itemcases and create them.
      */
-    @SuppressWarnings("deprecation")
     public void loadItemcases() {
-        for (World world : this.worldManager.getWorlds()) {
-            WorldFile saveFile = this.worldManager.getWorldFile(world);
+        for (World world : ItemCase.getInstance().getWorldManager().getWorlds()) {
+            WorldFile saveFile = ItemCase.getInstance().getWorldManager().
+                    getWorldFile(world);
 
             if (saveFile.getConfigFile().getFileConfiguration() != null) {
                 if (saveFile.getConfigFile().getFileConfiguration()
@@ -286,14 +277,14 @@ public class ItemcaseManager {
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Console.Errors.Itemcase-Loader.Load-Error"),
+                                            .getMessage(
+                                                    "Console.Errors.Itemcase-Loader.Load-Error"),
                                             true);
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Console.Errors.Itemcase-Loader.Parse-Error"),
+                                            .getMessage(
+                                                    "Console.Errors.Itemcase-Loader.Parse-Error"),
                                             true);
                             continue;
                         }
@@ -318,14 +309,14 @@ public class ItemcaseManager {
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Console.Errors.Itemcase-Loader.Load-Error"),
+                                            .getMessage(
+                                                    "Console.Errors.Itemcase-Loader.Load-Error"),
                                             true);
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Console.Errors.Itemcase-Loader.Owner-Error"),
+                                            .getMessage(
+                                                    "Console.Errors.Itemcase-Loader.Owner-Error"),
                                             true);
                             continue;
                         }
@@ -341,8 +332,9 @@ public class ItemcaseManager {
                                     .getFileConfiguration()
                                     .set(path + ".Owner",
                                             Bukkit.getOfflinePlayer(ownerString)
-                                                    .getUniqueId().toString());
-                            saveFile.getConfigFile().save(plugin);
+                                            .getUniqueId().toString());
+                            saveFile.getConfigFile().
+                                    save(ItemCase.getInstance());
                         }
 
                         Map<String, Object> itemValues;
@@ -355,14 +347,14 @@ public class ItemcaseManager {
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Console.Errors.Itemcase-Loader.Load-Error"),
+                                            .getMessage(
+                                                    "Console.Errors.Itemcase-Loader.Load-Error"),
                                             true);
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Console.Errors.Itemcase-Loader.Item-Error"),
+                                            .getMessage(
+                                                    "Console.Errors.Itemcase-Loader.Item-Error"),
                                             true);
                             continue;
                         }
@@ -399,8 +391,8 @@ public class ItemcaseManager {
                             PluginLogger
                                     .warning(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Console.Errors.Itemcase-Loader.Load-Error"),
+                                            .getMessage(
+                                                    "Console.Errors.Itemcase-Loader.Load-Error"),
                                             true);
                         }
 
@@ -434,16 +426,15 @@ public class ItemcaseManager {
     }
 
     /**
-     * @return - List of all created Itemcases.
+     * @return List of all created Itemcases.
      */
     public List<Itemcase> getItemcases() {
         return this.itemcases;
     }
 
     /**
-     * @param blockLocation
-     *            - Bukkit block location.
-     * @return - If itemcase is at given location.
+     * @param blockLocation Bukkit block location.
+     * @return If Itemcase is at given location.
      */
     public boolean isItemcaseAt(Location blockLocation) {
         for (Itemcase itemcase : this.itemcases) {
@@ -456,9 +447,8 @@ public class ItemcaseManager {
     }
 
     /**
-     * @param blockLocation
-     *            - Bukkit block.
-     * @return - Get itemcase at given location. (Null if doesn't exist)
+     * @param blockLocation Bukkit block.
+     * @return Get Itemcase at given location. (Null if doesn't exist)
      */
     public Itemcase getItemcaseAt(Location blockLocation) {
         for (Itemcase itemcase : this.itemcases) {
@@ -471,9 +461,8 @@ public class ItemcaseManager {
     }
 
     /**
-     * @param inventory
-     *            - Serialize given inventory.
-     * @return - Serialized map value.
+     * @param inventory Serialize given inventory.
+     * @return Serialized map value.
      */
     public Map<String, Object> serializeInventory(Inventory inventory) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -488,13 +477,10 @@ public class ItemcaseManager {
     }
 
     /**
-     * @param config
-     *            - WorldFile.
-     * @param path
-     *            - Path.
-     * @param size
-     *            - Size.
-     * @return - Inventory.
+     * @param config WorldFile.
+     * @param path Path.
+     * @param size Size.
+     * @return Inventory.
      */
     public Inventory deserializeInventory(WorldFile config, String path,
             int size) {

@@ -14,11 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.managers.itemcase;
 
 import java.util.UUID;
-
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -32,37 +30,82 @@ import org.bukkit.util.Vector;
 
 /**
  * Itemcase handler.
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
-public class Itemcase {
-    private Item item;
-    private ItemStack displayStack;
-    private ItemStack itemStack;
-    private Location blockLocation;
-    private String player;
+public final class Itemcase {
 
+    /**
+     * Item Entity that is on display.
+     */
+    private Item item;
+
+    /**
+     * ItemStack used for the display.
+     */
+    private final ItemStack displayStack;
+
+    /**
+     * ItemStack that Itemcase is for.
+     */
+    private final ItemStack itemStack;
+
+    /**
+     * Location of Itemcase.
+     */
+    private final Location blockLocation;
+
+    /**
+     * Owner of Itemcase.
+     */
+    private final String player;
+
+    /**
+     * ItemcaseType.
+     */
     private ItemcaseType type = ItemcaseType.SHOWCASE;
+
+    /**
+     * If players can buy from this Itemcase.
+     */
     private boolean canBuy;
+
+    /**
+     * If players can sell to this Itemcase.
+     */
     private boolean canSell;
 
+    /**
+     * Buy price of item.
+     */
     private double buyPrice = 0;
+
+    /**
+     * Sell price of item.
+     */
     private double sellPrice = 0;
 
+    /**
+     * If Itemcase is infinite.
+     */
     private boolean isInfinite;
+
+    /**
+     * Inventory of Itemcase.
+     */
     private Inventory inventory;
 
+    /**
+     * If chunk that Itemcase is in is loaded.
+     */
     private boolean isChunkLoaded;
 
     /**
-     * Create new itemcase instance.
-     * 
-     * @param itemStack
-     *            - ItemStack.
-     * @param blockLocation
-     *            - Bukkit block location.
-     * @param player
-     *            - Player creator.
+     * Create new Itemcase instance.
+     *
+     * @param itemStack ItemStack that Itemcase is for.
+     * @param blockLocation Location of Itemcase.
+     * @param player Owner of Itemcase.
      */
     public Itemcase(ItemStack itemStack, Location blockLocation, String player) {
         this.itemStack = itemStack;
@@ -70,7 +113,7 @@ public class Itemcase {
         this.displayStack = itemStack.clone();
         ItemMeta meta = displayStack.getItemMeta();
         meta.setDisplayName(UUID.randomUUID().toString()); // Stop item
-                                                           // stacking.
+        // stacking.
         this.displayStack.setItemMeta(meta);
 
         this.blockLocation = blockLocation;
@@ -81,7 +124,7 @@ public class Itemcase {
     }
 
     /**
-     * Spawn item on slab.
+     * Spawn display item.
      */
     public void spawnItem() {
         if (this.isChunkLoaded) {
@@ -112,37 +155,35 @@ public class Itemcase {
     }
 
     /**
-     * Despawn item on slab.
+     * Despawn display item.
      */
     public void despawnItem() {
         this.item.remove();
     }
 
     /**
-     * @return - Inventory of Itemcase. (Maybe null)
+     * @return Inventory of Itemcase. (Maybe null)
      */
     public Inventory getInventory() {
         return inventory;
     }
 
     /**
-     * @param inventory
-     *            - Inventory of Itemcase.
+     * @param inventory Inventory of Itemcase.
      */
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
 
     /**
-     * @return - If Itemcase chunk is loaded.
+     * @return If chunk that Itemcase is in is loaded.
      */
     public boolean isChunkLoaded() {
         return this.isChunkLoaded;
     }
 
     /**
-     * @param bool
-     *            - If itemcase chunk is loaded.
+     * @param bool If chunk that Itemcase is in is loaded.
      */
     public void setChunkLoaded(boolean bool) {
         this.isChunkLoaded = bool;
@@ -155,118 +196,112 @@ public class Itemcase {
     }
 
     /**
-     * @return - Itemcase item entity.
+     * @return Itemcase display Item entity.
      */
     public Item getItem() {
         return this.item;
     }
 
     /**
-     * @return - Itemcase block.
+     * @return Itemcase block.
      */
     public Block getBlock() {
         return this.blockLocation.getBlock();
     }
 
     /**
-     * @return - ItemStack of Itemcase.
+     * @return ItemStack of Itemcase.
      */
     public ItemStack getItemStack() {
         return this.itemStack;
     }
 
     /**
-     * @return - Player name of owner.
+     * @return Owner name.
      */
     public String getOwnerName() {
         return this.player;
     }
 
     /**
-     * @param type
-     *            - Type of Itemcase.
+     * @param type Type of Itemcase.
      */
     public void setType(ItemcaseType type) {
         this.type = type;
     }
 
     /**
-     * @return - Type of itemcase.
+     * @return Type of Itemcase.
      */
     public ItemcaseType getType() {
         return this.type;
     }
 
     /**
-     * @return - If players can buy from the itemcase.
+     * @return If players can buy from this Itemcase.
      */
     public boolean canBuy() {
         return canBuy;
     }
 
     /**
-     * @param canBuy
-     *            - If players can buy from the itemcase.
+     * @param canBuy If players can buy from this Itemcase.
      */
     public void setCanBuy(boolean canBuy) {
         this.canBuy = canBuy;
     }
 
     /**
-     * @return - If players can sell to the itemcase.
+     * @return - If players can sell to this Itemcase.
      */
     public boolean canSell() {
         return canSell;
     }
 
     /**
-     * @param canSell
-     *            - If players can sell to the itemcase.
+     * @param canSell - If players can sell to this Itemcase.
      */
     public void setCanSell(boolean canSell) {
         this.canSell = canSell;
     }
 
     /**
-     * @return - Buy price of item. (If can buy)
+     * @return Buy price of item. (If can buy)
      */
     public double getBuyPrice() {
         return buyPrice;
     }
 
     /**
-     * @param buyPrice
-     *            - Buy price of item. (If can buy)
+     * @param buyPrice Buy price of item. (If can buy)
      */
     public void setBuyPrice(double buyPrice) {
         this.buyPrice = buyPrice;
     }
 
     /**
-     * @return - Sell price of item. (If can sell)
+     * @return Sell price of item. (If can sell)
      */
     public double getSellPrice() {
         return sellPrice;
     }
 
     /**
-     * @param sellPrice
-     *            - Sell price of item. (If can sell)
+     * @param sellPrice Sell price of item. (If can sell)
      */
     public void setSellPrice(double sellPrice) {
         this.sellPrice = sellPrice;
     }
 
     /**
-     * @return - If itemcase is infinite.
+     * @return - If Itemcase is infinite.
      */
     public boolean isInfinite() {
         return isInfinite;
     }
 
     /**
-     * @param isInfinite
-     *            - If itemcase is infinite.
+     * @param isInfinite - If Itemcase is infinite.
      */
     public void setInfinite(boolean isInfinite) {
         this.isInfinite = isInfinite;

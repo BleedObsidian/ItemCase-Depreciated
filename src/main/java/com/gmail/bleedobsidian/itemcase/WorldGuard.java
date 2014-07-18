@@ -14,28 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-
 /**
- * This class allows you to load and access WorldGuard's API.
- * 
- * @author Jesse Prescott
+ * This class allows you to load and access WorldGuard's API. (Only used
+ * internally)
+ *
+ * @author BleedObsidian (Jesse Prescott)
  */
 public class WorldGuard {
-    private static WorldGuardPlugin worldGuard;
+
+    /**
+     * WorldGuard Plugin.
+     */
+    private static WorldGuardPlugin worldGuardPlugin;
+
+    /**
+     * If WorldGuard is enabled.
+     */
     private static boolean isEnabled;
 
     /**
      * Load WorldGuard plugin.
-     * 
-     * @param plugin
-     *            - JavaPlugin.
+     *
+     * @param plugin JavaPlugin.
      * @return If successfully loaded.
      */
     public static boolean load(JavaPlugin plugin) {
@@ -46,7 +52,7 @@ public class WorldGuard {
             WorldGuard.isEnabled = false;
             return false;
         } else {
-            WorldGuard.worldGuard = (WorldGuardPlugin) worldGuard;
+            WorldGuard.worldGuardPlugin = (WorldGuardPlugin) worldGuard;
             WorldGuard.isEnabled = true;
             return true;
         }
@@ -54,15 +60,15 @@ public class WorldGuard {
 
     /**
      * Get WorldGuard plugin.
-     * 
+     *
      * @return WorldGuard plugin.
      */
     public static WorldGuardPlugin getWorldGuardPlugin() {
-        return WorldGuard.worldGuard;
+        return WorldGuard.worldGuardPlugin;
     }
 
     /**
-     * @return - If WorldGuard is enabled.
+     * @return If WorldGuard is enabled.
      */
     public static boolean isEnabled() {
         return WorldGuard.isEnabled;

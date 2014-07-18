@@ -14,11 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.configurations;
 
 import java.io.InputStream;
-
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,17 +24,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * This class allows you to load and parse a language file.
- * 
+ *
  * @author Jesse Prescott
  */
 public class LanguageFile {
-    private FileConfiguration fileConfiguration;
-    private String name;
 
     /**
-     * Instantiate LanguageFile with given name.
-     * 
-     * @param name
+     * FileConfiguration.
+     */
+    private FileConfiguration fileConfiguration;
+
+    /**
+     * Name of language file.
+     */
+    private final String name;
+
+    /**
+     * New LanguageFile with given name.
+     *
+     * @param name Name of language file.
      */
     public LanguageFile(String name) {
         this.name = name;
@@ -44,10 +50,9 @@ public class LanguageFile {
 
     /**
      * Load language file from folder.
-     * 
-     * @param plugin
+     *
+     * @param plugin JavaPlugin.
      */
-    @SuppressWarnings("deprecation")
     public void load(JavaPlugin plugin) {
         InputStream stream = plugin.getResource("languages/" + this.name);
         this.fileConfiguration = YamlConfiguration.loadConfiguration(stream);
@@ -55,12 +60,10 @@ public class LanguageFile {
 
     /**
      * Get parsed version of message within language file with given variables.
-     * 
-     * @param path
-     *            - Path of message.
-     * @param variables
-     *            - Variables to change.
-     * @return Parsed Message
+     *
+     * @param path Path of message.
+     * @param variables Variables to change.
+     * @return Parsed Message.
      */
     public String getMessage(String path, String[] variables) {
         return this.parseMessage(this.fileConfiguration.getString(path),
@@ -69,10 +72,9 @@ public class LanguageFile {
 
     /**
      * Get parsed version of message within language file.
-     * 
-     * @param path
-     *            - Path of message.
-     * @return Parsed Message
+     *
+     * @param path Path of message.
+     * @return Parsed Message.
      */
     public String getMessage(String path) {
         return this.parseMessage(this.fileConfiguration.getString(path),
@@ -81,12 +83,10 @@ public class LanguageFile {
 
     /**
      * Parse message with given variables.
-     * 
-     * @param message
-     *            - Message to parse.
-     * @param variables
-     *            - Variables to chage.
-     * @return Parsed Message
+     *
+     * @param message Message to parse.
+     * @param variables Variables to change.
+     * @return Parsed Message.
      */
     private String parseMessage(String message, String[] variables) {
         message = message.replaceAll("\\(BLACK\\)", ChatColor.BLACK.toString());

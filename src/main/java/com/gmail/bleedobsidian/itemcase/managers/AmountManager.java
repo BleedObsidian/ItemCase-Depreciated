@@ -14,42 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.managers;
-
-import java.util.ArrayList;
-
-import org.bukkit.entity.Player;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import java.util.ArrayList;
+import org.bukkit.entity.Player;
 
 /**
  * A manager to handle amount setting of orders. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class AmountManager {
-    private final ItemCase plugin;
-
-    private ArrayList<Player> pendingAmounts = new ArrayList<Player>();
 
     /**
-     * New AmountManager.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
+     * Pending amounts.
      */
-    public AmountManager(ItemCase plugin) {
-        this.plugin = plugin;
-    }
+    private final ArrayList<Player> pendingAmounts = new ArrayList<Player>();
 
     /**
      * Add pending amount listener.
-     * 
-     * @param player
-     *            - Player.
+     *
+     * @param player Player.
      */
     public void addPendingAmount(Player player) {
         this.pendingAmounts.add(player);
@@ -57,9 +45,8 @@ public class AmountManager {
 
     /**
      * Remove pending amount listener.
-     * 
-     * @param player
-     *            - Player.
+     *
+     * @param player Player.
      */
     public void removePendingAmount(Player player) {
         this.pendingAmounts.remove(player);
@@ -67,32 +54,30 @@ public class AmountManager {
 
     /**
      * Set the amount of pending amount.
-     * 
-     * @param player
-     *            - Player.
-     * @param amount
-     *            - Given amount.
+     *
+     * @param player Player.
+     * @param amount Given amount.
      */
     public void setPendingAmount(Player player, int amount) {
-        this.plugin.getShopManager().getOrder(player).setAmount(amount);
+        ItemCase.getInstance().getShopManager().getOrder(player).setAmount(
+                amount);
         this.removePendingAmount(player);
 
         PlayerLogger.message(
                 player,
                 Language.getLanguageFile().getMessage(
                         "Player.Order.Amount-Set",
-                        new String[] { "%Amount%", "" + amount }));
+                        new String[]{"%Amount%", "" + amount}));
         PlayerLogger.message(player,
                 Language.getLanguageFile()
-                        .getMessage("Player.Order.Amount-End"));
+                .getMessage("Player.Order.Amount-End"));
     }
 
     /**
-     * @param player
-     *            - Player.
-     * @return - If order is awaiting amount value from player.
+     * @param player Player.
+     * @return If order is awaiting amount value from player.
      */
     public boolean isPendingAmount(Player player) {
-        return this.pendingAmounts.contains(player) ? true : false;
+        return this.pendingAmounts.contains(player);
     }
 }

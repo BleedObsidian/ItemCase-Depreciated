@@ -14,12 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase;
-
-import java.io.IOException;
-
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gmail.bleedobsidian.itemcase.command.ICCommandExecutor;
 import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
@@ -36,25 +31,64 @@ import com.gmail.bleedobsidian.itemcase.managers.ShopManager;
 import com.gmail.bleedobsidian.itemcase.managers.WorldManager;
 import com.gmail.bleedobsidian.itemcase.util.metrics.Graphs;
 import com.gmail.bleedobsidian.itemcase.util.metrics.Metrics;
+import java.io.IOException;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Main ItemCase plugin.
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ItemCase extends JavaPlugin {
+
+    /**
+     * Running instance of ItemCase.
+     */
     private static ItemCase instance;
 
+    /**
+     * Config file for ItemCase.
+     */
     private ConfigFile config;
+
+    /**
+     * Metrics instance.
+     */
     private Metrics metrics;
 
+    /**
+     * WorldManager.
+     */
     private WorldManager worldManager;
+
+    /**
+     * ItemcaseManager.
+     */
     private ItemcaseManager itemcaseManager;
+
+    /**
+     * SelectionManager.
+     */
     private SelectionManager selectionManager;
+
+    /**
+     * AmountManager.
+     */
     private AmountManager amountManager;
+
+    /**
+     * ShopManager.
+     */
     private ShopManager shopManager;
+
+    /**
+     * InventoryManager.
+     */
     private InventoryManager inventoryManager;
 
+    /**
+     * ItemCaseAPI.
+     */
     private ItemCaseAPI api;
 
     @Override
@@ -63,7 +97,7 @@ public class ItemCase extends JavaPlugin {
         ItemCase.instance = this;
 
         // Set API
-        this.api = new ItemCaseAPI(this);
+        this.api = new ItemCaseAPI();
 
         // Setup Logger
         PluginLogger.setJavaPlugin(this);
@@ -86,7 +120,7 @@ public class ItemCase extends JavaPlugin {
         // Set language
         String locale = this.config.getFileConfiguration().getString("Locale");
 
-        if (Language.exists(locale)) {
+        if (Language.isValid(locale)) {
             Language.setLangauge(locale + ".yml", this);
         } else {
             PluginLogger.warning("Failed to find locale: " + locale
@@ -173,13 +207,13 @@ public class ItemCase extends JavaPlugin {
         }
 
         // Create ItemcaseManager
-        this.itemcaseManager = new ItemcaseManager(this, this.worldManager);
+        this.itemcaseManager = new ItemcaseManager();
 
         // Create SelectionManager
         this.selectionManager = new SelectionManager();
 
         // Create AmountManager
-        this.amountManager = new AmountManager(this);
+        this.amountManager = new AmountManager();
 
         // Create ShopManager
         this.shopManager = new ShopManager();
@@ -196,11 +230,11 @@ public class ItemCase extends JavaPlugin {
                 "Console.Itemcases-Created"));
 
         // Register command
-        this.getCommand("itemc").setExecutor(new ICCommandExecutor(this));
+        this.getCommand("itemc").setExecutor(new ICCommandExecutor());
 
         PluginLogger.info(Language.getLanguageFile().getMessage(
                 "Console.Enabled",
-                new String[] { "%Version%", this.getVersion() }));
+                new String[]{"%Version%", this.getVersion()}));
     }
 
     @Override
@@ -214,85 +248,88 @@ public class ItemCase extends JavaPlugin {
 
         PluginLogger.info(Language.getLanguageFile().getMessage(
                 "Console.Disabled",
-                new String[] { "%Version%", this.getVersion() }));
-    }
-
-    private void registerEvents() {
-        this.getServer().getPluginManager()
-                .registerEvents(new BlockListener(this), this);
-        this.getServer().getPluginManager()
-                .registerEvents(new PlayerListener(this), this);
-        this.getServer().getPluginManager()
-                .registerEvents(new WorldListener(this), this);
-        this.getServer().getPluginManager()
-                .registerEvents(new InventoryListener(this), this);
+                new String[]{"%Version%", this.getVersion()}));
     }
 
     /**
-     * @return - Running instance of ItemCase.
+     * Register event listeners.
+     */
+    private void registerEvents() {
+        this.getServer().getPluginManager()
+                .registerEvents(new BlockListener(), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new WorldListener(), this);
+        this.getServer().getPluginManager()
+                .registerEvents(new InventoryListener(), this);
+    }
+
+    /**
+     * @return Running instance of ItemCase.
      */
     public static ItemCase getInstance() {
         return ItemCase.instance;
     }
 
     /**
-     * @return - ItemCase API.
+     * @return ItemCase API.
      */
     public ItemCaseAPI getAPI() {
         return this.api;
     }
 
     /**
-     * @return - Version of ItemCase.
+     * @return Version of ItemCase.
      */
     public String getVersion() {
         return this.getDescription().getVersion();
     }
 
     /**
-     * @return - Configuration File.
+     * @return ItemCase Configuration File.
      */
     public ConfigFile getConfigFile() {
         return this.config;
     }
 
     /**
-     * @return - WorldManager.
+     * @return WorldManager.
      */
     public WorldManager getWorldManager() {
         return this.worldManager;
     }
 
     /**
-     * @return - ItemcaseManager.
+     * @return ItemcaseManager.
      */
     public ItemcaseManager getItemcaseManager() {
         return this.itemcaseManager;
     }
 
     /**
-     * @return - SelectionManager.
+     * @return SelectionManager.
      */
     public SelectionManager getSelectionManager() {
         return this.selectionManager;
     }
 
     /**
-     * @return - AmountManager.
+     * @return AmountManager.
      */
     public AmountManager getAmountManager() {
         return this.amountManager;
     }
 
     /**
-     * @return - ShopManager.
+     * @return ShopManager.
      */
     public ShopManager getShopManager() {
         return this.shopManager;
     }
 
     /**
-     * @return - InventoryManager.
+     * @return InventoryManager.
      */
     public InventoryManager getInventoryManager() {
         return this.inventoryManager;

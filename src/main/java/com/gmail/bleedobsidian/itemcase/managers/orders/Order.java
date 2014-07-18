@@ -14,37 +14,49 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.managers.orders;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Represents an order.
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class Order {
+
+    /**
+     * Itemcase involved.
+     */
     private final Itemcase itemcase;
+
+    /**
+     * ItemStack being bought/sold.
+     */
     private final ItemStack item;
+
+    /**
+     * Amount.
+     */
     private int amount = 1;
 
+    /**
+     * Bukkit taskID.
+     */
     private final int taskID;
 
     /**
      * New order.
-     * 
-     * @param itemcase
-     *            - Itemcase.
-     * @param player
-     *            - Player.
+     *
+     * @param itemcase Itemcase involved.
+     * @param player Player involved.
+     * @param item ItemStack being bought/sold.
      */
     public Order(Itemcase itemcase, final Player player, ItemStack item) {
         this.itemcase = itemcase;
@@ -54,7 +66,7 @@ public class Order {
                 .runTaskLater(ItemCase.getInstance(), new Runnable() {
                     public void run() {
                         if (ItemCase.getInstance().getShopManager()
-                                .isPendingOrder(player)) {
+                        .isPendingOrder(player)) {
                             PlayerLogger.message(
                                     player,
                                     Language.getLanguageFile().getMessage(
@@ -64,7 +76,7 @@ public class Order {
                                     Language.getLanguageFile().getMessage(
                                             "Player.Order.Amount-End"));
                             ItemCase.getInstance().getShopManager()
-                                    .removePendingOrder(player);
+                            .removePendingOrder(player);
                         }
                     }
                 }, 600).getTaskId();
@@ -80,29 +92,28 @@ public class Order {
     }
 
     /**
-     * @return - Itemcase.
+     * @return Itemcase involved.
      */
     public Itemcase getItemcase() {
         return itemcase;
     }
 
     /**
-     * @return - Set amount of items.
+     * @return Amount of items to be bought/sold.
      */
     public int getAmount() {
         return amount;
     }
 
     /**
-     * @param amount
-     *            - Amount player entered.
+     * @param amount Amount of items to be bought/sold.
      */
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
     /**
-     * @return - ItemStack.
+     * @return ItemStack being bought/sold.
      */
     public ItemStack getItem() {
         return item;

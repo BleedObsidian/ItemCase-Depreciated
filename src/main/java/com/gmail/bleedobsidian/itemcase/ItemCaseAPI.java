@@ -14,74 +14,59 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase;
 
+import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-
 /**
  * Central ItemCase API.
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ItemCaseAPI {
-    private final ItemCase itemcase;
 
     /**
-     * Create new API instance.
-     * 
-     * @param itemcase
-     *            - ItemCase plugin.
-     */
-    public ItemCaseAPI(ItemCase itemcase) {
-        this.itemcase = itemcase;
-    }
-
-    /**
-     * Create new Itemcase.
-     * 
-     * @param itemStack
-     *            - ItemStack used for itemcase.
-     * @param blockLocation
-     *            - Bukkit block location.
-     * @param player
-     *            - Player creator.
-     * @return - Itemcase. (Null if fails to create)
+     * Create new Itemcase with given ItemStack at given Location.
+     *
+     * @param itemStack ItemStack used for Itemcase.
+     * @param blockLocation Bukkit block location.
+     * @param player Player creator (Owner).
+     * @return Itemcase. (Null if fails to create new Itemcase)
      */
     public Itemcase createItemcase(ItemStack itemStack, Location blockLocation,
             Player player) {
-        return this.itemcase.getItemcaseManager().createItemcase(itemStack,
+        return ItemCase.getInstance().getItemcaseManager().createItemcase(
+                itemStack,
                 blockLocation, player);
     }
 
     /**
-     * Destroy itemcase.
-     * 
-     * @param itemcase
-     *            - Itemcase to destroy.
-     * @return - Boolean if successful.
+     * Destroy Itemcase.
+     *
+     * @param itemcase Itemcase to destroy.
+     * @return If successful.
      */
     public boolean destroyItemcase(Itemcase itemcase) {
-        return this.itemcase.getItemcaseManager().destroyItemcase(itemcase,
+        return ItemCase.getInstance().getItemcaseManager().destroyItemcase(
+                itemcase,
                 null);
     }
 
     /**
-     * Destroy itemcase.
-     * 
-     * @param blockLocation
-     *            - Bukkit block location of itemcase.
-     * @return - Boolean if successful.
+     * Destroy Itemcase at given Location.
+     *
+     * @param blockLocation Bukkit block location of Itemcase.
+     * @return Boolean if successful.
      */
     public boolean destroyItemcase(Location blockLocation) {
-        if (this.itemcase.getItemcaseManager().isItemcaseAt(blockLocation)) {
-            return this.itemcase.getItemcaseManager().destroyItemcase(
-                    this.itemcase.getItemcaseManager().getItemcaseAt(
+        if (ItemCase.getInstance().getItemcaseManager().isItemcaseAt(
+                blockLocation)) {
+            return ItemCase.getInstance().getItemcaseManager().destroyItemcase(
+                    ItemCase.getInstance().getItemcaseManager().getItemcaseAt(
                             blockLocation), null);
         } else {
             return false;
@@ -89,87 +74,87 @@ public class ItemCaseAPI {
     }
 
     /**
-     * @param blockLocation
-     *            - Bukkit block location.
-     * @return - Itemcase at location. (Null if doesn't exist)
+     * Get ItemCase at given Location.
+     *
+     * @param blockLocation Bukkit block location.
+     * @return Itemcase at location. (Null if ItemCase doesn't exist)
      */
     public Itemcase getItemcaseAt(Location blockLocation) {
-        return this.itemcase.getItemcaseManager().getItemcaseAt(blockLocation);
+        return ItemCase.getInstance().getItemcaseManager().getItemcaseAt(
+                blockLocation);
     }
 
     /**
-     * @param blockLocation
-     *            - Bukkit block location.
-     * @return - If itemcase exists.
+     * If ItemCase is present at given Location.
+     *
+     * @param blockLocation Bukkit block location.
+     * @return If Itemcase exists.
      */
     public boolean isItemcaseAt(Location blockLocation) {
-        return this.itemcase.getItemcaseManager().isItemcaseAt(blockLocation);
+        return ItemCase.getInstance().getItemcaseManager().isItemcaseAt(
+                blockLocation);
     }
 
     /**
-     * Add a pending itemcase selection.
-     * 
-     * @param listener
-     *            - Listener.
-     * @param player
-     *            - Player.
+     * Add a pending Itemcase selection. (When a player selects an ItemCase)
+     *
+     * @param listener SelectionListener.
+     * @param player Player to apply selection too.
      */
     public void addPendingSelection(SelectionListener listener, Player player) {
-        this.itemcase.getSelectionManager().addPendingSelection(listener,
+        ItemCase.getInstance().getSelectionManager().addPendingSelection(
+                listener,
                 player);
     }
 
     /**
-     * Remove a pending itemcase selection.
-     * 
-     * @param player
-     *            - Player
+     * Remove a pending Itemcase selection.
+     *
+     * @param player Player to remove any pending selections from.
      */
     public void removePendingSelection(Player player) {
-        this.itemcase.getSelectionManager().removePendingSelection(player);
+        ItemCase.getInstance().getSelectionManager().removePendingSelection(
+                player);
     }
 
     /**
-     * If player is pending an itemcase selection.
-     * 
-     * @param player
-     *            - Player.
-     * @return - If pending selection or not.
+     * If player is pending an Itemcase selection.
+     *
+     * @param player Player.
+     * @return If pending selection or not.
      */
     public boolean isPendingSelection(Player player) {
-        return this.itemcase.getSelectionManager().isPendingSelection(player);
+        return ItemCase.getInstance().getSelectionManager().isPendingSelection(
+                player);
     }
 
     /**
-     * Add pending itemcase order/transaction.
-     * 
-     * @param itemcase
-     *            - Itemcase.
-     * @param player
-     *            - Player.
+     * Add pending Itemcase order/transaction.
+     *
+     * @param itemcase Itemcase.
+     * @param player Player.
      */
     public void addPendingOrder(Itemcase itemcase, Player player) {
-        this.itemcase.getShopManager().addPendingOrder(itemcase, player);
+        ItemCase.getInstance().getShopManager().
+                addPendingOrder(itemcase, player);
     }
 
     /**
-     * Remove pending itemcase order/transaction.
-     * 
-     * @param player
-     *            - Player.
+     * Remove pending Itemcase order/transaction.
+     *
+     * @param player Player.
      */
     public void removePendingOrder(Player player) {
-        this.itemcase.getShopManager().removePendingOrder(player);
+        ItemCase.getInstance().getShopManager().removePendingOrder(player);
     }
 
     /**
-     * If player has a current pending itemcase order/transaction.
-     * 
-     * @param player
-     *            - Player.
-     * @return - If player has current pending order.
+     * If player has a current pending Itemcase order/transaction.
+     *
+     * @param player Player.
+     * @return If player has current pending order.
      */
     public boolean isPendingOrder(Player player) {
-        return this.itemcase.getShopManager().isPendingOrder(player);
+        return ItemCase.getInstance().getShopManager().isPendingOrder(player);
     }
 }

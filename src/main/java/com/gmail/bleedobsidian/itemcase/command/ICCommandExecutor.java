@@ -14,15 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.command.commands.CancelCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.CreateCommand;
@@ -32,27 +25,26 @@ import com.gmail.bleedobsidian.itemcase.command.commands.OrderCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.StorageCommand;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * Main command executor. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ICCommandExecutor implements CommandExecutor {
-    private final ItemCase plugin;
-
-    /**
-     * Create new command executor.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     */
-    public ICCommandExecutor(ItemCase plugin) {
-        this.plugin = plugin;
-    }
 
     /**
      * On command execute.
+     *
+     * @param sender CommandSender.
+     * @param command Command.
+     * @param label Label.
+     * @param args Command arguments.
+     * @return If successful.
      */
     public boolean onCommand(CommandSender sender, Command command,
             String label, String[] args) {
@@ -79,19 +71,26 @@ public class ICCommandExecutor implements CommandExecutor {
         }
     }
 
+    /**
+     * Process Command.
+     *
+     * @param player Player that ran command.
+     * @param args Command arguments.
+     * @return If command exists.
+     */
     private boolean proccessCommand(Player player, String[] args) {
         if (args[0].equalsIgnoreCase("create")) {
-            CreateCommand.create(plugin, player, args);
+            CreateCommand.create(player, args);
         } else if (args[0].equalsIgnoreCase("modify")) {
-            ModifyCommand.modify(plugin, player, args);
+            ModifyCommand.modify(player, args);
         } else if (args[0].equalsIgnoreCase("order")) {
-            OrderCommand.order(plugin, player, args);
+            OrderCommand.order(player, args);
         } else if (args[0].equalsIgnoreCase("storage")) {
-            StorageCommand.storage(plugin, player, args);
+            StorageCommand.storage(player, args);
         } else if (args[0].equalsIgnoreCase("cancel")) {
-            CancelCommand.cancel(plugin, player, args);
+            CancelCommand.cancel(player, args);
         } else if (args[0].equalsIgnoreCase("help")) {
-            HelpCommand.help(plugin, player, args);
+            HelpCommand.help(player, args);
         } else {
             return false;
         }

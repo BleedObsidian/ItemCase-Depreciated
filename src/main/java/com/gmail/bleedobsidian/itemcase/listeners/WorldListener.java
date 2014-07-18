@@ -14,38 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.listeners;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-import com.gmail.bleedobsidian.itemcase.ItemCase;
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
-
 /**
  * World related event listener. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class WorldListener implements Listener {
-    private ItemCase plugin;
-
-    /**
-     * New WorldListener.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     */
-    public WorldListener(ItemCase plugin) {
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void onChunkLoad(ChunkLoadEvent event) {
-        for (Itemcase itemcase : this.plugin.getItemcaseManager()
+        for (Itemcase itemcase : ItemCase.getInstance().getItemcaseManager()
                 .getItemcases()) {
             if (event.getChunk().equals(itemcase.getBlock().getChunk())
                     && itemcase.isChunkLoaded() == false) {
@@ -56,7 +43,7 @@ public class WorldListener implements Listener {
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
-        for (Itemcase itemcase : this.plugin.getItemcaseManager()
+        for (Itemcase itemcase : ItemCase.getInstance().getItemcaseManager()
                 .getItemcases()) {
             if (event.getChunk().equals(itemcase.getBlock().getChunk())
                     && itemcase.isChunkLoaded() == true) {

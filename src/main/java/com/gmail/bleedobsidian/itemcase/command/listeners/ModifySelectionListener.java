@@ -14,54 +14,49 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.command.listeners;
 
-import org.bukkit.entity.Player;
-
-import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.command.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.managers.interfaces.SelectionListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
+import org.bukkit.entity.Player;
 
 /**
  * Modify Command Selection Listener. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class ModifySelectionListener implements SelectionListener {
-    private final ItemCase plugin;
+
+    /**
+     * ItemcaseType.
+     */
     private ItemcaseType type;
+
+    /**
+     * Command arguments.
+     */
     private final String[] args;
 
     /**
      * New ModifySelectionListener.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param type
-     *            - ItemcaseType.
-     * @param args
-     *            - Arguments.
+     *
+     * @param type ItemcaseType.
+     * @param args Command arguments.
      */
-    public ModifySelectionListener(ItemCase plugin, ItemcaseType type,
+    public ModifySelectionListener(ItemcaseType type,
             String[] args) {
-        this.plugin = plugin;
         this.type = type;
         this.args = args;
     }
 
     /**
      * New ModifySelectionListener.
-     * 
-     * @param plugin
-     *            - ItemCase plugin.
-     * @param args
-     *            - Arguments.
+     *
+     * @param args Command arguments.
      */
-    public ModifySelectionListener(ItemCase plugin, String[] args) {
-        this.plugin = plugin;
+    public ModifySelectionListener(String[] args) {
         this.args = args;
     }
 
@@ -70,9 +65,9 @@ public class ModifySelectionListener implements SelectionListener {
      */
     public void selected(Player player, Itemcase itemcase) {
         if (this.type != null) {
-            ModifyCommand.selected(plugin, player, args, itemcase, type);
+            ModifyCommand.selected(player, args, itemcase, type);
         } else {
-            ModifyCommand.selectedInfinite(plugin, player, args, itemcase);
+            ModifyCommand.selectedInfinite(player, args, itemcase);
         }
     }
 }

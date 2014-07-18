@@ -14,24 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.listeners;
-
-import java.util.Arrays;
-import java.util.Set;
-
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.ItemStack;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
@@ -45,26 +28,28 @@ import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatExtra;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatFormat;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
 import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
+import java.util.Arrays;
+import java.util.Set;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Player related event listener. (Only used internally)
- * 
+ *
  * @author BleedObsidian (Jesse Prescott)
  */
 public class PlayerListener implements Listener {
-    private ItemCase plugin;
 
-    /**
-     * New PlayerListener.
-     * 
-     * @param plugin
-     *            - ItemCase Plugin.
-     */
-    public PlayerListener(ItemCase plugin) {
-        this.plugin = plugin;
-    }
-
-    @SuppressWarnings("deprecation")
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!ItemCase.getInstance().getConfigFile().getFileConfiguration()
@@ -85,26 +70,29 @@ public class PlayerListener implements Listener {
                     }
                 }
 
-                for (int id : this.plugin.getConfigFile()
+                for (int id : ItemCase.getInstance().getConfigFile()
                         .getFileConfiguration().getIntegerList("Blocks")) {
                     if (block.getType().getId() == id) {
-                        if (!this.plugin.getItemcaseManager().isItemcaseAt(
-                                block.getLocation())) {
+                        if (!ItemCase.getInstance().getItemcaseManager().
+                                isItemcaseAt(
+                                        block.getLocation())) {
                             ItemStack itemStack = player.getItemInHand();
 
                             if (itemStack.getType() != Material.AIR) {
                                 if (player
-                                        .hasPermission("itemcase.create.showcase")) {
+                                        .hasPermission(
+                                                "itemcase.create.showcase")) {
                                     if (WorldGuard.isEnabled()
                                             && !WorldGuard
-                                                    .getWorldGuardPlugin()
-                                                    .canBuild(player, block)) {
+                                            .getWorldGuardPlugin()
+                                            .canBuild(player, block)) {
                                         PlayerLogger
                                                 .message(
                                                         player,
-                                                        Language.getLanguageFile()
-                                                                .getMessage(
-                                                                        "Player.ItemCase.Created-Region"));
+                                                        Language.
+                                                        getLanguageFile()
+                                                        .getMessage(
+                                                                "Player.ItemCase.Created-Region"));
                                         event.setCancelled(true);
                                         return;
                                     }
@@ -114,7 +102,7 @@ public class PlayerListener implements Listener {
                                     ItemStack itemStackCopy = itemStack.clone();
                                     itemStackCopy.setAmount(1);
 
-                                    this.plugin.getItemcaseManager()
+                                    ItemCase.getInstance().getItemcaseManager()
                                             .createItemcase(itemStackCopy,
                                                     location, player);
 
@@ -122,8 +110,8 @@ public class PlayerListener implements Listener {
                                             .message(
                                                     player,
                                                     Language.getLanguageFile()
-                                                            .getMessage(
-                                                                    "Player.ItemCase.Created"));
+                                                    .getMessage(
+                                                            "Player.ItemCase.Created"));
                                     event.setCancelled(true);
                                 } else {
                                     return;
@@ -134,47 +122,50 @@ public class PlayerListener implements Listener {
                 }
             } else if (event.getAction() == Action.LEFT_CLICK_BLOCK
                     || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if (this.plugin.getItemcaseManager().isItemcaseAt(
+                if (ItemCase.getInstance().getItemcaseManager().isItemcaseAt(
                         event.getClickedBlock().getLocation())) {
-                    if (this.plugin.getSelectionManager().isPendingSelection(
-                            player)) {
-                        this.plugin.getSelectionManager().call(
+                    if (ItemCase.getInstance().getSelectionManager().
+                            isPendingSelection(
+                                    player)) {
+                        ItemCase.getInstance().getSelectionManager().call(
                                 player,
-                                this.plugin.getItemcaseManager().getItemcaseAt(
+                                ItemCase.getInstance().getItemcaseManager().
+                                getItemcaseAt(
                                         event.getClickedBlock().getLocation()));
                         event.setCancelled(true);
                     } else {
-                        if (!((this.plugin
+                        if (!((ItemCase.getInstance()
                                 .getItemcaseManager()
                                 .getItemcaseAt(
                                         event.getClickedBlock().getLocation())
                                 .getOwnerName()
                                 .equals(event.getPlayer().getName()) || player
-                                .hasPermission("itemcase.destroy.other")) && event
-                                .getAction() == Action.LEFT_CLICK_BLOCK)) {
-                            if (this.plugin
+                                .hasPermission("itemcase.destroy.other")) && event.
+                                getAction() == Action.LEFT_CLICK_BLOCK)) {
+                            if (ItemCase.getInstance()
                                     .getItemcaseManager()
                                     .getItemcaseAt(
                                             event.getClickedBlock()
-                                                    .getLocation()).getType() == ItemcaseType.SHOP) {
-                                if (!this.plugin.getShopManager()
+                                            .getLocation()).getType() == ItemcaseType.SHOP) {
+                                if (!ItemCase.getInstance().getShopManager()
                                         .isPendingOrder(player)) {
-                                    this.plugin
+                                    ItemCase.getInstance()
                                             .getShopManager()
                                             .addPendingOrder(
-                                                    this.plugin
-                                                            .getItemcaseManager()
-                                                            .getItemcaseAt(
-                                                                    event.getClickedBlock()
-                                                                            .getLocation()),
+                                                    ItemCase.getInstance()
+                                                    .getItemcaseManager()
+                                                    .getItemcaseAt(
+                                                            event.
+                                                            getClickedBlock()
+                                                            .getLocation()),
                                                     player);
                                 } else {
                                     PlayerLogger
                                             .message(
                                                     player,
                                                     Language.getLanguageFile()
-                                                            .getMessage(
-                                                                    "Player.ItemCase.Shop-Order-Processing1"));
+                                                    .getMessage(
+                                                            "Player.ItemCase.Shop-Order-Processing1"));
 
                                     JSONChatMessage messageCancel = new JSONChatMessage();
                                     messageCancel.addText("[ItemCase]: ",
@@ -182,16 +173,16 @@ public class PlayerListener implements Listener {
 
                                     JSONChatExtra extraCancel = new JSONChatExtra(
                                             Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Player.ItemCase.Cancel-Order-Button"),
+                                            .getMessage(
+                                                    "Player.ItemCase.Cancel-Order-Button"),
                                             JSONChatColor.GOLD,
                                             Arrays.asList(JSONChatFormat.BOLD));
                                     extraCancel
                                             .setHoverEvent(
                                                     JSONChatHoverEventType.SHOW_TEXT,
                                                     Language.getLanguageFile()
-                                                            .getMessage(
-                                                                    "Player.ItemCase.Cancel-Order-Button-Hover"));
+                                                    .getMessage(
+                                                            "Player.ItemCase.Cancel-Order-Button-Hover"));
                                     extraCancel.setClickEvent(
                                             JSONChatClickEventType.RUN_COMMAND,
                                             "/ic order cancel");
@@ -203,8 +194,8 @@ public class PlayerListener implements Listener {
                                             .message(
                                                     player,
                                                     Language.getLanguageFile()
-                                                            .getMessage(
-                                                                    "Player.Order.Amount-End"));
+                                                    .getMessage(
+                                                            "Player.Order.Amount-End"));
                                 }
                             }
                         }
@@ -219,7 +210,7 @@ public class PlayerListener implements Listener {
         if (event.getItem().hasMetadata("ItemCase")) {
             event.setCancelled(true);
         } else { // Fail safe
-            for (Itemcase itemcase : this.plugin.getItemcaseManager()
+            for (Itemcase itemcase : ItemCase.getInstance().getItemcaseManager()
                     .getItemcases()) {
                 if (event.getItem().equals(itemcase.getItem())) {
                     event.setCancelled(true);
@@ -231,16 +222,17 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         if (event.getPlayer() != null) {
-            if (this.plugin.getAmountManager().isPendingAmount(
+            if (ItemCase.getInstance().getAmountManager().isPendingAmount(
                     event.getPlayer())) {
                 event.setCancelled(true);
                 try {
                     int amount = Integer.parseInt(event.getMessage());
-                    this.plugin.getAmountManager().setPendingAmount(
+                    ItemCase.getInstance().getAmountManager().setPendingAmount(
                             event.getPlayer(), amount);
                 } catch (NumberFormatException e) {
-                    this.plugin.getAmountManager().removePendingAmount(
-                            event.getPlayer());
+                    ItemCase.getInstance().getAmountManager().
+                            removePendingAmount(
+                                    event.getPlayer());
                     PlayerLogger.message(
                             event.getPlayer(),
                             Language.getLanguageFile().getMessage(
@@ -254,12 +246,13 @@ public class PlayerListener implements Listener {
                             Language.getLanguageFile().getMessage(
                                     "Player.Order.Amount-End"));
                 }
-            } else if (this.plugin.getShopManager().isPendingOrder(
+            } else if (ItemCase.getInstance().getShopManager().isPendingOrder(
                     event.getPlayer())) {
                 event.setCancelled(true);
             }
 
-            Set<Player> playersOrdering = plugin.getShopManager().getOrders()
+            Set<Player> playersOrdering = ItemCase.getInstance().
+                    getShopManager().getOrders()
                     .keySet();
 
             for (Player player : playersOrdering) {

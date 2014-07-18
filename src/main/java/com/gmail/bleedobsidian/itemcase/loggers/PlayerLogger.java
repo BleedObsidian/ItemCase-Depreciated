@@ -14,18 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-
 package com.gmail.bleedobsidian.itemcase.loggers;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
- * This class allows you to easily send messages to a player. (Only used internally)
- * 
- * @author Jesse Prescott
+ * This class allows you to easily send messages to a player. (Only used
+ * internally)
+ *
+ * @author BleedObsidian (Jesse Prescott)
  */
 public class PlayerLogger {
+
+    /**
+     * Prefix placed in front of every message.
+     */
     private static String prefix = ChatColor.BLUE + "[ItemCase]";
 
     public static void message(Player player, String message) {
