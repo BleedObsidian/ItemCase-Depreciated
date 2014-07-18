@@ -96,9 +96,6 @@ public class ItemCase extends JavaPlugin {
         // Set Instance
         ItemCase.instance = this;
 
-        // Set API
-        this.api = new ItemCaseAPI();
-
         // Setup Logger
         PluginLogger.setJavaPlugin(this);
 
@@ -127,6 +124,26 @@ public class ItemCase extends JavaPlugin {
                     + ", using en-us instead.", true);
             Language.setLangauge("en-us.yml", this);
         }
+
+        // Check correct version of craftbukkit is being used
+        try {
+            Class.forName("org.bukkit.craftbukkit.v1_7_R3.CraftServer");
+        } catch (ClassNotFoundException e) {
+            PluginLogger.warning(
+                    Language.getLanguageFile().getMessage(
+                            "Console.Incorrect-Craftbukkit-Version"),
+                    true);
+            PluginLogger.warning(
+                    Language.getLanguageFile().getMessage(
+                            "Console.Disabled",
+                            new String[]{"%Version%", this.getVersion()}),
+                    true);
+            this.getPluginLoader().disablePlugin(this);
+            return;
+        }
+
+        // Set API
+        this.api = new ItemCaseAPI();
 
         // / Check For Update
         if (this.config.getFileConfiguration().getBoolean(
@@ -242,9 +259,11 @@ public class ItemCase extends JavaPlugin {
         // Cancel ItemcaseWhatcher
         this.getServer().getScheduler().cancelTasks(this);
 
-        this.itemcaseManager.unloadItemcases();
-        PluginLogger.info(Language.getLanguageFile().getMessage(
-                "Console.Itemcases-Destroyed"));
+        if (this.itemcaseManager != null) {
+            this.itemcaseManager.unloadItemcases();
+            PluginLogger.info(Language.getLanguageFile().getMessage(
+                    "Console.Itemcases-Destroyed"));
+        }
 
         PluginLogger.info(Language.getLanguageFile().getMessage(
                 "Console.Disabled",

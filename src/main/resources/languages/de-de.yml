@@ -6,6 +6,7 @@ Console:
     Update-Available: Eine neue Version von ItemCase ist verfügbar!
     Itemcases-Created: ItemCases importiert und erstellt.
     Itemcases-Destroyed: ItemCases exportiert und entfernt.
+    Incorrect-Craftbukkit-Version: Falsche Version von CraftBukkit wird verwendet.
     Errors:
         Itemcase-Loader:
             Load-Error: Fehler beim Laden der gespeicherten ItemCases.

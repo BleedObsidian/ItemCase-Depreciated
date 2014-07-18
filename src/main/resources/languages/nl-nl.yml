@@ -6,6 +6,7 @@ Console:
     Update-Available: Een nieuwere versie van Itemcase is beschikbaar!
     Itemcases-Created: Opgeslagen Itemcases geladen en gemaakt.
     Itemcases-Destroyed: Itemcases opgeslagen en vernietigd.
+    Incorrect-Craftbukkit-Version: Onjuiste versie van CraftBukkit wordt gebruikt.
     Errors:
         Itemcase-Loader:
             Load-Error: Kon een opgeslagen Itemcase niet laden.
