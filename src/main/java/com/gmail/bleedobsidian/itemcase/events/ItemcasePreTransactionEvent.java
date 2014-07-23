@@ -24,11 +24,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * An event that is fired when a player buys an item from an Itemcase.
+ * An event that is fired when a player initiates a transaction with an
+ * Itemcase. (Right clicks)
  *
  * @author BleedObsidian (Jesse Prescott)
  */
-public class ItemcaseBuyEvent extends Event implements Cancellable {
+public class ItemcasePreTransactionEvent extends Event implements Cancellable {
 
     /**
      * HandlerList.
@@ -56,34 +57,35 @@ public class ItemcaseBuyEvent extends Event implements Cancellable {
     private final Order order;
 
     /**
-     * New ItemcaseBuyEvent.
+     * New ItemcasePreTransactionEvent.
      *
      * @param itemcase Itemcase that was bought from.
-     * @param player - Player that bought from Itemcase.
-     * @param order - Order.
+     * @param player Player that bought from Itemcase.
+     * @param order Order.
      */
-    public ItemcaseBuyEvent(Itemcase itemcase, Player player, Order order) {
+    public ItemcasePreTransactionEvent(Itemcase itemcase, Player player,
+            Order order) {
         this.itemcase = itemcase;
         this.player = player;
         this.order = order;
     }
 
     /**
-     * @return - Itemcase that was bought from.
+     * @return Itemcase thats involved in transaction.
      */
     public Itemcase getItemcase() {
         return itemcase;
     }
 
     /**
-     * @return - Player that bought from Itemcase.
+     * @return Player that is involved in transaction.
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * @return - Order.
+     * @return Current order.
      */
     public Order getOrder() {
         return order;

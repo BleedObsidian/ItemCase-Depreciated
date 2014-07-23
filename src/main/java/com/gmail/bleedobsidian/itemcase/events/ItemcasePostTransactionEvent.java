@@ -18,17 +18,20 @@ package com.gmail.bleedobsidian.itemcase.events;
 
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.orders.Order;
+import com.gmail.bleedobsidian.itemcase.managers.orders.OrderMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * An event that is fired when a player sells an item to an Itemcase.
+ * An event that is fired when a player attempts to buy or sell from an
+ * Itemcase. (The players balance etc is checked beforehand, when this event is
+ * called, the player is ready and able to buy or sell)
  *
  * @author BleedObsidian (Jesse Prescott)
  */
-public class ItemcaseSellEvent extends Event implements Cancellable {
+public class ItemcasePostTransactionEvent extends Event implements Cancellable {
 
     /**
      * HandlerList.
@@ -41,12 +44,12 @@ public class ItemcaseSellEvent extends Event implements Cancellable {
     private boolean isCancelled;
 
     /**
-     * Itemcase that was sold to.
+     * Itemcase that was bought from.
      */
     private final Itemcase itemcase;
 
     /**
-     * Player that sold to Itemcase.
+     * Player that bought from Itemcase.
      */
     private final Player player;
 
@@ -56,37 +59,52 @@ public class ItemcaseSellEvent extends Event implements Cancellable {
     private final Order order;
 
     /**
-     * New ItemcaseSellEvent.
-     *
-     * @param itemcase Itemcase that was sold to.
-     * @param player Player that sold to Itemcase.
-     * @param order Order.
+     * OrderMode.
      */
-    public ItemcaseSellEvent(Itemcase itemcase, Player player, Order order) {
+    private final OrderMode mode;
+
+    /**
+     * New ItemcaseBuyEvent.
+     *
+     * @param itemcase Itemcase that was bought from.
+     * @param player Player that bought from Itemcase.
+     * @param order Order.
+     * @param mode OrderMode.
+     */
+    public ItemcasePostTransactionEvent(Itemcase itemcase, Player player,
+            Order order, OrderMode mode) {
         this.itemcase = itemcase;
         this.player = player;
         this.order = order;
+        this.mode = mode;
     }
 
     /**
-     * @return Itemcase that was sold to.
+     * @return Itemcase thats involved in transaction.
      */
     public Itemcase getItemcase() {
         return itemcase;
     }
 
     /**
-     * @return Player that sold to Itemcase.
+     * @return Player that is involved in transaction.
      */
     public Player getPlayer() {
         return player;
     }
 
     /**
-     * @return Order.
+     * @return Current order.
      */
     public Order getOrder() {
         return order;
+    }
+
+    /**
+     * @return OrderMode.
+     */
+    public OrderMode getMode() {
+        return this.mode;
     }
 
     @Override

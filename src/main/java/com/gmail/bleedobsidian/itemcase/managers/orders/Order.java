@@ -19,6 +19,7 @@ package com.gmail.bleedobsidian.itemcase.managers.orders;
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.Vault;
+import com.gmail.bleedobsidian.itemcase.events.ItemcasePostTransactionEvent;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.util.InventoryUtils;
@@ -46,9 +47,19 @@ public class Order {
     private final ItemStack item;
 
     /**
+     * OrderMode.
+     */
+    private OrderMode mode;
+
+    /**
      * Amount.
      */
     private int amount = 1;
+
+    /**
+     * Price of order.
+     */
+    private double price = 0;
 
     /**
      * Bukkit taskID.
@@ -102,7 +113,7 @@ public class Order {
             if (!Vault.getEconomy().createPlayerAccount(Bukkit.getOfflinePlayer(
                     player.getUniqueId()), player.getWorld().getName())) {
                 ShopGUI.displayResult(player, this,
-                        OrderResult.TRANSACTION_FAILED, 0);
+                        OrderResult.TRANSACTION_FAILED);
                 return;
             }
         }
@@ -115,8 +126,7 @@ public class Order {
 
         if (playerBalance < amountDue) {
             ShopGUI.
-                    displayResult(player, this, OrderResult.INSUFFICIENT_BALANCE,
-                            0);
+                    displayResult(player, this, OrderResult.INSUFFICIENT_BALANCE);
             return;
         }
 
@@ -127,9 +137,18 @@ public class Order {
 
             if (stock < this.amount) {
                 ShopGUI.displayResult(player, this,
-                        OrderResult.INSUFFICIENT_STOCK, 0);
+                        OrderResult.INSUFFICIENT_STOCK);
                 return;
             }
+        }
+
+        ItemcasePostTransactionEvent event = new ItemcasePostTransactionEvent(
+                itemcase, player, this, OrderMode.BUY);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            ShopGUI.displayResult(player, this, OrderResult.CANCELED);
+            return;
         }
 
         // Remove funds
@@ -138,8 +157,7 @@ public class Order {
                 player.getWorld().getName(), amountDue);
 
         if (!response.transactionSuccess()) {
-            ShopGUI.displayResult(player, this, OrderResult.TRANSACTION_FAILED,
-                    0);
+            ShopGUI.displayResult(player, this, OrderResult.TRANSACTION_FAILED);
             return;
         }
 
@@ -152,7 +170,7 @@ public class Order {
 
             if (!ownerResponse.transactionSuccess()) {
                 ShopGUI.displayResult(player, this,
-                        OrderResult.TRANSACTION_FAILED, 0);
+                        OrderResult.TRANSACTION_FAILED);
                 return;
             }
         }
@@ -172,7 +190,7 @@ public class Order {
         player.getInventory().addItem(itemstack);
 
         ShopGUI.displayResult(player, this,
-                OrderResult.BUY_SUCCESS, amountDue);
+                OrderResult.BUY_SUCCESS);
         return;
     }
 
@@ -188,7 +206,7 @@ public class Order {
             if (!Vault.getEconomy().createPlayerAccount(Bukkit.getOfflinePlayer(
                     player.getUniqueId()), player.getWorld().getName())) {
                 ShopGUI.displayResult(player, this,
-                        OrderResult.TRANSACTION_FAILED, 0);
+                        OrderResult.TRANSACTION_FAILED);
                 return;
             }
         }
@@ -203,8 +221,7 @@ public class Order {
         if (ownerBalance < amountDue) {
             ShopGUI.
                     displayResult(player, this,
-                            OrderResult.INSUFFICIENT_OWNER_BALANCE,
-                            0);
+                            OrderResult.INSUFFICIENT_OWNER_BALANCE);
             return;
         }
 
@@ -214,7 +231,16 @@ public class Order {
 
         if (stock < this.amount) {
             ShopGUI.displayResult(player, this,
-                    OrderResult.NOT_ENOUGH_ITEMS, 0);
+                    OrderResult.NOT_ENOUGH_ITEMS);
+            return;
+        }
+
+        ItemcasePostTransactionEvent event = new ItemcasePostTransactionEvent(
+                itemcase, player, this, OrderMode.SELL);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) {
+            ShopGUI.displayResult(player, this, OrderResult.CANCELED);
             return;
         }
 
@@ -227,7 +253,7 @@ public class Order {
 
             if (!ownerResponse.transactionSuccess()) {
                 ShopGUI.displayResult(player, this,
-                        OrderResult.TRANSACTION_FAILED, 0);
+                        OrderResult.TRANSACTION_FAILED);
                 return;
             }
         }
@@ -238,8 +264,7 @@ public class Order {
                 player.getWorld().getName(), amountDue);
 
         if (!response.transactionSuccess()) {
-            ShopGUI.displayResult(player, this, OrderResult.TRANSACTION_FAILED,
-                    0);
+            ShopGUI.displayResult(player, this, OrderResult.TRANSACTION_FAILED);
             return;
         }
 
@@ -258,7 +283,7 @@ public class Order {
         player.getInventory().removeItem(itemstack);
 
         ShopGUI.displayResult(player, this,
-                OrderResult.SELL_SUCCESS, amountDue);
+                OrderResult.SELL_SUCCESS);
         return;
     }
 
@@ -286,16 +311,40 @@ public class Order {
     }
 
     /**
+     * Update order.
+     *
      * @param amount Amount of items to be bought/sold.
+     * @param mode OrderMode.
      */
-    public void setAmount(int amount) {
+    public void update(int amount, OrderMode mode) {
         this.amount = amount;
+        this.mode = mode;
+
+        if (mode == OrderMode.BUY) {
+            this.price = this.itemcase.getBuyPrice() * this.amount;
+        } else if (mode == OrderMode.SELL) {
+            this.price = this.itemcase.getSellPrice() * this.amount;
+        }
     }
 
     /**
      * @return ItemStack being bought/sold.
      */
     public ItemStack getItem() {
-        return item;
+        return this.item;
+    }
+
+    /**
+     * @return OrderMode of order. (Maybe null)
+     */
+    public OrderMode getMode() {
+        return this.mode;
+    }
+
+    /**
+     * @return Price of order. (Maybe 0)
+     */
+    public double getPrice() {
+        return this.price;
     }
 }

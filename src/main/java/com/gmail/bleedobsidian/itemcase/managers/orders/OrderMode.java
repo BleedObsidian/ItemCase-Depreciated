@@ -17,12 +17,11 @@
 package com.gmail.bleedobsidian.itemcase.managers.orders;
 
 /**
- * An enum that contains all of the possible order results.
+ * An enum containing all of the possible order modes.
  *
  * @author BleedObsidian (Jesse Prescott)
  */
-public enum OrderResult {
+public enum OrderMode {
 
-    BUY_SUCCESS, SELL_SUCCESS, TRANSACTION_FAILED, INSUFFICIENT_BALANCE,
-    INSUFFICIENT_STOCK, INSUFFICIENT_OWNER_BALANCE, NOT_ENOUGH_ITEMS, CANCELED;
+    BUY, SELL;
 }

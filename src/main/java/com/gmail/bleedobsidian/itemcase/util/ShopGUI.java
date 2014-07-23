@@ -7,6 +7,7 @@ import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.interfaces.InputListener;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.orders.Order;
+import com.gmail.bleedobsidian.itemcase.managers.orders.OrderMode;
 import com.gmail.bleedobsidian.itemcase.managers.orders.OrderResult;
 import java.text.DecimalFormat;
 import java.util.Map.Entry;
@@ -237,7 +238,7 @@ public class ShopGUI {
                     return;
                 }
 
-                order.setAmount(amount);
+                order.update(amount, OrderMode.BUY);
 
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage("Player.Order.Amount-Set",
@@ -296,7 +297,7 @@ public class ShopGUI {
                     return;
                 }
 
-                order.setAmount(amount);
+                order.update(amount, OrderMode.SELL);
 
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage("Player.Order.Amount-Set",
@@ -319,10 +320,13 @@ public class ShopGUI {
      * Display order result GUI.
      *
      * @param player Player.
+     * @param order Order.
      * @param result OrderResult.
      */
     public static void displayResult(Player player, Order order,
-            OrderResult result, double price) {
+            OrderResult result) {
+        double price = order.getPrice();
+
         if (result == OrderResult.BUY_SUCCESS) {
             if (price <= 1) {
                 PlayerLogger.message(player, Language.getLanguageFile().
@@ -507,6 +511,10 @@ public class ShopGUI {
             PlayerLogger.messageLanguage(player,
                     "Player.Order.Transaction-Error");
             PlayerLogger.messageLanguage(player, "Player.Order.End");
+        } else if (result == OrderResult.CANCELED) {
+            PlayerLogger.messageLanguage(player, "Player.Order.Canceled");
+            PlayerLogger.messageLanguage(player, "Player.Order.End");
+            ItemCase.getInstance().getShopManager().removePendingOrder(player);
         }
     }
 

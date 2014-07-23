@@ -16,10 +16,12 @@
  */
 package com.gmail.bleedobsidian.itemcase.managers;
 
+import com.gmail.bleedobsidian.itemcase.events.ItemcasePreTransactionEvent;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.orders.Order;
 import com.gmail.bleedobsidian.itemcase.util.ShopGUI;
 import java.util.HashMap;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -44,8 +46,14 @@ public class ShopManager {
     public void addPendingOrder(Itemcase itemcase, Player player) {
         Order order = new Order(itemcase, player, itemcase.getItemStack());
 
-        ShopGUI.displayGUI(itemcase, player, order);
-        this.orders.put(player, order);
+        ItemcasePreTransactionEvent event = new ItemcasePreTransactionEvent(
+                itemcase, player, order);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        if (!event.isCancelled()) {
+            ShopGUI.displayGUI(itemcase, player, order);
+            this.orders.put(player, order);
+        }
     }
 
     /**
