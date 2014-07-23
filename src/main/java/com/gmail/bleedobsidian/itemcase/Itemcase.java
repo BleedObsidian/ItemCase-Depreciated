@@ -23,7 +23,7 @@ import com.gmail.bleedobsidian.itemcase.listeners.InventoryListener;
 import com.gmail.bleedobsidian.itemcase.listeners.PlayerListener;
 import com.gmail.bleedobsidian.itemcase.listeners.WorldListener;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
-import com.gmail.bleedobsidian.itemcase.managers.AmountManager;
+import com.gmail.bleedobsidian.itemcase.managers.InputManager;
 import com.gmail.bleedobsidian.itemcase.managers.InventoryManager;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.SelectionManager;
@@ -72,9 +72,9 @@ public class ItemCase extends JavaPlugin {
     private SelectionManager selectionManager;
 
     /**
-     * AmountManager.
+     * InputManager.
      */
-    private AmountManager amountManager;
+    private InputManager inputManager;
 
     /**
      * ShopManager.
@@ -229,8 +229,8 @@ public class ItemCase extends JavaPlugin {
         // Create SelectionManager
         this.selectionManager = new SelectionManager();
 
-        // Create AmountManager
-        this.amountManager = new AmountManager();
+        // Create InputManager
+        this.inputManager = new InputManager();
 
         // Create ShopManager
         this.shopManager = new ShopManager();
@@ -334,10 +334,10 @@ public class ItemCase extends JavaPlugin {
     }
 
     /**
-     * @return AmountManager.
+     * @return InputManager.
      */
-    public AmountManager getAmountManager() {
-        return this.amountManager;
+    public InputManager getInputManager() {
+        return this.inputManager;
     }
 
     /**

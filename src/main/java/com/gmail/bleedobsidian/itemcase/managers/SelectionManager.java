@@ -33,15 +33,15 @@ public class SelectionManager {
     /**
      * Pending selections.
      */
-    private Map<Player, SelectionListener> pending = new HashMap<Player, SelectionListener>();
+    private final Map<Player, SelectionListener> pending = new HashMap<Player, SelectionListener>();
 
     /**
-     * Receive event call.
+     * On player select Itemcase.
      *
      * @param player Player.
      * @param itemcase Itemcase.
      */
-    public void call(Player player, Itemcase itemcase) {
+    public void onPlayerSelect(Player player, Itemcase itemcase) {
         if (pending.containsKey(player)) {
             pending.get(player).selected(player, itemcase);
             pending.remove(player);

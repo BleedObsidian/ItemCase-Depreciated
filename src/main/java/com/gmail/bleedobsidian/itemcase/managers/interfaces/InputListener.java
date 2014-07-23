@@ -16,21 +16,21 @@
  */
 package com.gmail.bleedobsidian.itemcase.managers.interfaces;
 
-import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import org.bukkit.entity.Player;
 
 /**
- * An interface listener for commands needing to use Itemcase selection.
+ * An interface listener for the InputManager that is called upon when the
+ * player provides input.
  *
  * @author BleedObsidian (Jesse Prescott)
  */
-public interface SelectionListener {
+public interface InputListener {
 
     /**
-     * An Itemcase was selected.
+     * Fired when the player sets the amount.
      *
-     * @param player Player.
-     * @param itemcase Itemcase selected.
+     * @param player Player that set amount.
+     * @param input Input that player provided.
      */
-    public void selected(Player player, Itemcase itemcase);
+    public void onPlayerInput(Player player, String input);
 }

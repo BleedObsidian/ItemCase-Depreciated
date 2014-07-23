@@ -17,18 +17,10 @@
 package com.gmail.bleedobsidian.itemcase.listeners;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
-import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.WorldGuard;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatClickEventType;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatColor;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatExtra;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatFormat;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
-import java.util.Arrays;
 import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -52,160 +44,150 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (!ItemCase.getInstance().getConfigFile().getFileConfiguration()
+        if (ItemCase.getInstance().getConfigFile().getFileConfiguration()
                 .getBoolean("Options.Disable-Sneak-Create")) {
-            Player player = event.getPlayer();
+            return;
+        }
 
-            if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event
-                    .getAction() == Action.RIGHT_CLICK_AIR)
-                    && player.isSneaking()) {
-                Block block = event.getClickedBlock();
+        ItemCase itemcase = ItemCase.getInstance();
+        Player player = event.getPlayer();
 
-                if (block == null) {
-                    if (player.getTargetBlock(null, 100) != null
-                            && player.getTargetBlock(null, 100).getType() != Material.AIR) {
-                        block = player.getTargetBlock(null, 100);
-                    } else {
-                        return;
-                    }
+        if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event
+                .getAction() == Action.RIGHT_CLICK_AIR)
+                && player.isSneaking()) {
+
+            Block block = event.getClickedBlock();
+
+            if (block == null) {
+                if (player.getTargetBlock(null, 100) != null
+                        && player.getTargetBlock(null, 100).getType() != Material.AIR) {
+                    block = player.getTargetBlock(null, 100);
+                } else {
+                    return;
+                }
+            }
+
+            for (int id : itemcase.getConfigFile()
+                    .getFileConfiguration().getIntegerList("Blocks")) {
+
+                if (block.getType().getId() != id) {
+                    return;
                 }
 
-                for (int id : ItemCase.getInstance().getConfigFile()
-                        .getFileConfiguration().getIntegerList("Blocks")) {
-                    if (block.getType().getId() == id) {
-                        if (!ItemCase.getInstance().getItemcaseManager().
-                                isItemcaseAt(
-                                        block.getLocation())) {
-                            ItemStack itemStack = player.getItemInHand();
-
-                            if (itemStack.getType() != Material.AIR) {
-                                if (player
-                                        .hasPermission(
-                                                "itemcase.create.showcase")) {
-                                    if (WorldGuard.isEnabled()
-                                            && !WorldGuard
-                                            .getWorldGuardPlugin()
-                                            .canBuild(player, block)) {
-                                        PlayerLogger
-                                                .message(
-                                                        player,
-                                                        Language.
-                                                        getLanguageFile()
-                                                        .getMessage(
-                                                                "Player.ItemCase.Created-Region"));
-                                        event.setCancelled(true);
-                                        return;
-                                    }
-
-                                    Location location = block.getLocation();
-
-                                    ItemStack itemStackCopy = itemStack.clone();
-                                    itemStackCopy.setAmount(1);
-
-                                    ItemCase.getInstance().getItemcaseManager()
-                                            .createItemcase(itemStackCopy,
-                                                    location, player);
-
-                                    PlayerLogger
-                                            .message(
-                                                    player,
-                                                    Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Player.ItemCase.Created"));
-                                    event.setCancelled(true);
-                                } else {
-                                    return;
-                                }
-                            }
-                        }
-                    }
+                if (itemcase.getItemcaseManager().
+                        isItemcaseAt(
+                                block.getLocation())) {
+                    return;
                 }
-            } else if (event.getAction() == Action.LEFT_CLICK_BLOCK
-                    || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if (ItemCase.getInstance().getItemcaseManager().isItemcaseAt(
-                        event.getClickedBlock().getLocation())) {
-                    if (ItemCase.getInstance().getSelectionManager().
-                            isPendingSelection(
-                                    player)) {
-                        ItemCase.getInstance().getSelectionManager().call(
+
+                ItemStack itemStack = player.getItemInHand();
+
+                if (itemStack.getType() == Material.AIR) {
+                    return;
+                }
+
+                if (!player
+                        .hasPermission(
+                                "itemcase.create.showcase")) {
+                    return;
+                }
+
+                if (WorldGuard.isEnabled()
+                        && !WorldGuard
+                        .getWorldGuardPlugin()
+                        .canBuild(player, block)) {
+                    PlayerLogger
+                            .messageLanguage(
+                                    player,
+                                    "Player.ItemCase.Created-Region");
+                    event.setCancelled(true);
+                    return;
+                }
+
+                Location location = block.getLocation();
+
+                ItemStack itemStackCopy = itemStack.clone();
+                itemStackCopy.setAmount(1);
+
+                ItemCase.getInstance().getItemcaseManager()
+                        .createItemcase(itemStackCopy,
+                                location, player);
+
+                PlayerLogger
+                        .messageLanguage(
                                 player,
-                                ItemCase.getInstance().getItemcaseManager().
-                                getItemcaseAt(
-                                        event.getClickedBlock().getLocation()));
-                        event.setCancelled(true);
-                    } else {
-                        if (!((ItemCase.getInstance()
-                                .getItemcaseManager()
-                                .getItemcaseAt(
-                                        event.getClickedBlock().getLocation())
-                                .getOwnerName()
-                                .equals(event.getPlayer().getName()) || player
-                                .hasPermission("itemcase.destroy.other")) && event.
-                                getAction() == Action.LEFT_CLICK_BLOCK)) {
-                            if (ItemCase.getInstance()
-                                    .getItemcaseManager()
-                                    .getItemcaseAt(
-                                            event.getClickedBlock()
-                                            .getLocation()).getType() == ItemcaseType.SHOP) {
-                                if (!ItemCase.getInstance().getShopManager()
-                                        .isPendingOrder(player)) {
-                                    ItemCase.getInstance()
-                                            .getShopManager()
-                                            .addPendingOrder(
-                                                    ItemCase.getInstance()
-                                                    .getItemcaseManager()
-                                                    .getItemcaseAt(
-                                                            event.
-                                                            getClickedBlock()
-                                                            .getLocation()),
-                                                    player);
-                                } else {
-                                    PlayerLogger
-                                            .message(
-                                                    player,
-                                                    Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Player.ItemCase.Shop-Order-Processing1"));
+                                "Player.ItemCase.Created");
+                event.setCancelled(true);
+                return;
+            }
+        } else if (event.getAction() == Action.LEFT_CLICK_BLOCK
+                || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (!ItemCase.getInstance().getItemcaseManager().isItemcaseAt(
+                    event.getClickedBlock().getLocation())) {
+                return;
+            }
 
-                                    JSONChatMessage messageCancel = new JSONChatMessage();
-                                    messageCancel.addText("[ItemCase]: ",
-                                            JSONChatColor.BLUE, null);
+            if (ItemCase.getInstance().getSelectionManager().
+                    isPendingSelection(
+                            player)) {
+                itemcase.getSelectionManager().onPlayerSelect(
+                        player,
+                        itemcase.getItemcaseManager().
+                        getItemcaseAt(
+                                event.getClickedBlock().getLocation()));
+                event.setCancelled(true);
+                return;
+            } else {
+                if ((itemcase
+                        .getItemcaseManager()
+                        .getItemcaseAt(
+                                event.getClickedBlock().getLocation())
+                        .getOwnerName()
+                        .equals(event.getPlayer().getName()) || player
+                        .hasPermission("itemcase.destroy.other")) && event.
+                        getAction() == Action.LEFT_CLICK_BLOCK) {
+                    return;
+                }
 
-                                    JSONChatExtra extraCancel = new JSONChatExtra(
-                                            Language.getLanguageFile()
-                                            .getMessage(
-                                                    "Player.ItemCase.Cancel-Order-Button"),
-                                            JSONChatColor.GOLD,
-                                            Arrays.asList(JSONChatFormat.BOLD));
-                                    extraCancel
-                                            .setHoverEvent(
-                                                    JSONChatHoverEventType.SHOW_TEXT,
-                                                    Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Player.ItemCase.Cancel-Order-Button-Hover"));
-                                    extraCancel.setClickEvent(
-                                            JSONChatClickEventType.RUN_COMMAND,
-                                            "/ic order cancel");
+                if (itemcase
+                        .getItemcaseManager()
+                        .getItemcaseAt(
+                                event.getClickedBlock()
+                                .getLocation()).getType() != ItemcaseType.SHOP) {
+                    return;
+                }
 
-                                    messageCancel.addExtra(extraCancel);
-                                    messageCancel.sendToPlayer(player);
+                if (!itemcase.getShopManager()
+                        .isPendingOrder(player)) {
+                    ItemCase.getInstance()
+                            .getShopManager()
+                            .addPendingOrder(
+                                    ItemCase.
+                                    getInstance()
+                                    .getItemcaseManager().
+                                    getItemcaseAt(
+                                            event.
+                                            getClickedBlock().
+                                            getLocation()),
+                                    player);
+                    return;
+                } else {
+                    PlayerLogger
+                            .messageLanguage(
+                                    player,
+                                    "Player.ItemCase.Shop-Order-Processing-1");
 
-                                    PlayerLogger
-                                            .message(
-                                                    player,
-                                                    Language.getLanguageFile()
-                                                    .getMessage(
-                                                            "Player.Order.Amount-End"));
-                                }
-                            }
-                        }
-                    }
+                    PlayerLogger
+                            .messageLanguage(
+                                    player,
+                                    "Player.ItemCase.Shop-Order-Processing-2");
+                    return;
                 }
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
         if (event.getItem().hasMetadata("ItemCase")) {
             event.setCancelled(true);
@@ -222,30 +204,11 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         if (event.getPlayer() != null) {
-            if (ItemCase.getInstance().getAmountManager().isPendingAmount(
+            if (ItemCase.getInstance().getInputManager().isPendingInput(
                     event.getPlayer())) {
                 event.setCancelled(true);
-                try {
-                    int amount = Integer.parseInt(event.getMessage());
-                    ItemCase.getInstance().getAmountManager().setPendingAmount(
-                            event.getPlayer(), amount);
-                } catch (NumberFormatException e) {
-                    ItemCase.getInstance().getAmountManager().
-                            removePendingAmount(
-                                    event.getPlayer());
-                    PlayerLogger.message(
-                            event.getPlayer(),
-                            Language.getLanguageFile().getMessage(
-                                    "Player.Order.Amount-Error1"));
-                    PlayerLogger.message(
-                            event.getPlayer(),
-                            Language.getLanguageFile().getMessage(
-                                    "Player.Order.Amount-Error2"));
-                    PlayerLogger.message(
-                            event.getPlayer(),
-                            Language.getLanguageFile().getMessage(
-                                    "Player.Order.Amount-End"));
-                }
+                ItemCase.getInstance().getInputManager().setPendingInput(
+                        event.getPlayer(), event.getMessage());
             } else if (ItemCase.getInstance().getShopManager().isPendingOrder(
                     event.getPlayer())) {
                 event.setCancelled(true);

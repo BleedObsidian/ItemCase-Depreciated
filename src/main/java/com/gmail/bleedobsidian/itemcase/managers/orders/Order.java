@@ -18,8 +18,12 @@ package com.gmail.bleedobsidian.itemcase.managers.orders;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
+import com.gmail.bleedobsidian.itemcase.Vault;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.util.InventoryUtils;
+import com.gmail.bleedobsidian.itemcase.util.ShopGUI;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -67,19 +71,195 @@ public class Order {
                     public void run() {
                         if (ItemCase.getInstance().getShopManager()
                         .isPendingOrder(player)) {
+                            if (ItemCase.getInstance().getInputManager().
+                            isPendingInput(player)) {
+                                ItemCase.getInstance().getInputManager().
+                                removePendingInput(player);
+                            }
+
                             PlayerLogger.message(
                                     player,
                                     Language.getLanguageFile().getMessage(
                                             "Player.Order.Timeout"));
-                            PlayerLogger.message(
-                                    player,
-                                    Language.getLanguageFile().getMessage(
-                                            "Player.Order.Amount-End"));
+                            PlayerLogger.messageLanguage(player,
+                                    "Player.Order.End");
                             ItemCase.getInstance().getShopManager()
                             .removePendingOrder(player);
                         }
                     }
                 }, 600).getTaskId();
+    }
+
+    /**
+     * Buy current order.
+     *
+     * @param player Player buying order.
+     */
+    public void buy(Player player) {
+        // Create economy account
+        if (!Vault.getEconomy().hasAccount(Bukkit.getOfflinePlayer(player.
+                getUniqueId()), player.getWorld().getName())) {
+            if (!Vault.getEconomy().createPlayerAccount(Bukkit.getOfflinePlayer(
+                    player.getUniqueId()), player.getWorld().getName())) {
+                ShopGUI.displayResult(player, this,
+                        OrderResult.TRANSACTION_FAILED, 0);
+                return;
+            }
+        }
+
+        // Check balance
+        double playerBalance = Vault.getEconomy().getBalance(Bukkit.
+                getOfflinePlayer(player.getUniqueId()), player.getWorld().
+                getName());
+        double amountDue = this.itemcase.getBuyPrice() * this.amount;
+
+        if (playerBalance < amountDue) {
+            ShopGUI.
+                    displayResult(player, this, OrderResult.INSUFFICIENT_BALANCE,
+                            0);
+            return;
+        }
+
+        // Check stock
+        if (!this.itemcase.isInfinite()) {
+            int stock = InventoryUtils.getAmountOf(this.itemcase.getInventory(),
+                    this.item);
+
+            if (stock < this.amount) {
+                ShopGUI.displayResult(player, this,
+                        OrderResult.INSUFFICIENT_STOCK, 0);
+                return;
+            }
+        }
+
+        // Remove funds
+        EconomyResponse response = Vault.getEconomy().withdrawPlayer(Bukkit.
+                getOfflinePlayer(player.getUniqueId()),
+                player.getWorld().getName(), amountDue);
+
+        if (!response.transactionSuccess()) {
+            ShopGUI.displayResult(player, this, OrderResult.TRANSACTION_FAILED,
+                    0);
+            return;
+        }
+
+        // Add owner funds
+        if (!this.itemcase.isInfinite()) {
+            EconomyResponse ownerResponse = Vault.getEconomy().depositPlayer(
+                    Bukkit.
+                    getOfflinePlayer(this.itemcase.getOwnerName()),
+                    player.getWorld().getName(), amountDue);
+
+            if (!ownerResponse.transactionSuccess()) {
+                ShopGUI.displayResult(player, this,
+                        OrderResult.TRANSACTION_FAILED, 0);
+                return;
+            }
+        }
+
+        // Remove stock
+        if (!this.itemcase.isInfinite()) {
+            ItemStack itemstack = this.item.clone();
+            itemstack.setAmount(this.amount);
+
+            this.itemcase.getInventory().removeItem(itemstack);
+        }
+
+        // Add player stock
+        ItemStack itemstack = this.item.clone();
+        itemstack.setAmount(this.amount);
+
+        player.getInventory().addItem(itemstack);
+
+        ShopGUI.displayResult(player, this,
+                OrderResult.BUY_SUCCESS, amountDue);
+        return;
+    }
+
+    /**
+     * Sell current order.
+     *
+     * @param player Player selling order.
+     */
+    public void sell(Player player) {
+        // Create economy account
+        if (!Vault.getEconomy().hasAccount(Bukkit.getOfflinePlayer(player.
+                getUniqueId()), player.getWorld().getName())) {
+            if (!Vault.getEconomy().createPlayerAccount(Bukkit.getOfflinePlayer(
+                    player.getUniqueId()), player.getWorld().getName())) {
+                ShopGUI.displayResult(player, this,
+                        OrderResult.TRANSACTION_FAILED, 0);
+                return;
+            }
+        }
+
+        // Check balance
+        double ownerBalance = Vault.getEconomy().getBalance(Bukkit.
+                getOfflinePlayer(this.itemcase.getOwnerName()), player.
+                getWorld().
+                getName());
+        double amountDue = this.itemcase.getSellPrice() * this.amount;
+
+        if (ownerBalance < amountDue) {
+            ShopGUI.
+                    displayResult(player, this,
+                            OrderResult.INSUFFICIENT_OWNER_BALANCE,
+                            0);
+            return;
+        }
+
+        // Check stock
+        int stock = InventoryUtils.getAmountOf(player.getInventory(), this.item
+        );
+
+        if (stock < this.amount) {
+            ShopGUI.displayResult(player, this,
+                    OrderResult.NOT_ENOUGH_ITEMS, 0);
+            return;
+        }
+
+        // Add funds
+        if (!this.itemcase.isInfinite()) {
+            EconomyResponse ownerResponse = Vault.getEconomy().depositPlayer(
+                    Bukkit.
+                    getOfflinePlayer(player.getDisplayName()),
+                    player.getWorld().getName(), amountDue);
+
+            if (!ownerResponse.transactionSuccess()) {
+                ShopGUI.displayResult(player, this,
+                        OrderResult.TRANSACTION_FAILED, 0);
+                return;
+            }
+        }
+
+        // Remove owner funds
+        EconomyResponse response = Vault.getEconomy().withdrawPlayer(Bukkit.
+                getOfflinePlayer(this.itemcase.getOwnerName()),
+                player.getWorld().getName(), amountDue);
+
+        if (!response.transactionSuccess()) {
+            ShopGUI.displayResult(player, this, OrderResult.TRANSACTION_FAILED,
+                    0);
+            return;
+        }
+
+        // Add owner stock
+        if (!this.itemcase.isInfinite()) {
+            ItemStack itemstack = this.item.clone();
+            itemstack.setAmount(this.amount);
+
+            this.itemcase.getInventory().addItem(itemstack);
+        }
+
+        // Remove player stock
+        ItemStack itemstack = this.item.clone();
+        itemstack.setAmount(this.amount);
+
+        player.getInventory().removeItem(itemstack);
+
+        ShopGUI.displayResult(player, this,
+                OrderResult.SELL_SUCCESS, amountDue);
+        return;
     }
 
     /**

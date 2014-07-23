@@ -16,6 +16,7 @@
  */
 package com.gmail.bleedobsidian.itemcase.loggers;
 
+import com.gmail.bleedobsidian.itemcase.Language;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -32,7 +33,26 @@ public class PlayerLogger {
      */
     private static String prefix = ChatColor.BLUE + "[ItemCase]";
 
+    /**
+     * Message player with given message.
+     *
+     * @param player Player to message.
+     * @param message Message.
+     */
     public static void message(Player player, String message) {
         player.sendMessage(prefix + ": " + ChatColor.RESET + message);
+    }
+
+    /**
+     * Message player with given message.
+     *
+     * @param player Player to message.
+     * @param languageMessage Language Message.
+     */
+    public static void messageLanguage(Player player, String languageMessage) {
+        player.sendMessage(prefix + ": " + ChatColor.RESET + Language.
+                getLanguageFile()
+                .getMessage(
+                        languageMessage));
     }
 }

@@ -16,19 +16,9 @@
  */
 package com.gmail.bleedobsidian.itemcase.managers;
 
-import com.gmail.bleedobsidian.itemcase.Language;
-import com.gmail.bleedobsidian.itemcase.Vault;
-import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.orders.Order;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatClickEventType;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatColor;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatExtra;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatFormat;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatHoverEventType;
-import com.gmail.bleedobsidian.itemcase.util.tellraw.JSONChatMessage;
-import java.text.DecimalFormat;
-import java.util.Arrays;
+import com.gmail.bleedobsidian.itemcase.util.ShopGUI;
 import java.util.HashMap;
 import org.bukkit.entity.Player;
 
@@ -43,12 +33,7 @@ public class ShopManager {
     /**
      * Current orders.
      */
-    private HashMap<Player, Order> orders = new HashMap<Player, Order>();
-
-    /**
-     * DecimalFormat to display currencies with.
-     */
-    private final DecimalFormat format = new DecimalFormat("0.00");
+    private final HashMap<Player, Order> orders = new HashMap<Player, Order>();
 
     /**
      * Add new pending order.
@@ -57,210 +42,10 @@ public class ShopManager {
      * @param player Player.
      */
     public void addPendingOrder(Itemcase itemcase, Player player) {
-        PlayerLogger.message(
-                player,
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Stop-Chat"));
+        Order order = new Order(itemcase, player, itemcase.getItemStack());
 
-        PlayerLogger.message(
-                player,
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Shop-Message1"));
-
-        if (itemcase.getItemStack().hasItemMeta()
-                && itemcase.getItemStack().getItemMeta().getDisplayName() != null) {
-            PlayerLogger.message(
-                    player,
-                    Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Message2",
-                            new String[]{
-                                "%Item%",
-                                itemcase.getItemStack().getItemMeta()
-                                .getDisplayName()}));
-        } else {
-            PlayerLogger
-                    .message(
-                            player,
-                            Language.getLanguageFile().getMessage(
-                                    "Player.ItemCase.Shop-Message2",
-                                    new String[]{
-                                        "%Item%",
-                                        itemcase.getItemStack().getType()
-                                        .name()}));
-        }
-
-        if (itemcase.canBuy()) {
-            if (itemcase.getBuyPrice() >= 1) {
-                PlayerLogger
-                        .message(
-                                player,
-                                Language.getLanguageFile()
-                                .getMessage(
-                                        "Player.ItemCase.Shop-Message3",
-                                        new String[]{
-                                            "%Cost%",
-                                            ""
-                                            + this.format
-                                            .format(itemcase
-                                                    .getBuyPrice()),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                            .currencyNamePlural()}));
-            } else {
-                PlayerLogger.message(
-                        player,
-                        Language.getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Message3",
-                                new String[]{
-                                    "%Cost%",
-                                    ""
-                                    + this.format.format(itemcase
-                                            .getBuyPrice()),
-                                    "%Currency%",
-                                    Vault.getEconomy()
-                                    .currencyNameSingular()}));
-            }
-        }
-
-        if (itemcase.canSell()) {
-            if (itemcase.getSellPrice() >= 1) {
-                PlayerLogger
-                        .message(
-                                player,
-                                Language.getLanguageFile()
-                                .getMessage(
-                                        "Player.ItemCase.Shop-Message4",
-                                        new String[]{
-                                            "%Cost%",
-                                            ""
-                                            + this.format
-                                            .format(itemcase
-                                                    .getSellPrice()),
-                                            "%Currency%",
-                                            Vault.getEconomy()
-                                            .currencyNamePlural()}));
-            } else {
-                PlayerLogger.message(
-                        player,
-                        Language.getLanguageFile().getMessage(
-                                "Player.ItemCase.Shop-Message4",
-                                new String[]{
-                                    "%Cost%",
-                                    ""
-                                    + this.format.format(itemcase
-                                            .getSellPrice()),
-                                    "%Currency%",
-                                    Vault.getEconomy()
-                                    .currencyNameSingular()}));
-            }
-        }
-
-        JSONChatMessage message = new JSONChatMessage();
-        message.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-        message.addText(
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Shop-Message5")
-                + " ", JSONChatColor.GREEN, null);
-
-        JSONChatExtra extra = new JSONChatExtra(Language.getLanguageFile()
-                .getMessage("Player.ItemCase.Shop-Amount-Button"),
-                JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-        extra.setHoverEvent(
-                JSONChatHoverEventType.SHOW_TEXT,
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Shop-Amount-Button-Hover"));
-        extra.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                "/itemc order amount");
-        message.addExtra(extra);
-        message.addText(
-                " "
-                + Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Button-Idicator"),
-                JSONChatColor.GREEN, null);
-        message.sendToPlayer(player);
-
-        if (itemcase.canBuy()) {
-            JSONChatMessage messageBuy = new JSONChatMessage();
-            messageBuy.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-            messageBuy.addText(
-                    Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Message6")
-                    + " ", JSONChatColor.GREEN, null);
-
-            JSONChatExtra extraBuy = new JSONChatExtra(Language
-                    .getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Buy-Button"),
-                    JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-            extraBuy.setHoverEvent(
-                    JSONChatHoverEventType.SHOW_TEXT,
-                    Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Buy-Button-Hover"));
-            extraBuy.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                    "/itemc order buy");
-            messageBuy.addExtra(extraBuy);
-            messageBuy.addText(
-                    "                 "
-                    + Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Button-Idicator"),
-                    JSONChatColor.GREEN, null);
-            messageBuy.sendToPlayer(player);
-        }
-
-        if (itemcase.canSell()) {
-            JSONChatMessage messageSell = new JSONChatMessage();
-            messageSell.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-            messageSell.addText(
-                    Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Message7")
-                    + " ", JSONChatColor.GREEN, null);
-
-            JSONChatExtra extraSell = new JSONChatExtra(Language
-                    .getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Sell-Button"),
-                    JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-            extraSell.setHoverEvent(
-                    JSONChatHoverEventType.SHOW_TEXT,
-                    Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Shop-Sell-Button-Hover"));
-            extraSell.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                    "/itemc order sell");
-            messageSell.addExtra(extraSell);
-            messageSell.addText(
-                    "               "
-                    + Language.getLanguageFile().getMessage(
-                            "Player.ItemCase.Button-Idicator"),
-                    JSONChatColor.GREEN, null);
-            messageSell.sendToPlayer(player);
-        }
-
-        JSONChatMessage messageCancel = new JSONChatMessage();
-        messageCancel.addText("[ItemCase]: ", JSONChatColor.BLUE, null);
-
-        JSONChatExtra extraCancel = new JSONChatExtra(Language
-                .getLanguageFile().getMessage(
-                        "Player.ItemCase.Cancel-Order-Button"),
-                JSONChatColor.GOLD, Arrays.asList(JSONChatFormat.BOLD));
-        extraCancel.setHoverEvent(
-                JSONChatHoverEventType.SHOW_TEXT,
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Cancel-Order-Button-Hover"));
-        extraCancel.setClickEvent(JSONChatClickEventType.RUN_COMMAND,
-                "/itemc order cancel");
-
-        messageCancel.addExtra(extraCancel);
-        message.addText(
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Button-Idicator"),
-                JSONChatColor.GREEN, null);
-        messageCancel.sendToPlayer(player);
-
-        PlayerLogger.message(
-                player,
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Shop-Message8"));
-
-        this.orders.put(player,
-                new Order(itemcase, player, itemcase.getItemStack()));
+        ShopGUI.displayGUI(itemcase, player, order);
+        this.orders.put(player, order);
     }
 
     /**
@@ -271,10 +56,7 @@ public class ShopManager {
     public void removePendingOrder(Player player) {
         this.getOrder(player).cancel();
         this.orders.remove(player);
-        PlayerLogger.message(
-                player,
-                Language.getLanguageFile().getMessage(
-                        "Player.ItemCase.Start-Chat"));
+        ShopGUI.displayCancelGUI(player);
     }
 
     /**

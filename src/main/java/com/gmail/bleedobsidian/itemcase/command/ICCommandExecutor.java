@@ -21,7 +21,6 @@ import com.gmail.bleedobsidian.itemcase.command.commands.CancelCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.CreateCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.HelpCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.ModifyCommand;
-import com.gmail.bleedobsidian.itemcase.command.commands.OrderCommand;
 import com.gmail.bleedobsidian.itemcase.command.commands.StorageCommand;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.loggers.PluginLogger;
@@ -83,8 +82,6 @@ public class ICCommandExecutor implements CommandExecutor {
             CreateCommand.create(player, args);
         } else if (args[0].equalsIgnoreCase("modify")) {
             ModifyCommand.modify(player, args);
-        } else if (args[0].equalsIgnoreCase("order")) {
-            OrderCommand.order(player, args);
         } else if (args[0].equalsIgnoreCase("storage")) {
             StorageCommand.storage(player, args);
         } else if (args[0].equalsIgnoreCase("cancel")) {

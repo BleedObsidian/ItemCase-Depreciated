@@ -196,7 +196,7 @@ public class Updater {
     private boolean query() {
         try {
             final URLConnection con = this.url.openConnection();
-            con.setConnectTimeout(500);
+            con.setConnectTimeout(5000);
 
             if (this.apiKey != null) {
                 con.addRequestProperty("X-API-Key", this.apiKey);

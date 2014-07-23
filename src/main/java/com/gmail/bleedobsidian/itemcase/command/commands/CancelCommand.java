@@ -17,7 +17,6 @@
 package com.gmail.bleedobsidian.itemcase.command.commands;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
-import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import org.bukkit.entity.Player;
 
@@ -40,15 +39,17 @@ public class CancelCommand {
             ItemCase.getInstance().getSelectionManager().removePendingSelection(
                     player);
 
-            PlayerLogger.message(
-                    player,
-                    Language.getLanguageFile().getMessage(
-                            "Player.Cancel.Canceled"));
+            PlayerLogger.messageLanguage(player, "Player.Cancel.Canceled");
+            return;
+        } else if (ItemCase.getInstance().getShopManager().
+                isPendingOrder(player)) {
+            PlayerLogger.messageLanguage(player, "Player.Order.Canceled");
+            PlayerLogger.messageLanguage(player, "Player.Order.End");
+            ItemCase.getInstance().getShopManager().removePendingOrder(player);
+            ItemCase.getInstance().getInputManager().removePendingInput(player);
             return;
         } else {
-            PlayerLogger.message(player,
-                    Language.getLanguageFile()
-                    .getMessage("Player.Cancel.Error"));
+            PlayerLogger.messageLanguage(player, "Player.Cancel.Error");
             return;
         }
     }
