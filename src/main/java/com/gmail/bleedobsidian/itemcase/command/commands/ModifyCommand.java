@@ -18,6 +18,7 @@ package com.gmail.bleedobsidian.itemcase.command.commands;
 
 import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.Language;
+import com.gmail.bleedobsidian.itemcase.Vault;
 import com.gmail.bleedobsidian.itemcase.command.listeners.ModifySelectionListener;
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
@@ -64,6 +65,12 @@ public class ModifyCommand {
             }
 
             if (args[2].equalsIgnoreCase("buy")) {
+                if (!Vault.isLoaded()) {
+                    PlayerLogger.messageLanguage(player,
+                            "Player.ItemCase.Vault-Warning");
+                    return;
+                }
+
                 if (!player.hasPermission("itemcase.create.shop.buy")) {
                     PlayerLogger.message(player,
                             language.getMessage("Player.Permission-Itemcase"));
@@ -91,6 +98,12 @@ public class ModifyCommand {
 
                 return;
             } else if (args[2].equalsIgnoreCase("sell")) {
+                if (!Vault.isLoaded()) {
+                    PlayerLogger.messageLanguage(player,
+                            "Player.ItemCase.Vault-Warning");
+                    return;
+                }
+
                 if (!player.hasPermission("itemcase.create.shop.sell")) {
                     PlayerLogger.message(player,
                             language.getMessage("Player.Permission-Itemcase"));

@@ -187,7 +187,7 @@ public class ItemCase extends JavaPlugin {
         } else {
             PluginLogger.warning(
                     Language.getLanguageFile().getMessage(
-                            "Console.Vault.Unsuccessful"), true);
+                            "Console.Vault.Unsuccessful"));
         }
 
         // Metrics

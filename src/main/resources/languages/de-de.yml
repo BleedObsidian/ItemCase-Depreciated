@@ -49,6 +49,7 @@ Player:
         Permission-Sell: "(RED)Sie haben keine Berechtigung, um Produkte zu verkaufen."
         Permission-Buy: "(RED)Sie haben keine Berechtigung, um Artikel zu kaufen."
         Invalid-Option: "(RED)Sie müssen (GOLD)KAUFEN (RED)oder (GOLD)SELL (RED)eingeben."
+        Vault-Warning: "(RED)Vault muss installiert sein, um Geschäfte zu nutzen."
     Modify:
         Usage: "(RED)Nutzung: (GOLD)/ic modify [showcase/shop/infinite]"
         Unknown-Type: "(RED)Typ: (GOLD)showcase(RED), (GOLD)shop(RED)."

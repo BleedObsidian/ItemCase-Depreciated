@@ -34,20 +34,30 @@ public class Vault {
     private static Economy economy;
 
     /**
+     * If Vault is successfully loaded.
+     */
+    private static boolean isLoaded;
+
+    /**
      * Load vault and an economy plugin.
      *
      * @param plugin JavaPlugin.
      * @return If successfully loaded.
      */
     public static boolean load(JavaPlugin plugin) {
-        RegisteredServiceProvider<Economy> economyProvider = plugin.getServer()
-                .getServicesManager()
-                .getRegistration(net.milkbowl.vault.economy.Economy.class);
+        try {
+            RegisteredServiceProvider<Economy> economyProvider = plugin.
+                    getServer()
+                    .getServicesManager()
+                    .getRegistration(net.milkbowl.vault.economy.Economy.class);
 
-        if (economyProvider != null) {
-            Vault.economy = economyProvider.getProvider();
+            if (economyProvider != null) {
+                Vault.economy = economyProvider.getProvider();
+            }
+        } catch (NoClassDefFoundError e) {
         }
 
+        Vault.isLoaded = (economy != null);
         return (economy != null);
     }
 
@@ -58,5 +68,12 @@ public class Vault {
      */
     public static Economy getEconomy() {
         return Vault.economy;
+    }
+
+    /**
+     * @return If Vault is successfully loaded.
+     */
+    public static boolean isLoaded() {
+        return Vault.isLoaded;
     }
 }

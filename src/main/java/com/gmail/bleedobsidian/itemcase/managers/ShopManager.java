@@ -16,7 +16,9 @@
  */
 package com.gmail.bleedobsidian.itemcase.managers;
 
+import com.gmail.bleedobsidian.itemcase.Vault;
 import com.gmail.bleedobsidian.itemcase.events.ItemcasePreTransactionEvent;
+import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.orders.Order;
 import com.gmail.bleedobsidian.itemcase.util.ShopGUI;
@@ -44,6 +46,12 @@ public class ShopManager {
      * @param player Player.
      */
     public void addPendingOrder(Itemcase itemcase, Player player) {
+        if (!Vault.isLoaded()) {
+            PlayerLogger.messageLanguage(player,
+                    "Player.ItemCase.Vault-Warning");
+            return;
+        }
+
         Order order = new Order(itemcase, player, itemcase.getItemStack());
 
         ItemcasePreTransactionEvent event = new ItemcasePreTransactionEvent(
