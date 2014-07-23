@@ -81,15 +81,17 @@ public class ShopGUI {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.ItemCase.Shop-Message5",
-                                new String[]{"%Cost%", "" + itemcase.
-                                    getBuyPrice(), "%Currency%", Vault.
+                                new String[]{"%Cost%", "" + ShopGUI.CURRENCY_FORMAT.
+                                    format(itemcase.
+                                            getBuyPrice()), "%Currency%", Vault.
                                     getEconomy().currencyNamePlural()}));
             } else {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.ItemCase.Shop-Message5",
-                                new String[]{"%Cost%", "" + itemcase.
-                                    getBuyPrice(), "%Currency%", Vault.
+                                new String[]{"%Cost%", "" + ShopGUI.CURRENCY_FORMAT.
+                                    format(itemcase.
+                                            getBuyPrice()), "%Currency%", Vault.
                                     getEconomy().currencyNameSingular()}));
             }
         }
@@ -100,15 +102,17 @@ public class ShopGUI {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.ItemCase.Shop-Message6",
-                                new String[]{"%Cost%", "" + itemcase.
-                                    getSellPrice(), "%Currency%", Vault.
+                                new String[]{"%Cost%", "" + ShopGUI.CURRENCY_FORMAT.
+                                    format(itemcase.
+                                            getSellPrice()), "%Currency%", Vault.
                                     getEconomy().currencyNamePlural()}));
             } else {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.ItemCase.Shop-Message6",
-                                new String[]{"%Cost%", "" + itemcase.
-                                    getSellPrice(), "%Currency%", Vault.
+                                new String[]{"%Cost%", ShopGUI.CURRENCY_FORMAT.
+                                    format(itemcase.
+                                            getSellPrice()), "%Currency%", Vault.
                                     getEconomy().currencyNameSingular()}));
             }
         }
@@ -332,13 +336,15 @@ public class ShopGUI {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.Order.Withdraw",
-                                new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                    format(price), "%Currency%", Vault.
                                     getEconomy().currencyNameSingular()}));
             } else {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.Order.Withdraw",
-                                new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                    format(price), "%Currency%", Vault.
                                     getEconomy().currencyNamePlural()}));
             }
 
@@ -396,7 +402,8 @@ public class ShopGUI {
                                     getLanguageFile().
                                     getMessage(
                                             "Player.Order.Deposit",
-                                            new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                            new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                                format(price), "%Currency%", Vault.
                                                 getEconomy().
                                                 currencyNameSingular()}));
                         } else {
@@ -404,7 +411,8 @@ public class ShopGUI {
                                     getLanguageFile().
                                     getMessage(
                                             "Player.Order.Deposit",
-                                            new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                            new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                                format(price), "%Currency%", Vault.
                                                 getEconomy().
                                                 currencyNamePlural()}));
                         }
@@ -416,13 +424,15 @@ public class ShopGUI {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.Order.Deposit",
-                                new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                    format(price), "%Currency%", Vault.
                                     getEconomy().currencyNameSingular()}));
             } else {
                 PlayerLogger.message(player, Language.getLanguageFile().
                         getMessage(
                                 "Player.Order.Deposit",
-                                new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                    format(price), "%Currency%", Vault.
                                     getEconomy().currencyNamePlural()}));
             }
 
@@ -480,7 +490,8 @@ public class ShopGUI {
                                     getLanguageFile().
                                     getMessage(
                                             "Player.Order.Withdraw",
-                                            new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                            new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                                format(price), "%Currency%", Vault.
                                                 getEconomy().
                                                 currencyNameSingular()}));
                         } else {
@@ -488,7 +499,8 @@ public class ShopGUI {
                                     getLanguageFile().
                                     getMessage(
                                             "Player.Order.Withdraw",
-                                            new String[]{"%Amount%", "" + price, "%Currency%", Vault.
+                                            new String[]{"%Amount%", ShopGUI.CURRENCY_FORMAT.
+                                                format(price), "%Currency%", Vault.
                                                 getEconomy().
                                                 currencyNamePlural()}));
                         }

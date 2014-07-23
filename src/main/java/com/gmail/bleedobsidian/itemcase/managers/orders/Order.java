@@ -245,27 +245,28 @@ public class Order {
         }
 
         // Add funds
+        EconomyResponse ownerResponse = Vault.getEconomy().depositPlayer(
+                Bukkit.
+                getOfflinePlayer(player.getDisplayName()),
+                player.getWorld().getName(), amountDue);
+
+        if (!ownerResponse.transactionSuccess()) {
+            ShopGUI.displayResult(player, this,
+                    OrderResult.TRANSACTION_FAILED);
+            return;
+        }
+
+        // Remove owner funds
         if (!this.itemcase.isInfinite()) {
-            EconomyResponse ownerResponse = Vault.getEconomy().depositPlayer(
-                    Bukkit.
-                    getOfflinePlayer(player.getDisplayName()),
+            EconomyResponse response = Vault.getEconomy().withdrawPlayer(Bukkit.
+                    getOfflinePlayer(this.itemcase.getOwnerName()),
                     player.getWorld().getName(), amountDue);
 
-            if (!ownerResponse.transactionSuccess()) {
+            if (!response.transactionSuccess()) {
                 ShopGUI.displayResult(player, this,
                         OrderResult.TRANSACTION_FAILED);
                 return;
             }
-        }
-
-        // Remove owner funds
-        EconomyResponse response = Vault.getEconomy().withdrawPlayer(Bukkit.
-                getOfflinePlayer(this.itemcase.getOwnerName()),
-                player.getWorld().getName(), amountDue);
-
-        if (!response.transactionSuccess()) {
-            ShopGUI.displayResult(player, this, OrderResult.TRANSACTION_FAILED);
-            return;
         }
 
         // Add owner stock
