@@ -19,6 +19,9 @@ permissions:
     itemcase.create.showcase:
         description: Create and destroy showcase itemcases.
         
+    itemcase.create.pickup:
+        description: Create and destroy pickup-point itemcases.
+        
     itemcase.create.shop.buy:
         description: Create and destroy itemcases that sells items to players.
         

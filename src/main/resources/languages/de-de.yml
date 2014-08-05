@@ -68,6 +68,10 @@ Player:
         Infinite:
             Usage: "(RED)Nutzung: (GOLD)/ic modify infinite [true/false]"
             Successful: "(GREEN)Ausgewähltes ItemCase wurde geändert zu -infinite-: (GOLD)%Boolean%(GREEN)."
+        Pickup:
+            Usage: "(RED)Nutzung: (GOLD)/ic modify pickup [Sekunden]"
+            Invalid-Interval: "(RED)Ungültige Zeit."
+            Successful: "(GREEN)Ausgewähltes ItemCase ist nun ein -pickup point-."
     Order:
         Usage: "(RED)Nutzung: (GOLD)/ic order [amount/buy/sell]"
         No-Order: "(RED)Keine Bestellung vorhanden."

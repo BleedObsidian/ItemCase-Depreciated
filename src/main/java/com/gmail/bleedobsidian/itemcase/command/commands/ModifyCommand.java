@@ -153,6 +153,37 @@ public class ModifyCommand {
             PlayerLogger.message(player,
                     language.getMessage("Player.Modify.Cancel"));
             return;
+        } else if (args[1].equalsIgnoreCase("pickup")) {
+            if (!player.hasPermission("itemcase.create.pickup")) {
+                PlayerLogger.message(player,
+                        language.getMessage("Player.Permission-Itemcase"));
+                return;
+            }
+
+            if (args.length != 3) {
+                PlayerLogger.message(player,
+                        language.getMessage("Player.Modify.Pickup.Usage"));
+                return;
+            }
+
+            try {
+                Double.parseDouble(args[2]);
+            } catch (NumberFormatException e) {
+                PlayerLogger.message(player, language
+                        .getMessage("Player.Modify.Pickup.Invalid-Interval"));
+                return;
+            }
+
+            ModifySelectionListener listener = new ModifySelectionListener(
+                    ItemcaseType.PICKUP_POINT, args);
+            ItemCase.getInstance().getSelectionManager().addPendingSelection(
+                    listener, player);
+
+            PlayerLogger.message(player,
+                    language.getMessage("Player.Modify.Select"));
+            PlayerLogger.message(player,
+                    language.getMessage("Player.Modify.Cancel"));
+            return;
         } else if (args[1].equalsIgnoreCase("infinite")) {
             if (!player.hasPermission("itemcase.create.infinite")) {
                 PlayerLogger.message(player,
@@ -228,6 +259,12 @@ public class ModifyCommand {
                 PlayerLogger.message(player,
                         language.getMessage("Player.Modify.Shop.Sell"));
             }
+        } else if (type == ItemcaseType.PICKUP_POINT) {
+            itemcase.setPickupPointInterval(
+                    (int) (Double.parseDouble(args[2]) * 20));
+
+            PlayerLogger.message(player,
+                    language.getMessage("Player.Modify.Pickup.Successful"));
         }
 
         ItemCase.getInstance().getItemcaseManager().saveItemcase(itemcase);

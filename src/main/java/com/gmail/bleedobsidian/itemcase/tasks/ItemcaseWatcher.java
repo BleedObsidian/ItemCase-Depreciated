@@ -32,23 +32,25 @@ public class ItemcaseWatcher implements Runnable {
     public void run() {
         for (Itemcase itemcase : ItemCase.getInstance().getItemcaseManager().
                 getItemcases()) {
-            if (itemcase.getItem().isDead()) {
-                itemcase.spawnItem();
-            }
+            if (!itemcase.isWaitingForSpawn()) {
+                if (itemcase.getItem().isDead()) {
+                    itemcase.spawnItem();
+                }
 
-            Location itemLocation = itemcase.getItem().getLocation();
-            Location blockLocation = itemcase.getBlock().getLocation();
+                Location itemLocation = itemcase.getItem().getLocation();
+                Location blockLocation = itemcase.getBlock().getLocation();
 
-            if (!((itemLocation.getX() == blockLocation.getBlockX() + 0.5)
-                    && ((itemLocation.getY() <= blockLocation.getBlockY() + 2) && (itemLocation.
-                    getY() >= blockLocation.getBlockY())) && (itemLocation
-                    .getZ() == blockLocation.getBlockZ() + 0.5))) {
-                itemcase.despawnItem();
-                itemcase.spawnItem();
-            }
+                if (!((itemLocation.getX() == blockLocation.getBlockX() + 0.5)
+                        && ((itemLocation.getY() <= blockLocation.getBlockY() + 2) && (itemLocation.
+                        getY() >= blockLocation.getBlockY())) && (itemLocation
+                        .getZ() == blockLocation.getBlockZ() + 0.5))) {
+                    itemcase.despawnItem();
+                    itemcase.spawnItem();
+                }
 
-            if (itemcase.getItem().getItemStack().getAmount() > 1) {
-                itemcase.getItem().getItemStack().setAmount(1);
+                if (itemcase.getItem().getItemStack().getAmount() > 1) {
+                    itemcase.getItem().getItemStack().setAmount(1);
+                }
             }
 
             if (!ItemCase.getInstance().getConfigFile().getFileConfiguration()

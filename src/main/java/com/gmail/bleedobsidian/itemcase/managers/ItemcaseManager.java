@@ -95,6 +95,7 @@ public class ItemcaseManager {
             }
 
             this.itemcases.add(itemcase);
+            itemcase.spawnItem();
 
             String path = "Itemcases." + blockLocation.getBlockX() + "/"
                     + blockLocation.getBlockY() + "/"
@@ -236,6 +237,16 @@ public class ItemcaseManager {
                         .set(path + ".Shop.BuyPrice", itemcase.getBuyPrice());
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Shop.SellPrice", itemcase.getSellPrice());
+            } else if (itemcase.getType() == ItemcaseType.PICKUP_POINT) {
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Type", "PICKUP_POINT");
+
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".PickupPoint.Interval", itemcase.
+                                getPickupPointInterval());
+
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Shop", null);
             }
 
             saveFile.getConfigFile().save(ItemCase.getInstance());
@@ -387,6 +398,15 @@ public class ItemcaseManager {
                                         .getFileConfiguration()
                                         .getDouble(path + ".Shop.SellPrice"));
                             }
+                        } else if (saveFile.getConfigFile()
+                                .getFileConfiguration()
+                                .getString(path + ".Type").
+                                equals("PICKUP_POINT")) {
+                            itemcase.setPickupPointInterval(saveFile.
+                                    getConfigFile()
+                                    .getFileConfiguration()
+                                    .getInt(path + ".PickupPoint.Interval"));
+                            itemcase.setType(ItemcaseType.PICKUP_POINT);
                         } else {
                             PluginLogger
                                     .warning(
@@ -407,6 +427,7 @@ public class ItemcaseManager {
                         }
 
                         this.itemcases.add(itemcase);
+                        itemcase.spawnItem();
                     }
                 }
             }

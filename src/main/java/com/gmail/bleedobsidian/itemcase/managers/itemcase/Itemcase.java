@@ -101,6 +101,16 @@ public final class Itemcase {
     private boolean isChunkLoaded;
 
     /**
+     * Interval in ticks between pickup point spawns.
+     */
+    private int pickupPointInterval = 40;
+
+    /**
+     * If the Itemcase is waiting for a pickup point spawn.
+     */
+    private boolean isWaitingForSpawn;
+
+    /**
      * Create new Itemcase instance.
      *
      * @param itemStack ItemStack that Itemcase is for.
@@ -119,8 +129,8 @@ public final class Itemcase {
         this.blockLocation = blockLocation;
         this.player = player;
 
-        this.setChunkLoaded(blockLocation.getWorld().isChunkLoaded(
-                blockLocation.getChunk()));
+        this.isChunkLoaded = blockLocation.getWorld().isChunkLoaded(
+                blockLocation.getChunk());
     }
 
     /**
@@ -133,14 +143,24 @@ public final class Itemcase {
                     blockLocation.getBlockY() + 1.5,
                     blockLocation.getBlockZ() + 0.5);
 
-            net.minecraft.server.v1_7_R3.ItemStack stack = CraftItemStack
-                    .asNMSCopy(this.displayStack);
-            stack.count = 0;
+            if (this.type != ItemcaseType.PICKUP_POINT) {
+                net.minecraft.server.v1_7_R3.ItemStack stack = CraftItemStack
+                        .asNMSCopy(this.displayStack);
+                stack.count = 0;
 
-            this.item = blockLocation.getWorld().dropItem(itemLocation,
-                    CraftItemStack.asBukkitCopy(stack));
-            this.item.setVelocity(new Vector(0.0, 0.1, 0.0));
-            this.item.setMetadata("ItemCase", new ItemcaseData());
+                this.item = blockLocation.getWorld().dropItem(itemLocation,
+                        CraftItemStack.asBukkitCopy(stack));
+                this.item.setVelocity(new Vector(0.0, 0.1, 0.0));
+                this.item.setMetadata("ItemCase", new ItemcaseData());
+            } else {
+                net.minecraft.server.v1_7_R3.ItemStack stack = CraftItemStack
+                        .asNMSCopy(this.itemStack);
+                stack.count = 1;
+
+                this.item = blockLocation.getWorld().dropItem(itemLocation,
+                        CraftItemStack.asBukkitCopy(stack));
+                this.item.setVelocity(new Vector(0.0, 0.1, 0.0));
+            }
 
             Chunk chunk = blockLocation.getChunk();
 
@@ -227,7 +247,15 @@ public final class Itemcase {
      * @param type Type of Itemcase.
      */
     public void setType(ItemcaseType type) {
+        ItemcaseType previousType = this.type;
         this.type = type;
+
+        if (previousType != this.type) {
+            if (this.item != null) {
+                this.despawnItem();
+                this.spawnItem();
+            }
+        }
     }
 
     /**
@@ -252,14 +280,14 @@ public final class Itemcase {
     }
 
     /**
-     * @return - If players can sell to this Itemcase.
+     * @return If players can sell to this Itemcase.
      */
     public boolean canSell() {
         return canSell;
     }
 
     /**
-     * @param canSell - If players can sell to this Itemcase.
+     * @param canSell If players can sell to this Itemcase.
      */
     public void setCanSell(boolean canSell) {
         this.canSell = canSell;
@@ -294,16 +322,44 @@ public final class Itemcase {
     }
 
     /**
-     * @return - If Itemcase is infinite.
+     * @return If Itemcase is infinite.
      */
     public boolean isInfinite() {
         return isInfinite;
     }
 
     /**
-     * @param isInfinite - If Itemcase is infinite.
+     * @param isInfinite If Itemcase is infinite.
      */
     public void setInfinite(boolean isInfinite) {
         this.isInfinite = isInfinite;
+    }
+
+    /**
+     * @param ticks Ticks between pickup point spawns.
+     */
+    public void setPickupPointInterval(int ticks) {
+        this.pickupPointInterval = ticks;
+    }
+
+    /**
+     * @return Ticks between pickup point spawns.
+     */
+    public int getPickupPointInterval() {
+        return this.pickupPointInterval;
+    }
+
+    /**
+     * @param isWaitingForSpawn If Itemcase is waiting for a pickup point spawn.
+     */
+    public void setWaitingForSpawn(boolean isWaitingForSpawn) {
+        this.isWaitingForSpawn = isWaitingForSpawn;
+    }
+
+    /**
+     * @return If Itemcase is waiting for a pickup point spawn.
+     */
+    public boolean isWaitingForSpawn() {
+        return this.isWaitingForSpawn;
     }
 }

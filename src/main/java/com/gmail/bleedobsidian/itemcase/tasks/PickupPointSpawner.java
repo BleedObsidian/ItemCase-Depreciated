@@ -14,14 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-package com.gmail.bleedobsidian.itemcase.managers.itemcase;
+package com.gmail.bleedobsidian.itemcase.tasks;
+
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 
 /**
- * Itemcase Type.
+ * A Bukkit task to spawn the item of a pickup point. (Only used internally)
  *
  * @author BleedObsidian (Jesse Prescott)
  */
-public enum ItemcaseType {
+public class PickupPointSpawner implements Runnable {
 
-    SHOWCASE, SHOP, PICKUP_POINT;
+    /**
+     * Itemcase to watch.
+     */
+    private final Itemcase itemcase;
+
+    /**
+     * New PickupPointWatcher.
+     *
+     * @param itemcase Itemcase to watch.
+     */
+    public PickupPointSpawner(Itemcase itemcase) {
+        this.itemcase = itemcase;
+    }
+
+    @Override
+    public void run() {
+        if (this.itemcase.getItem().isDead()) {
+            this.itemcase.spawnItem();
+            this.itemcase.setWaitingForSpawn(false);
+        }
+    }
 }

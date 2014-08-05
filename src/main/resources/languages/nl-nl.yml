@@ -68,6 +68,10 @@ Player:
         Infinite:
             Usage: "(RED)Gebruik: (GOLD)/ic modify infinite [true/false]"
             Successful: "(GREEN)Geselecteerde Itemcase is nu infinite: (GOLD)%Boolean%(GREEN)."
+        Pickup:
+            Usage: "(RED)Gebruik: (GOLD)/ic modify pickup [seconden]"
+            Invalid-Interval: "(RED)Geen geldige interval."
+            Successful: "(GREEN)Geselecteerde Itemcase is nu een Pickup Point."
     Order:
         Usage: "(RED)Gebruik: (GOLD)/ic order [amount/buy/sell]"
         No-Order: "(RED)Momenteel geen bestelling bezig."

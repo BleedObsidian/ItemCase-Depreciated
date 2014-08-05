@@ -21,7 +21,9 @@ import com.gmail.bleedobsidian.itemcase.WorldGuard;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
+import com.gmail.bleedobsidian.itemcase.tasks.PickupPointSpawner;
 import java.util.Set;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -195,7 +197,16 @@ public class PlayerListener implements Listener {
             for (Itemcase itemcase : ItemCase.getInstance().getItemcaseManager()
                     .getItemcases()) {
                 if (event.getItem().equals(itemcase.getItem())) {
-                    event.setCancelled(true);
+                    if (itemcase.getType() == ItemcaseType.PICKUP_POINT) {
+                        Bukkit.getScheduler().runTaskLater(ItemCase.
+                                getInstance(), new PickupPointSpawner(itemcase),
+                                itemcase.getPickupPointInterval());
+                        itemcase.setWaitingForSpawn(true);
+                        return;
+                    } else {
+                        event.setCancelled(true);
+                        return;
+                    }
                 }
             }
         }
