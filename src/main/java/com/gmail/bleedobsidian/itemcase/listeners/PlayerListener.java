@@ -46,17 +46,16 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (ItemCase.getInstance().getConfigFile().getFileConfiguration()
-                .getBoolean("Options.Disable-Sneak-Create")) {
-            return;
-        }
-
         ItemCase itemcase = ItemCase.getInstance();
         Player player = event.getPlayer();
 
         if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event
                 .getAction() == Action.RIGHT_CLICK_AIR)
                 && player.isSneaking()) {
+            if (ItemCase.getInstance().getConfigFile().getFileConfiguration()
+                    .getBoolean("Options.Disable-Sneak-Create")) {
+                return;
+            }
 
             Block block = event.getClickedBlock();
 
