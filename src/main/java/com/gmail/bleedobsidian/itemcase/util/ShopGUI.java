@@ -12,9 +12,11 @@ import com.gmail.bleedobsidian.itemcase.managers.orders.OrderResult;
 import java.text.DecimalFormat;
 import java.util.Map.Entry;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 /**
  * A utility class for display the shop GUI to players.
@@ -66,6 +68,21 @@ public class ShopGUI {
 
             for (Entry<Enchantment, Integer> enchantment : itemcase.
                     getItemStack().getEnchantments().entrySet()) {
+                enchantments += enchantment.getKey().getName() + " (L" + enchantment.
+                        getValue() + "), ";
+            }
+
+            PlayerLogger.message(player, Language.getLanguageFile().getMessage(
+                    "Player.ItemCase.Shop-Message3",
+                    new String[]{"%Enchantments%", enchantments}));
+        } else if (itemcase.getItemStack().getType() == Material.ENCHANTED_BOOK) {
+            String enchantments = "";
+
+            EnchantmentStorageMeta meta = (EnchantmentStorageMeta) itemcase.
+                    getItemStack().getItemMeta();
+
+            for (Entry<Enchantment, Integer> enchantment : meta.
+                    getStoredEnchants().entrySet()) {
                 enchantments += enchantment.getKey().getName() + " (L" + enchantment.
                         getValue() + "), ";
             }
