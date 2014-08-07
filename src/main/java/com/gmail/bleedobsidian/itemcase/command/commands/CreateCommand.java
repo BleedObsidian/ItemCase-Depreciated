@@ -57,6 +57,12 @@ public class CreateCommand {
             return;
         }
 
+        if (player.getItemInHand().getType() == Material.AIR) {
+            PlayerLogger.message(player,
+                    language.getMessage("Player.ItemCase.Created-Hand"));
+            return;
+        }
+
         if (!ItemCase.getInstance().getConfigFile().getFileConfiguration()
                 .getIntegerList("Blocks").contains(block.getType().getId())) {
             PlayerLogger.message(player,
