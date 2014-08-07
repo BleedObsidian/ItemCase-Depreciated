@@ -347,7 +347,25 @@ public final class Itemcase {
      * @param isInfinite If Itemcase is infinite.
      */
     public void setInfinite(boolean isInfinite) {
+        boolean previousIsInfinite = this.isInfinite;
         this.isInfinite = isInfinite;
+
+        if (!previousIsInfinite) {
+            if (this.isInfinite) {
+                if (this.inventory != null) {
+                    for (ItemStack itemStack : this.inventory.
+                            getContents()) {
+                        if (itemStack != null) {
+                            this.blockLocation
+                                    .getWorld()
+                                    .dropItemNaturally(
+                                            this.blockLocation,
+                                            itemStack);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
