@@ -13,7 +13,7 @@ main: com.gmail.bleedobsidian.itemcase.ItemCase
 commands:
     itemc:
         description: Main ItemCase alias command.
-        aliases: [itemcase, case, ic]
+        aliases: [itemcase]
 
 permissions:
     itemcase.create.showcase:
