@@ -255,6 +255,21 @@ public final class Itemcase {
                 this.despawnItem();
                 this.spawnItem();
             }
+
+            if (previousType == ItemcaseType.SHOP) {
+                if (this.inventory != null) {
+                    for (ItemStack itemStack : this.inventory.
+                            getContents()) {
+                        if (itemStack != null) {
+                            this.blockLocation
+                                    .getWorld()
+                                    .dropItemNaturally(
+                                            this.blockLocation,
+                                            itemStack);
+                        }
+                    }
+                }
+            }
         }
     }
 

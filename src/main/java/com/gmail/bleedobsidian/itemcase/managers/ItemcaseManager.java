@@ -161,13 +161,15 @@ public class ItemcaseManager {
             saveFile.getConfigFile().getFileConfiguration().set(path, null);
             saveFile.getConfigFile().save(ItemCase.getInstance());
 
-            for (ItemStack itemStack : itemcase.getInventory().getContents()) {
-                if (itemStack != null) {
-                    itemcase.getBlock()
-                            .getWorld()
-                            .dropItemNaturally(
-                                    itemcase.getBlock().getLocation(),
-                                    itemStack);
+            if (itemcase.getInventory() != null) {
+                for (ItemStack itemStack : itemcase.getInventory().getContents()) {
+                    if (itemStack != null) {
+                        itemcase.getBlock()
+                                .getWorld()
+                                .dropItemNaturally(
+                                        itemcase.getBlock().getLocation(),
+                                        itemStack);
+                    }
                 }
             }
 
