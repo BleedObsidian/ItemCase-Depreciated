@@ -234,7 +234,7 @@ public class ModifyCommand {
         LanguageFile language = Language.getLanguageFile();
 
         if (!(itemcase.getOwnerName().equals(player.getName()) || player
-                .hasPermission("itemcase.modify"))) {
+                .hasPermission("itemcase.modify.other"))) {
             PlayerLogger.message(player,
                     language.getMessage("Player.Modify.Modify-Permission"));
             return;
