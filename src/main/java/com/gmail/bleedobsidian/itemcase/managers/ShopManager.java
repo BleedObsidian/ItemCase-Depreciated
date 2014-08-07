@@ -52,6 +52,13 @@ public class ShopManager {
             return;
         }
 
+        if (!player.hasPermission("itemcase.buy") && !player.hasPermission(
+                "itemcase.sell")) {
+            PlayerLogger.messageLanguage(player,
+                    "Player.Permission-Itemcase");
+            return;
+        }
+
         Order order = new Order(itemcase, player, itemcase.getItemStack());
 
         ItemcasePreTransactionEvent event = new ItemcasePreTransactionEvent(
