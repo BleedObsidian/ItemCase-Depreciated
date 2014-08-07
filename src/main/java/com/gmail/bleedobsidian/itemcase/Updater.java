@@ -197,6 +197,7 @@ public class Updater {
         try {
             final URLConnection con = this.url.openConnection();
             con.setConnectTimeout(5000);
+            con.setReadTimeout(5000);
 
             if (this.apiKey != null) {
                 con.addRequestProperty("X-API-Key", this.apiKey);
