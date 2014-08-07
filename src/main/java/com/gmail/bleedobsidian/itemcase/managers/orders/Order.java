@@ -64,7 +64,7 @@ public class Order {
     /**
      * Bukkit taskID.
      */
-    private final int taskID;
+    private int taskID;
 
     /**
      * New order.
@@ -77,28 +77,33 @@ public class Order {
         this.itemcase = itemcase;
         this.item = item;
 
-        this.taskID = Bukkit.getScheduler()
-                .runTaskLater(ItemCase.getInstance(), new Runnable() {
-                    public void run() {
-                        if (ItemCase.getInstance().getShopManager()
-                        .isPendingOrder(player)) {
-                            if (ItemCase.getInstance().getInputManager().
-                            isPendingInput(player)) {
-                                ItemCase.getInstance().getInputManager().
-                                removePendingInput(player);
-                            }
+        if (!ItemCase.getInstance().getConfigFile().getFileConfiguration().
+                getBoolean("Order.Disable-Timeout")) {
+            this.taskID = Bukkit.getScheduler()
+                    .runTaskLater(ItemCase.getInstance(), new Runnable() {
+                        public void run() {
+                            if (ItemCase.getInstance().getShopManager()
+                            .isPendingOrder(player)) {
+                                if (ItemCase.getInstance().getInputManager().
+                                isPendingInput(player)) {
+                                    ItemCase.getInstance().getInputManager().
+                                    removePendingInput(player);
+                                }
 
-                            PlayerLogger.message(
-                                    player,
-                                    Language.getLanguageFile().getMessage(
-                                            "Player.Order.Timeout"));
-                            PlayerLogger.messageLanguage(player,
-                                    "Player.Order.End");
-                            ItemCase.getInstance().getShopManager()
-                            .removePendingOrder(player);
+                                PlayerLogger.message(
+                                        player,
+                                        Language.getLanguageFile().getMessage(
+                                                "Player.Order.Timeout"));
+                                PlayerLogger.messageLanguage(player,
+                                        "Player.Order.End");
+                                ItemCase.getInstance().getShopManager()
+                                .removePendingOrder(player);
+                            }
                         }
-                    }
-                }, 600).getTaskId();
+                    }, ItemCase.getInstance().getConfigFile().
+                            getFileConfiguration().getInt("Order.Timeout") * 20).
+                    getTaskId();
+        }
     }
 
     /**
@@ -292,8 +297,11 @@ public class Order {
      * Cancel order.
      */
     public void cancel() {
-        if (Bukkit.getScheduler().isQueued(this.taskID)) {
-            Bukkit.getScheduler().cancelTask(this.taskID);
+        if (!ItemCase.getInstance().getConfigFile().getFileConfiguration().
+                getBoolean("Order.Disable-Timeout")) {
+            if (Bukkit.getScheduler().isQueued(this.taskID)) {
+                Bukkit.getScheduler().cancelTask(this.taskID);
+            }
         }
     }
 

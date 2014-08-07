@@ -17,6 +17,13 @@ Updates:
     Check-For-Update: true
     # Use a custom API key for the ServerMods API. (Optional)
     API-Key: your_api_key
+    
+#Order options
+Order:
+    #The time in seconds before an order automatically times out. (Disable-Timeout: false)
+    Timeout: 10
+    #If automatic timeout is disabled
+    Disable-Timeout: false
    
 #Blocks that can be used for ItemCases.   
 Blocks:
