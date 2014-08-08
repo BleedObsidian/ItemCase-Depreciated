@@ -204,6 +204,9 @@ public class ItemcaseManager {
 
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Shop", null);
+
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".PickupPoint", null);
             } else if (itemcase.getType() == ItemcaseType.SHOP) {
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Type", "SHOP");
@@ -228,6 +231,9 @@ public class ItemcaseManager {
                         .set(path + ".Shop.BuyPrice", itemcase.getBuyPrice());
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Shop.SellPrice", itemcase.getSellPrice());
+
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".PickupPoint", null);
             } else if (itemcase.getType() == ItemcaseType.PICKUP_POINT) {
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Type", "PICKUP_POINT");

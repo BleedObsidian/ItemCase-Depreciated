@@ -39,6 +39,9 @@ public class ShopGUI {
      */
     public static void displayGUI(final Itemcase itemcase, final Player player,
             final Order order) {
+        // Stop Chat
+        PlayerLogger.messageLanguage(player, "Player.ItemCase.Stop-Chat");
+
         // Header
         PlayerLogger.messageLanguage(player, "Player.ItemCase.Shop-Message1");
 

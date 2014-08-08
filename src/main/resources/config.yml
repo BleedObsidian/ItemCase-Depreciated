@@ -21,7 +21,7 @@ Updates:
 #Order options
 Order:
     #The time in seconds before an order automatically times out. (Disable-Timeout: false)
-    Timeout: 10
+    Timeout: 15
     #If automatic timeout is disabled
     Disable-Timeout: false
    

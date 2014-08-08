@@ -41,9 +41,9 @@ public class StorageCommand {
     public static void storage(Player player, String[] args) {
         LanguageFile language = Language.getLanguageFile();
 
-        if (!(player.hasPermission("itemcase.create.shop.buy") || player
-                .hasPermission("itemcase.create.shop.sell") || player.
-                hasPermission("itemcase.create.pickup"))) {
+        if (!player.hasPermission("itemcase.create.shop.buy") && !player
+                .hasPermission("itemcase.create.shop.sell") && !player.
+                hasPermission("itemcase.create.pickup")) {
             PlayerLogger.message(player,
                     language.getMessage("Player.Permission"));
             return;
@@ -73,6 +73,23 @@ public class StorageCommand {
             PlayerLogger.message(player,
                     language.getMessage("Player.Storage.No-Storage"));
             return;
+        }
+
+        if (itemcase.getType() == ItemcaseType.SHOP) {
+            if (!(player.hasPermission("itemcase.create.shop.sell") || player.
+                    hasPermission("itemcase.create.shop.buy"))) {
+                PlayerLogger.message(player,
+                        language.getMessage("Player.Permission"));
+                return;
+            }
+        }
+
+        if (itemcase.getType() == ItemcaseType.PICKUP_POINT) {
+            if (!player.hasPermission("itemcase.create.pickup")) {
+                PlayerLogger.message(player,
+                        language.getMessage("Player.Permission"));
+                return;
+            }
         }
 
         if (!(itemcase.getOwnerName().equals(player.getName()) || player
