@@ -22,6 +22,7 @@ import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import com.gmail.bleedobsidian.itemcase.tasks.PickupPointSpawner;
+import com.gmail.bleedobsidian.itemcase.util.InventoryUtils;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -197,11 +198,32 @@ public class PlayerListener implements Listener {
                     .getItemcases()) {
                 if (event.getItem().equals(itemcase.getItem())) {
                     if (itemcase.getType() == ItemcaseType.PICKUP_POINT) {
-                        Bukkit.getScheduler().runTaskLater(ItemCase.
-                                getInstance(), new PickupPointSpawner(itemcase),
-                                itemcase.getPickupPointInterval());
-                        itemcase.setWaitingForSpawn(true);
-                        return;
+                        if (itemcase.isInfinite()) {
+                            Bukkit.getScheduler().runTaskLater(ItemCase.
+                                    getInstance(), new PickupPointSpawner(
+                                            itemcase),
+                                    itemcase.getPickupPointInterval());
+                            itemcase.setWaitingForSpawn(true);
+                            return;
+                        } else {
+                            if (InventoryUtils.getAmountOf(itemcase.
+                                    getInventory(),
+                                    itemcase.getItemStack()) >= 1) {
+                                Bukkit.getScheduler().runTaskLater(ItemCase.
+                                        getInstance(), new PickupPointSpawner(
+                                                itemcase),
+                                        itemcase.getPickupPointInterval());
+                                itemcase.setWaitingForSpawn(true);
+                                return;
+                            } else {
+                                Bukkit.getScheduler().runTaskLater(ItemCase.
+                                        getInstance(), new PickupPointSpawner(
+                                                itemcase),
+                                        60);
+                                itemcase.setWaitingForSpawn(true);
+                                return;
+                            }
+                        }
                     } else {
                         event.setCancelled(true);
                         return;

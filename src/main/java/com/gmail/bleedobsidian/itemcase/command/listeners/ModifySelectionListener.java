@@ -65,9 +65,9 @@ public class ModifySelectionListener implements SelectionListener {
      */
     public void selected(Player player, Itemcase itemcase) {
         if (this.type != null) {
-            ModifyCommand.selected(player, args, itemcase, type);
+            ModifyCommand.selected(player, args, itemcase, type, false);
         } else {
-            ModifyCommand.selectedInfinite(player, args, itemcase);
+            ModifyCommand.selected(player, args, itemcase, type, true);
         }
     }
 }

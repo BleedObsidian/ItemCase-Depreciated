@@ -224,17 +224,6 @@ public class ItemcaseManager {
                             .set(path + ".Shop.Sell", false);
                 }
 
-                if (!itemcase.isInfinite()) {
-                    saveFile.getConfigFile()
-                            .getFileConfiguration()
-                            .set(path + ".Inventory",
-                                    this.serializeInventory(itemcase
-                                            .getInventory()));
-                } else {
-                    saveFile.getConfigFile().getFileConfiguration()
-                            .set(path + ".Inventory", null);
-                }
-
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Shop.BuyPrice", itemcase.getBuyPrice());
                 saveFile.getConfigFile().getFileConfiguration()
@@ -249,6 +238,17 @@ public class ItemcaseManager {
 
                 saveFile.getConfigFile().getFileConfiguration()
                         .set(path + ".Shop", null);
+            }
+
+            if (itemcase.getInventory() != null) {
+                saveFile.getConfigFile()
+                        .getFileConfiguration()
+                        .set(path + ".Inventory",
+                                this.serializeInventory(itemcase
+                                        .getInventory()));
+            } else {
+                saveFile.getConfigFile().getFileConfiguration()
+                        .set(path + ".Inventory", null);
             }
 
             saveFile.getConfigFile().save(ItemCase.getInstance());

@@ -24,7 +24,6 @@ import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -230,7 +229,7 @@ public class ModifyCommand {
      * @param type ItemCaseType.
      */
     public static void selected(Player player, String[] args,
-            Itemcase itemcase, ItemcaseType type) {
+            Itemcase itemcase, ItemcaseType type, boolean isInfinite) {
         LanguageFile language = Language.getLanguageFile();
 
         if (!(itemcase.getOwnerName().equals(player.getName()) || player
@@ -240,63 +239,42 @@ public class ModifyCommand {
             return;
         }
 
-        itemcase.setType(type);
+        if (!isInfinite) {
+            itemcase.setType(type);
 
-        if (type == ItemcaseType.SHOWCASE) {
-            PlayerLogger.message(player,
-                    language.getMessage("Player.Modify.Showcase.Successful"));
-        } else if (type == ItemcaseType.SHOP) {
-            if (args[2].equalsIgnoreCase("buy")) {
-                itemcase.setCanBuy(true);
-                itemcase.setBuyPrice(Double.parseDouble(args[3]));
+            if (type == ItemcaseType.SHOWCASE) {
+                PlayerLogger.message(player,
+                        language.getMessage("Player.Modify.Showcase.Successful"));
+            } else if (type == ItemcaseType.SHOP) {
+                if (args[2].equalsIgnoreCase("buy")) {
+                    itemcase.setCanBuy(true);
+                    itemcase.setBuyPrice(Double.parseDouble(args[3]));
+
+                    PlayerLogger.message(player,
+                            language.getMessage("Player.Modify.Shop.Buy"));
+                } else if (args[2].equalsIgnoreCase("sell")) {
+                    itemcase.setCanSell(true);
+                    itemcase.setSellPrice(Double.parseDouble(args[3]));
+
+                    PlayerLogger.message(player,
+                            language.getMessage("Player.Modify.Shop.Sell"));
+                }
+            } else if (type == ItemcaseType.PICKUP_POINT) {
+                itemcase.setPickupPointInterval(
+                        (int) (Double.parseDouble(args[2]) * 20));
 
                 PlayerLogger.message(player,
-                        language.getMessage("Player.Modify.Shop.Buy"));
-            } else if (args[2].equalsIgnoreCase("sell")) {
-                itemcase.setCanSell(true);
-                itemcase.setSellPrice(Double.parseDouble(args[3]));
-
-                PlayerLogger.message(player,
-                        language.getMessage("Player.Modify.Shop.Sell"));
+                        language.getMessage("Player.Modify.Pickup.Successful"));
             }
-        } else if (type == ItemcaseType.PICKUP_POINT) {
-            itemcase.setPickupPointInterval(
-                    (int) (Double.parseDouble(args[2]) * 20));
+        } else {
+            boolean value = Boolean.parseBoolean(args[2]);
+            itemcase.setInfinite(value);
 
-            PlayerLogger.message(player,
-                    language.getMessage("Player.Modify.Pickup.Successful"));
+            PlayerLogger.message(player, language.getMessage(
+                    "Player.Modify.Infinite.Successful", new String[]{
+                        "%Boolean%", "" + value}));
         }
 
         ItemCase.getInstance().getItemcaseManager().saveItemcase(itemcase);
-    }
-
-    /**
-     * Received selection.
-     *
-     * @param player Player.
-     * @param args Command arguments.
-     * @param itemcase Selected Itemcase.
-     */
-    public static void selectedInfinite(Player player,
-            String[] args, Itemcase itemcase) {
-        LanguageFile language = Language.getLanguageFile();
-
-        if (!(itemcase.getOwnerName().equals(player.getName()) || player
-                .hasPermission("itemcase.modify"))) {
-            PlayerLogger.message(player,
-                    language.getMessage("Player.Modify.Modify-Permission"));
-            return;
-        }
-
-        boolean value = Boolean.parseBoolean(args[2]);
-        itemcase.setInfinite(value);
-
-        itemcase.setInventory(Bukkit.createInventory(null, 54,
-                "ItemCase Storage"));
-        ItemCase.getInstance().getItemcaseManager().saveItemcase(itemcase);
-
-        PlayerLogger.message(player, language.getMessage(
-                "Player.Modify.Infinite.Successful", new String[]{
-                    "%Boolean%", "" + value}));
     }
 }

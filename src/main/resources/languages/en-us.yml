@@ -97,7 +97,7 @@ Player:
         Owner-Sell: "(GREEN)Player (GOLD)%Player% (GREEN)sold (GOLD)%Amount% %Item%(GREEN)."
     Storage:
         Infinite: "(RED)This itemcase is infinite."
-        Not-Shop: "(RED)Itemcase must be a shop."
+        No-Storage: "(RED)Itemcase must be a shop or a pickup point."
         Select: "(GREEN)Select an itemcase to view the storage of."
         Cancel: "(GREEN)To cancel: (GOLD)/itemc cancel"
         Storage-Permission: "(RED)You don't own this itemcase!"

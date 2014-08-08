@@ -16,7 +16,10 @@
  */
 package com.gmail.bleedobsidian.itemcase.tasks;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.util.InventoryUtils;
+import org.bukkit.Bukkit;
 
 /**
  * A Bukkit task to spawn the item of a pickup point. (Only used internally)
@@ -42,8 +45,23 @@ public class PickupPointSpawner implements Runnable {
     @Override
     public void run() {
         if (this.itemcase.getItem().isDead()) {
-            this.itemcase.spawnItem();
-            this.itemcase.setWaitingForSpawn(false);
+            if (this.itemcase.isInfinite()) {
+                this.itemcase.spawnItem();
+                this.itemcase.setWaitingForSpawn(false);
+            } else {
+                if (InventoryUtils.getAmountOf(this.itemcase.getInventory(),
+                        this.itemcase.getItemStack()) >= 1) {
+                    this.itemcase.spawnItem();
+                    this.itemcase.setWaitingForSpawn(false);
+
+                    this.itemcase.getInventory().removeItem(this.itemcase.
+                            getItemStack().clone());
+                } else {
+                    Bukkit.getScheduler().runTaskLater(ItemCase.
+                            getInstance(), new PickupPointSpawner(itemcase),
+                            60);
+                }
+            }
         }
     }
 }

@@ -97,7 +97,7 @@ Player:
         Owner-Sell: "(GREEN)Spieler (GOLD)%Player% (GREEN)verkaufte (GOLD)%Amount% %Item%(GREEN)."
     Storage:
         Infinite: "(RED)Dieses Itemcase ist -infinite-."
-        Not-Shop: "(RED)ItemCase muss von Typ -shop- sein."
+        No-Storage: "(RED)Itemcase müssen -shop- oder ein -pickup point- sein."
         Select: "(GREEN)Wähle ein ItemCase aus, um dessen Bestand zu sehen."
         Cancel: "(GREEN)Abbruch: (GOLD)/itemc cancel"
         Storage-Permission: "(RED)Du besitzt dieses ItemCase nicht!"

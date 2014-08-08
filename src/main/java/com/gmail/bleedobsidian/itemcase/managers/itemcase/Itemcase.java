@@ -16,7 +16,10 @@
  */
 package com.gmail.bleedobsidian.itemcase.managers.itemcase;
 
+import com.gmail.bleedobsidian.itemcase.ItemCase;
+import com.gmail.bleedobsidian.itemcase.tasks.PickupPointSpawner;
 import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -178,7 +181,9 @@ public final class Itemcase {
      * Despawn display item.
      */
     public void despawnItem() {
-        this.item.remove();
+        if (this.item != null) {
+            this.item.remove();
+        }
     }
 
     /**
@@ -251,13 +256,22 @@ public final class Itemcase {
         this.type = type;
 
         if (previousType != this.type) {
-            if (this.item != null) {
+            if (this.item != null && type != ItemcaseType.PICKUP_POINT) {
                 this.despawnItem();
                 this.spawnItem();
             }
 
-            if (previousType == ItemcaseType.SHOP) {
-                if (this.inventory != null) {
+            if (type == ItemcaseType.PICKUP_POINT) {
+                this.despawnItem();
+                Bukkit.getScheduler().runTaskLater(ItemCase.
+                        getInstance(), new PickupPointSpawner(
+                                this),
+                        60);
+                this.setWaitingForSpawn(true);
+            }
+
+            if (previousType == ItemcaseType.SHOP || previousType == ItemcaseType.PICKUP_POINT) {
+                if (!this.isInfinite && this.inventory != null) {
                     for (ItemStack itemStack : this.inventory.
                             getContents()) {
                         if (itemStack != null) {
@@ -268,9 +282,20 @@ public final class Itemcase {
                                             itemStack);
                         }
                     }
+
+                    this.inventory = null;
                 }
             }
         }
+
+        if (previousType != ItemcaseType.SHOP || previousType != ItemcaseType.PICKUP_POINT) {
+            if (type == ItemcaseType.SHOP || type == ItemcaseType.PICKUP_POINT) {
+                this.inventory = Bukkit.createInventory(null, 54,
+                        "ItemCase Storage");
+            }
+        }
+
+        this.isInfinite = false;
     }
 
     /**
@@ -363,7 +388,16 @@ public final class Itemcase {
                                             itemStack);
                         }
                     }
+
+                    this.inventory = null;
                 }
+            }
+        }
+
+        if (!isInfinite) {
+            if (previousIsInfinite != false) {
+                this.inventory = Bukkit.createInventory(null, 54,
+                        "ItemCase Storage");
             }
         }
     }

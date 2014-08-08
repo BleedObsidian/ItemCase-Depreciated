@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 /**
- * A utility class for display the shop GUI to players.
+ * A utility class for display the shop GUI to players. (Only used internally)
  *
  * @author BleedObsidian (Jesse Prescott)
  */

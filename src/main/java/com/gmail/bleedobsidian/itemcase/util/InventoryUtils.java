@@ -5,7 +5,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * A utility class for Inventory related methods.
+ * A utility class for Inventory related methods. (Only used internally)
  *
  * @author BleedObsidian (Jesse Prescott)
  */

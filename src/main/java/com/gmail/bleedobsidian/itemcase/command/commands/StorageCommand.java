@@ -22,6 +22,7 @@ import com.gmail.bleedobsidian.itemcase.command.listeners.StorageSelectionListen
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import org.bukkit.entity.Player;
 
 /**
@@ -41,7 +42,8 @@ public class StorageCommand {
         LanguageFile language = Language.getLanguageFile();
 
         if (!(player.hasPermission("itemcase.create.shop.buy") || player
-                .hasPermission("itemcase.create.shop.sell"))) {
+                .hasPermission("itemcase.create.shop.sell") || player.
+                hasPermission("itemcase.create.pickup"))) {
             PlayerLogger.message(player,
                     language.getMessage("Player.Permission"));
             return;
@@ -67,9 +69,9 @@ public class StorageCommand {
             Itemcase itemcase) {
         LanguageFile language = Language.getLanguageFile();
 
-        if (!(itemcase.canBuy() || itemcase.canSell())) {
+        if (!(itemcase.canBuy() || itemcase.canSell() || itemcase.getType() == ItemcaseType.PICKUP_POINT)) {
             PlayerLogger.message(player,
-                    language.getMessage("Player.Storage.Not-Shop"));
+                    language.getMessage("Player.Storage.No-Storage"));
             return;
         }
 
