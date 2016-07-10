@@ -23,6 +23,7 @@ import com.gmail.bleedobsidian.itemcase.managers.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.managers.itemcase.ItemcaseType;
 import com.gmail.bleedobsidian.itemcase.tasks.PickupPointSpawner;
 import com.gmail.bleedobsidian.itemcase.util.InventoryUtils;
+import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -36,6 +37,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -47,6 +49,10 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if(event.getHand() == EquipmentSlot.OFF_HAND) {
+            return;
+        }
+        
         ItemCase itemcase = ItemCase.getInstance();
         Player player = event.getPlayer();
 
@@ -61,9 +67,12 @@ public class PlayerListener implements Listener {
             Block block = event.getClickedBlock();
 
             if (block == null) {
-                if (player.getTargetBlock(null, 100) != null
-                        && player.getTargetBlock(null, 100).getType() != Material.AIR) {
-                    block = player.getTargetBlock(null, 100);
+                Set transparent = new HashSet();
+                transparent.add(Material.AIR);
+        
+                if (player.getTargetBlock(transparent, 100) != null
+                        && player.getTargetBlock(transparent, 100).getType() != Material.AIR) {
+                    block = player.getTargetBlock(transparent, 100);
                 } else {
                     return;
                 }

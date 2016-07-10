@@ -21,6 +21,8 @@ import com.gmail.bleedobsidian.itemcase.Language;
 import com.gmail.bleedobsidian.itemcase.WorldGuard;
 import com.gmail.bleedobsidian.itemcase.configurations.LanguageFile;
 import com.gmail.bleedobsidian.itemcase.loggers.PlayerLogger;
+import java.util.HashSet;
+import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,7 +51,9 @@ public class CreateCommand {
             return;
         }
 
-        Block block = player.getTargetBlock(null, 5);
+        Set transparent = new HashSet();
+        transparent.add(Material.AIR);
+        Block block = player.getTargetBlock(transparent, 5);
 
         if (block == null || block.getType() == Material.AIR) {
             PlayerLogger.message(player,

@@ -23,7 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
@@ -147,7 +147,7 @@ public final class Itemcase {
                     blockLocation.getBlockZ() + 0.5);
 
             if (this.type != ItemcaseType.PICKUP_POINT) {
-                net.minecraft.server.v1_7_R3.ItemStack stack = CraftItemStack
+                net.minecraft.server.v1_10_R1.ItemStack stack = CraftItemStack
                         .asNMSCopy(this.displayStack);
                 stack.count = 0;
 
@@ -156,8 +156,8 @@ public final class Itemcase {
                 this.item.setVelocity(new Vector(0.0, 0.1, 0.0));
                 this.item.setMetadata("ItemCase", new ItemcaseData());
             } else {
-                net.minecraft.server.v1_7_R3.ItemStack stack = CraftItemStack
-                        .asNMSCopy(this.itemStack);
+                net.minecraft.server.v1_10_R1.ItemStack stack = CraftItemStack
+                        .asNMSCopy(this.displayStack);
                 stack.count = 1;
 
                 this.item = blockLocation.getWorld().dropItem(itemLocation,

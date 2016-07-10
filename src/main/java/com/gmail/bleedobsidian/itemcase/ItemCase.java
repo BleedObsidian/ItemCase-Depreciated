@@ -124,10 +124,9 @@ public class ItemCase extends JavaPlugin {
                     + ", using en-us instead.", true);
             Language.setLangauge("en-us.yml", this);
         }
-
-        // Check correct version of craftbukkit is being used
+        
         try {
-            Class.forName("org.bukkit.craftbukkit.v1_7_R3.CraftServer");
+            Class.forName("org.bukkit.craftbukkit.v1_10_R1.CraftServer");
         } catch (ClassNotFoundException e) {
             PluginLogger.warning(
                     Language.getLanguageFile().getMessage(
